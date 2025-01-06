@@ -1,0 +1,157 @@
+/* 
+  Localizable.strings (Spanish)
+  PhotoNavigator
+
+  Created by Clint Shank on 8/7/24.
+
+*/
+
+"AlertMessage.CannotOpenDatabase"           = "Error fatal!  No se puede abrir la base de datos.";
+"AlertMessage.CannotReadAllDbFiles"         = "La última actualización de la base de datos en el dispositivo remoto no se completó correctamente. Póngase en contacto con el usuario de '%@' y pídale que vuelva a enviar su última publicación. La base de datos permanecerá bloqueada hasta que esto se resuelva.";
+"AlertMessage.CannotReadFileData"           = "No podemos leer este archivo multimedia.";
+"AlertMessage.CannotSeeExternalDevice"      = "No podemos ver su dispositivo externo. Acérquese a su red WiFi e intente nuevamente.";
+"AlertMessage.ConnectingToExternalDevice"   = "Conectándose a su dispositivo externo.";
+"AlertMessage.CsvFileSaved"                 = "Se ha guardado correctamente un archivo CSV en su unidad NAS.";
+"AlertMessage.DatabaseNotOpen"              = "¡Error fatal! ¡La base de datos NO está abierta!  Elimina y vuelve a instalar la aplicación.";
+"AlertMessage.DataCorrupted"                = "¡Este archivo multimedia ha sido dañado!";
+"AlertMessage.DataWillBeMovedTo"            = "Cuando presione el botón Aceptar, transferiremos sus datos y luego eliminaremos la aplicación. Cuando reinicie la aplicación, sus datos se almacenarán en su ";
+"AlertMessage.DataWillBeShared"             = "Cuando presione el botón Aceptar, transferiremos sus datos y luego eliminaremos la aplicación. Cuando reinicie la aplicación, COMPARTIRÁ los datos en su ";
+"AlertMessage.DeviceNameRequired"           = "Vaya a la pestaña Configuración, toque la entrada 'Nombre de dispositivo asignado por el usuario' en la tabla e ingrese un nombre para este dispositivo.";
+"AlertMessage.DuplicateName"                = "El nombre que ingresó ya existe. Inténtalo de nuevo.";
+"AlertMessage.ExternalDriveLocked"          = "La base de datos en su disco externo está bloqueada por otro usuario [ %@ ]. Puede esperar hasta que el otro usuario cierre la aplicación (lo que la desbloquea) o realizar cambios sin conexión y cargarlos cuando la unidad ya no esté bloqueada.";
+"AlertMessage.ImportAdvisory"               = "Hemos intentado importar el archivo que seleccionó. Ahora mataremos la aplicación. Cuando reinicie la aplicación, verifique sus datos y tome las medidas apropiadas para corregirlos o volver a cargarlos.";
+"AlertMessage.ImportErrorsSavedTo"          = "Los errores se guardaron en ErrorLog.txt en la misma ubicación que su archivo CSV";
+"AlertMessage.ImportingIsDestructive"       = "La importación de un archivo CSV con formato incorrecto puede fallar o tener un resultado impredecible. Para evitar esto, intentaremos validar su archivo CSV antes de importarlo. Aun así, si falla la importación, puede perder los datos que ha creado y puede que tenga que eliminar la aplicación y comenzar de nuevo.";
+"AlertMessage.KeywordManagerInfo"           = "Utilice esta herramienta para administrar su lista de palabras clave.  Toca el signo (+) para agregar.  Desliza hacia la izquierda para eliminar. Seleccione para modificar.";
+"AlertMessage.KeywordsMustBeUnique"         = "Las palabras clave deben ser únicos!";
+"AlertMessage.LoginFailed"                  = "¡Error de inicio de sesion!";
+"AlertMessage.MediaRepoNotSet"              = "Seleccione usando la opción Repositorio de medios";
+"AlertMessage.NameCannotBeBlank"            = "El nombre no puede dejarse en blanco";
+"AlertMessage.NameMustBeUnique"             = "¡El nombre debe ser único!";
+"AlertMessage.NetworkAddressCannotBeBlank"  = "La dirección de red no se puede dejar en blanco!";
+"AlertMessage.NoAccess"                     = "¡No se puede acceder a este servidor de archivos!";
+"AlertMessage.NoSharesOnDrive"              = "¡No hay acciones disponibles en esta unidad!";
+"AlertMessage.OfflineWarning"               = "No podemos conectarnos a su almacenamiento remoto. Debido a que esta aplicación está diseñada para funcionar sin conexión, puede realizar cambios que cargaremos la próxima vez que se conecte a su almacenamiento remoto. Solo tenga en cuenta que si más de una persona realiza cambios fuera de línea, es posible que se sobrescriban sus cambios.";
+"AlertMessage.PhotoLibraryNotAuthorized"    = "Esta aplicación requiere su autorización para acceder a la biblioteca de fotos de este dispositivo.  Actualice la Configuración para permitirnos ver sus fotos.";
+"AlertMessage.ReadyToRestart"               = "Listo para reiniciar";
+"AlertMessage.ScanCompleteFormat"           = "Se agregaron %d archivos multimedia y se omitieron %d archivos.";
+"AlertMessage.SelectHowToUseForInfo"        = "Seleccione '%@' para obtener información útil sobre '%@', '%@' y '%@'.";
+"AlertMessage.UnableToAddMedia"             = "¡No podemos agregar los archivos multimedia que encontramos!  Inténtalo de nuevo.";
+"AlertMessage.UnableToConnect"              = "No podemos conectarnos a su dispositivo externo. Acérquese a su red WiFi e intente nuevamente.";
+"AlertMessage.UnableToCreate"               = "¡No se puede crear nuestro directorio!";
+"AlertMessage.UnableToCreateCsvFile"        = "¡No podemos crear el archivo de variables separadas por comas (CSV)!";
+"AlertMessage.UnableToDeleteMediaRefs"      = "¡No pudimos eliminar todas las referencias a los medios de nuestra base de datos!  Es posible que esto haya dejado referencias no deseadas en su base de datos.";
+"AlertMessage.UnableToFetchDevices"         = "¡No se pueden recuperar dispositivos!";
+"AlertMessage.UnableToFetchFileFromNAS"     = "¡No se puede recuperar el archivo de su unidad accesible en red (NAS)!";
+"AlertMessage.UnableToOpenShare"            = "¡No se puede abrir el recurso compartido seleccionado!";
+"AlertMessage.UnableToReadFromCsvFile"      = "No podemos leer los datos en el archivo CSV que seleccionó. Por favor, intente con otro archivo.";
+"AlertMessage.UnableToStartSession"         = "¡No se puede iniciar una sesión con el recurso compartido seleccionado!";
+"AlertMessage.UnsupportedFileFormat"        = "Lo sentimos, actualmente no admitimos este formato de archivo.";
+"AlertMessage.UpdatingExternalDevice"       = "Espere mientras actualizamos la base de datos con los cambios más recientes.";
+
+"AlertTitle.ActionForFile"                  = "¿Qué te gustaría hacer con este archivo?";
+"AlertTitle.AreYouSure"                     = "¿Estás seguro de que quieres descartar tus cambios?";
+"AlertTitle.AreYouSureImport"               = "¿Estás seguro de que quieres importar este archivo?";
+"AlertTitle.AuthorizationRequired"          = "¡Se requiere autorización!";
+"AlertTitle.CannotReadAllDbFiles"           = "¡No se pueden leer TODOS los archivos de la base de datos en el control remoto!";
+"AlertTitle.DataWillBeSavedToNAS"           = "Preparación para guardar datos en:";
+"AlertTitle.DeviceNameRequired"             = "Se requiere el nombre del dispositivo para NAS";
+"AlertTitle.DuplicateEntry"                 = "¡Entrada duplicada!";
+"AlertTitle.EnterDeviceName"                = "Ingrese el nombre del dispositivo";
+"AlertTitle.EnterName"                      = "Ingrese su Nombre";
+"AlertTitle.EnterStartingPath"              = "Ingresar ruta de inicio";
+"AlertTitle.Error"                          = "Error";
+"AlertTitle.ExportComplete"                 = "Exportación completa";
+"AlertTitle.GotAQuestion"                   = "¿Tienes una pregunta?";
+"AlertTitle.ImportComplete"                 = "Importación completada";
+"AlertTitle.ImportErrors"                   = "Su archivo CSV tiene uno o más errores que debe corregir antes de poder importarlo.";
+"AlertTitle.LastUpdateDidNotComplete"       = "¡La última actualización NO se completó!";
+"AlertTitle.MediaRepoNotSet"                = "¡El repositorio de medios aún NO se ha configurado!";
+"AlertTitle.ScanComplete"                   = "Escaneo completo";
+"AlertTitle.ScanNowPrompt"                  = "¿Le gustaría que escaneemos su repositorio ahora?";
+"AlertTitle.TransferComplete"               = "¡Transferencia completa!";
+"AlertTitle.UnableToDeleteMediaReference"   = "Eliminar fallido!";
+"AlertTitle.UpdateComplete"                 = "¡Actualizacion completa!";
+"AlertTitle.Warning"                        = "¡Advertencia!";
+"AlertTitle.WhatAction"                     = "Que te gustaría hacer?";
+"AlertTitle.WouldYouLikeToSelectASubFolder" = "¿Desea seleccionar una subcarpeta en este recurso compartido?";
+
+"ButtonTitle.Add"                           = "Añadir";
+"ButtonTitle.AddToViewer"                   = "Agregar al visor";
+"ButtonTitle.Back"                          = "Espalda";
+"ButtonTitle.Cancel"                        = "Cancelar";
+"ButtonTitle.CreateHere"                    = "Crea aquí";
+"ButtonTitle.Delete"                        = "Borrar";
+"ButtonTitle.Done"                          = "Hecho";
+"ButtonTitle.DontRemindMeAgain"             = "No me lo recuerdes más.";
+"ButtonTitle.Edit"                          = "Editar";
+"ButtonTitle.GotIt"                         = "¡Entiendo!";
+"ButtonTitle.Hide"                          = "Esconder";
+"ButtonTitle.Next"                          = "Próximo";
+"ButtonTitle.No"                            = "¡No!";
+"ButtonTitle.OK"                            = "DE ACUERDO";
+"ButtonTitle.Open"                          = "Abierto";
+"ButtonTitle.QuickLook"                     = "Vistazo rápido";
+"ButtonTitle.RemoveFromViewer"              = "Quitar del visor";
+"ButtonTitle.Rename"                        = "Rebautizar";
+"ButtonTitle.Replace"                       = "Reemplazar";
+"ButtonTitle.Resubmit"                      = "Reenviar";
+"ButtonTitle.Save"                          = "Salvar";
+"ButtonTitle.SelectDirectory"               = "Seleccionar directorio";
+"ButtonTitle.SetAsMediaRepository"          = "Définir comme référentiel multimédia";
+"ButtonTitle.SortAscending"                 = "Orden ascendente";
+"ButtonTitle.StayOffline"                   = "Mantenerse fuera de línea";
+"ButtonTitle.Yes"                           = "Sí";
+
+"InfoText.DataStoreLocation"                = "Esta aplicación le brinda la opción de almacenar sus datos en...\n\n (a) en su dispositivo (predeterminado) o\n (b) en una unidad de almacenamiento accesible en red (NAS). \n\nEl punto clave aquí es que no se puede compartir en el dispositivo. Si prefiere utilizar un NAS, cualquiera que tenga esta aplicación y acceso a su Wi-Fi podrá acceder a sus datos.";
+"InfoText.FirstThingsFirst"                 = "Antes de comenzar a usar esta aplicación, debe considerar dónde podemos encontrar sus fotos y archivos multimedia (consulte el Repositorio multimedia para obtener más detalles).";
+"InfoText.MediaRepository"                  = "Utilice esta utilidad para especificar dónde se encuentran sus fotos y archivos multimedia.  Pueden estar en (a) este dispositivo o (b) en una unidad de almacenamiento accesible en red (NAS).\n\nEsta aplicación SÓLO reconoce fotos y archivos multimedia en los siguientes formatos de archivo: JPG, JPEG, PNG, MPG, MPEG o MOV.";
+"InfoText.ScanMediaRepository"              = "Une fois que vous avez spécifié l'emplacement de vos photos et fichiers multimédias (votre référentiel), vous pouvez utiliser cet utilitaire pour analyser l'emplacement désigné et créer une base de données sur cet appareil pour un accès facile.\n\nLe temps nécessaire pour accéder et afficher une photo ou le fichier multimédia dépendra de l'endroit où vous stockez vos fichiers.  Nous ne copions PAS vos fichiers sur votre appareil.";
+
+"LabelText.About"                           = "Acerca de";
+"LabelText.Added"                           = "Adicional";
+"LabelText.ContactUs"                       = "Todos los derechos reservados. Contactanos en";
+"LabelText.EnterName"                       = "Ingrese su Nombre";
+"LabelText.ImageDuration"                   = "Duración de la imagen";
+"LabelText.Name"                            = "Nombre";
+"LabelText.NetworkPath"                     = "Ruta de red";
+"LabelText.None"                            = "Ninguno";
+"LabelText.NotSet"                          = "No establecido";
+"LabelText.Password"                        = "Contraseña:";
+"LabelText.PleaseWait"                      = "Esto puede tomar unos pocos minutos.\nPor favor espera...";
+"LabelText.PleaseWaitWhileWeConnect"        = "Espere mientras nos conectamos a su dispositivo externo ..";
+"LabelText.SortedOn"                        = "Ordenado por: ";
+"LabelText.StartingPath"                    = "Camino de inicio";
+"LabelText.UserName"                        = "Nombre de usuario:";
+
+"SortOption.Filename"                       = "Nombre del archivo";
+"SortOption.RelativePath"                   = "Camino relativo";
+
+"Title.About"                               = "Acerca de";
+"Title.App"                                 = "Navegador de fotos";
+"Title.DataStoreLocation"                   = "Ubicación del almacén de datos";
+"Title.Device"                              = "Dispositivo";
+"Title.DisplaySettings"                     = "Configuración de pantalla";
+"Title.EnterCredentials"                    = "Ingrese credenciales para";
+"Title.FirstThingFirst"                     = "Lo Primero es lo Primero";
+"Title.HowToUse"                            = "Cómo Utilizar";
+"Title.InNASDrive"                          = "Almacenamiento accesible en red";
+"Title.LogViewer"                           = "Visor de registro";
+"Title.MediaRepository"                     = "Repositorio de medios";
+"Title.MediaViewer"                         = "Visor de medios";
+"Title.Photos"                              = "Fotos";
+"Title.QuickLook"                           = "Vistazo rápido";
+"Title.RootPath"                            = "Ruta raíz";
+"Title.SaveDataIn"                          = "¿Guardar datos en?";
+"Title.ScanMediaRepository"                 = "Escanear repositorio de medios";
+"Title.SelectDirectory"                     = "Seleccionar directorio";
+"Title.SelectNASDrive"                      = "Seleccione unidad NAS";
+"Title.SelectNetworkPath"                   = "Seleccionar ruta de red";
+"Title.SelectShare"                         = "Selecciona un recurso compartido";
+"Title.SelectSortOptions"                   = "Seleccionar opciones de clasificación";
+"Title.SelectSubFolder"                     = "Seleccione una subcarpeta";
+"Title.Settings"                            = "Ajustes";
+"Title.TransferringFiles"                   = "Transfert de fichiers";
+"Title.Unknown"                             = "Desconocido";
+"Title.UserAssignedDeviceName"              = "Nombre de dispositivo asignado por el usuario";
+"Title.Viewer"                              = "Espectador";

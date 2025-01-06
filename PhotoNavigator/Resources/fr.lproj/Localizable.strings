@@ -1,0 +1,157 @@
+/* 
+  Localizable.strings (French)
+  PhotoNavigator
+
+  Created by Clint Shank on 8/7/24.
+
+*/
+
+"AlertMessage.CannotOpenDatabase"           = "Erreur fatale!  Impossible d'ouvrir la base de données.";
+"AlertMessage.CannotReadAllDbFiles"         = "La dernière mise à jour de la base de données sur le périphérique distant ne s'est pas terminée correctement. Veuillez contacter l'utilisateur de '%@' et lui demander de soumettre à nouveau son dernier message. La base de données restera verrouillée jusqu'à ce que ce problème soit résolu.";
+"AlertMessage.CannotReadFileData"           = "Nous ne pouvons pas lire ce fichier multimédia.";
+"AlertMessage.CannotSeeExternalDevice"      = "Nous ne pouvons pas voir votre appareil externe. Rapprochez-vous de votre réseau WiFi et réessayez.";
+"AlertMessage.ConnectingToExternalDevice"   = "Connexion à votre appareil externe.";
+"AlertMessage.CsvFileSaved"                 = "Un fichier CSV a été enregistré avec succès sur votre lecteur NAS.";
+"AlertMessage.DatabaseNotOpen"              = "Erreur fatale!  La base de données n'est PAS ouverte!  Veuillez supprimer et réinstaller l'application.";
+"AlertMessage.DataCorrupted"                = "Ce fichier multimédia a été corrompu !";
+"AlertMessage.DataWillBeMovedTo"            = "Lorsque vous appuyez sur le bouton OK, nous transférerons vos données, puis tuerons l'application. Lorsque vous redémarrez l'application, vos données seront stockées sur votre ";
+"AlertMessage.DataWillBeShared"             = "Lorsque vous appuyez sur le bouton OK, nous transférerons vos données, puis tuerons l'application. Lorsque vous redémarrerez, l'application PARTAGERA les données de votre ";
+"AlertMessage.DeviceNameRequired"           = "Veuillez accéder à l'onglet Paramètres, appuyez sur l'entrée 'Nom de l'appareil attribué à l'utilisateur' dans le tableau et entrez un nom pour cet appareil.";
+"AlertMessage.DuplicateName"                = "Le nom que vous avez entré existe déjà. Veuillez réessayer.";
+"AlertMessage.ExternalDriveLocked"          = "La base de données de votre disque externe est verrouillée par un autre utilisateur [ %@ ]. Vous pouvez attendre que l'autre utilisateur ferme l'application (ce qui la déverrouille) ou apporter des modifications hors ligne et les télécharger lorsque le lecteur n'est plus verrouillé.";
+"AlertMessage.ImportAdvisory"               = "Nous avons tenté d'importer le fichier que vous avez sélectionné. Nous allons maintenant tuer l'application. Lorsque vous redémarrez l'application, veuillez vérifier vos données et prendre les mesures appropriées pour les corriger ou les recharger.";
+"AlertMessage.ImportErrorsSavedTo"          = "Les erreurs ont été enregistrées dans ErrorLog.txt au même emplacement que votre fichier CSV";
+"AlertMessage.ImportingIsDestructive"       = "L'importation d'un fichier CSV mal formaté peut échouer ou avoir un résultat imprévisible. Pour éviter cela, nous tenterons de valider votre fichier CSV avant de l'importer. Néanmoins, si l'importation échoue, vous risquez de perdre toutes les données que vous avez créées et vous devrez peut-être supprimer l'application et recommencer.";
+"AlertMessage.KeywordManagerInfo"           = "Utilisez cet outil pour gérer votre liste de mots-clés.  Appuyez sur le signe (+) pour ajouter.  Balayez vers la gauche pour supprimer. Sélectionnez pour modifier.";
+"AlertMessage.KeywordsMustBeUnique"         = "Les mots-clés doivent être uniques !";
+"AlertMessage.LoginFailed"                  = "Échec de la connexion!";
+"AlertMessage.MediaRepoNotSet"              = "Sélectionnez à l'aide de l'option Media Repository";
+"AlertMessage.NameCannotBeBlank"            = "Le nom ne peut pas être laissé en blanc";
+"AlertMessage.NameMustBeUnique"             = "Le nom doit être unique!";
+"AlertMessage.NetworkAddressCannotBeBlank"  = "L'adresse réseau ne peut pas être laissée en blanc!";
+"AlertMessage.NoAccess"                     = "Impossible d'accéder à ce serveur de fichiers!";
+"AlertMessage.NoSharesOnDrive"              = "Il n'y a pas de partages disponibles sur ce disque!";
+"AlertMessage.OfflineWarning"               = "Nous ne pouvons pas nous connecter à votre stockage distant. Étant donné que cette application est conçue pour fonctionner hors ligne, vous pouvez apporter des modifications que nous téléchargerons la prochaine fois que vous vous connecterez à votre stockage distant. Sachez simplement que si plusieurs personnes effectuent des modifications hors ligne, vos modifications peuvent être écrasées.";
+"AlertMessage.PhotoLibraryNotAuthorized"    = "Cette application nécessite votre autorisation pour accéder à la photothèque sur cet appareil.  Veuillez mettre à jour les paramètres pour nous permettre de visualiser vos photos.";
+"AlertMessage.ReadyToRestart"               = "Prêt à redémarrer";
+"AlertMessage.ScanCompleteFormat"           = "%d fichiers multimédias ajoutés et %d fichiers ignorés.";
+"AlertMessage.SelectHowToUseForInfo"        = "Sélectionnez '%@' pour obtenir des informations utiles sur '%@', '%@' et '%@'.";
+"AlertMessage.UnableToAddMedia"             = "Nous ne pouvons pas ajouter les fichiers multimédias que nous avons trouvés !  Veuillez réessayer.";
+"AlertMessage.UnableToConnect"              = "Nous ne pouvons pas nous connecter à votre appareil externe. Rapprochez-vous de votre réseau WiFi et réessayez.";
+"AlertMessage.UnableToCreate"               = "Impossible de créer notre annuaire!";
+"AlertMessage.UnableToCreateCsvFile"        = "Nous ne pouvons pas créer le fichier de variable séparée par des virgules (CSV)!";
+"AlertMessage.UnableToDeleteMediaRefs"      = "Nous n'avons pas pu supprimer toutes les références médias de notre base de données !  Cela a peut-être laissé des références indésirables dans votre base de données.";
+"AlertMessage.UnableToFetchDevices"         = "Impossible de récupérer les appareils!";
+"AlertMessage.UnableToFetchFileFromNAS"     = "Impossible de récupérer le fichier depuis votre lecteur accessible au réseau (NAS) !";
+"AlertMessage.UnableToOpenShare"            = "Impossible d'ouvrir le partage sélectionné!";
+"AlertMessage.UnableToReadFromCsvFile"      = "Nous ne pouvons pas lire les données du fichier CSV que vous avez sélectionné. Veuillez essayer un autre fichier.";
+"AlertMessage.UnableToStartSession"         = "Impossible de démarrer une session avec le partage sélectionné !";
+"AlertMessage.UnsupportedFileFormat"        = "Désolé, nous ne prenons actuellement pas en charge ce format de fichier.";
+"AlertMessage.UpdatingExternalDevice"       = "Veuillez patienter pendant que nous mettons à jour la base de données avec les modifications les plus récentes.";
+
+"AlertTitle.ActionForFile"                  = "Que souhaiteriez-vous faire avec ce fichier ?";
+"AlertTitle.AreYouSure"                     = "Êtes-vous sûr de vouloir annuler vos modifications?";
+"AlertTitle.AreYouSureImport"               = "Voulez-vous vraiment importer ce fichier?";
+"AlertTitle.AuthorizationRequired"          = "Autorisation requise!";
+"AlertTitle.CannotReadAllDbFiles"           = "Impossible de lire TOUS les fichiers de base de données à distance!";
+"AlertTitle.DataWillBeSavedToNAS"           = "Préparation de l'enregistrement des données dans:";
+"AlertTitle.DeviceNameRequired"             = "Le nom de l'appareil est requis pour NAS";
+"AlertTitle.DuplicateEntry"                 = "Double entrée!";
+"AlertTitle.EnterDeviceName"                = "Entrez le nom de l'appareil";
+"AlertTitle.EnterName"                      = "Entrez le nom";
+"AlertTitle.EnterStartingPath"              = "Entrez le chemin de départ";
+"AlertTitle.Error"                          = "Erreur!";
+"AlertTitle.ExportComplete"                 = "Exportation terminée";
+"AlertTitle.GotAQuestion"                   = "Tu as une question?";
+"AlertTitle.ImportComplete"                 = "Importation terminée";
+"AlertTitle.ImportErrors"                   = "Votre fichier CSV contient une ou plusieurs erreurs que vous devez corriger avant de pouvoir l'importer.";
+"AlertTitle.LastUpdateDidNotComplete"       = "La dernière mise à jour n'a PAS été terminée!";
+"AlertTitle.MediaRepoNotSet"                = "Le référentiel multimédia n'a PAS encore été défini !";
+"AlertTitle.ScanComplete"                   = "Analyse terminée";
+"AlertTitle.ScanNowPrompt"                  = "Souhaitez-vous que nous analysions votre référentiel maintenant ?";
+"AlertTitle.TransferComplete"               = "Transfert complet!";
+"AlertTitle.UnableToDeleteMediaReference"   = "Échec de la suppression !";
+"AlertTitle.UpdateComplete"                 = "Mise à jour terminée!";
+"AlertTitle.Warning"                        = "Avertissement!";
+"AlertTitle.WhatAction"                     = "Qu'est-ce que tu aimerais faire?";
+"AlertTitle.WouldYouLikeToSelectASubFolder" = "Souhaitez-vous sélectionner un sous-dossier sur ce partage?";
+
+"ButtonTitle.Add"                           = "Ajouter";
+"ButtonTitle.AddToViewer"                   = "Ajouter à la visionneuse";
+"ButtonTitle.Back"                          = "Retour";
+"ButtonTitle.Cancel"                        = "Annuler";
+"ButtonTitle.CreateHere"                    = "Créer ici";
+"ButtonTitle.Delete"                        = "Effacer";
+"ButtonTitle.Done"                          = "Terminé";
+"ButtonTitle.DontRemindMeAgain"             = "Ne me le rappelle plus.";
+"ButtonTitle.Edit"                          = "Modifier";
+"ButtonTitle.GotIt"                         = "J'ai compris!";
+"ButtonTitle.Hide"                          = "Cacher";
+"ButtonTitle.Next"                          = "Prochain";
+"ButtonTitle.No"                            = "Non!";
+"ButtonTitle.OK"                            = "OK";
+"ButtonTitle.Open"                          = "Ouvrir";
+"ButtonTitle.QuickLook"                     = "Coup d'oeil";
+"ButtonTitle.RemoveFromViewer"              = "Supprimer de la visionneuse";
+"ButtonTitle.Rename"                        = "Renommer";
+"ButtonTitle.Replace"                       = "Remplacer";
+"ButtonTitle.Resubmit"                      = "Soumettre à nouveau";
+"ButtonTitle.Save"                          = "Sauvegarder";
+"ButtonTitle.SelectDirectory"               = "Sélectionnez le répertoire";
+"ButtonTitle.SetAsMediaRepository"          = "Définir comme référentiel multimédia";
+"ButtonTitle.SortAscending"                 = "Trier par ordre croissant";
+"ButtonTitle.StayOffline"                   = "Restez hors ligne";
+"ButtonTitle.Yes"                           = "Oui";
+
+"InfoText.DataStoreLocation"                = "Cette application vous offre la possibilité de stocker vos données soit sur...\n\n (a) sur votre appareil (par défaut) ou\n (b) sur un lecteur de stockage accessible en réseau (NAS). \n\nLe point clé ici est qu’il n’y a pas de partage sur l’appareil. Si vous préférez utiliser un NAS, toute personne disposant de cette application et ayant accès à votre Wi-Fi peut accéder à vos données.";
+"InfoText.FirstThingsFirst"                 = "Avant de commencer à utiliser cette application, vous devez déterminer où nous pouvons trouver vos photos et fichiers multimédias (voir Media Repository pour plus de détails).";
+"InfoText.MediaRepository"                  = "Utilisez cet utilitaire pour spécifier où se trouvent vos photos et fichiers multimédias.  Ils peuvent se trouver soit (a) sur cet appareil, soit (b) sur une unité de stockage accessible en réseau (NAS).\n\nCette application reconnaît UNIQUEMENT les photos et les fichiers multimédias dans les formats de fichiers suivants : JPG, JPEG, PNG, MPG, MPEG ou MOV.";
+"InfoText.ScanMediaRepository"              = "Une fois que vous avez spécifié l'emplacement de vos photos et fichiers multimédias (votre référentiel), vous pouvez utiliser cet utilitaire pour analyser l'emplacement désigné et créer une base de données sur cet appareil pour un accès facile.\n\nLe temps nécessaire pour accéder et afficher une photo ou le fichier multimédia dépendra de l'endroit où vous stockez vos fichiers.  Nous ne copions PAS vos fichiers sur votre appareil.";
+
+"LabelText.About"                           = "Sur";
+"LabelText.Added"                           = "Ajouté";
+"LabelText.ContactUs"                       = "Tous les droits sont réservés. Contactez-nous à";
+"LabelText.EnterName"                       = "Entrez le Nom";
+"LabelText.ImageDuration"                   = "Durée de l'image";
+"LabelText.Name"                            = "Nom";
+"LabelText.NetworkPath"                     = "Chemin d'accès au réseau";
+"LabelText.None"                            = "Aucun";
+"LabelText.NotSet"                          = "Pas encore défini";
+"LabelText.Password"                        = "Mot de passe:";
+"LabelText.PleaseWait"                      = "Cela peut prendre quelques minutes.\nS'il vous plaît, attendez...";
+"LabelText.PleaseWaitWhileWeConnect"        = "Veuillez patienter pendant que nous nous connectons à votre appareil externe ...";
+"LabelText.SortedOn"                        = "Trié sur : ";
+"LabelText.StartingPath"                    = "Chemin de départ";
+"LabelText.UserName"                        = "Nom d'utilisateur:";
+
+"SortOption.Filename"                       = "Nom de fichier";
+"SortOption.RelativePath"                   = "Chemin relatif";
+
+"Title.About"                               = "Sur";
+"Title.App"                                 = "Navigateur de photos";
+"Title.DataStoreLocation"                   = "Emplacement du magasin de données";
+"Title.Device"                              = "Dispositif";
+"Title.DisplaySettings"                     = "Paramètres d'affichage";
+"Title.EnterCredentials"                    = "Entrez les informations d'identification pour";
+"Title.FirstThingFirst"                     = "Tout d'abord";
+"Title.HowToUse"                            = "Comment Utiliser";
+"Title.InNASDrive"                          = "Almacenamiento accesible en red";
+"Title.LogViewer"                           = "Visionneuse de journal";
+"Title.MediaRepository"                     = "Référentiel multimédia";
+"Title.MediaViewer"                         = "Visionneuse de médias";
+"Title.Photos"                              = "Photos";
+"Title.QuickLook"                           = "Coup d'oeil";
+"Title.RootPath"                            = "Chemin racine";
+"Title.SaveDataIn"                          = "Enregistrer les données dans?";
+"Title.ScanMediaRepository"                 = "Scan Media Repository";
+"Title.SelectDirectory"                     = "Sélectionnez le répertoire";
+"Title.SelectNASDrive"                      = "Sélectionnez NAS Drive";
+"Title.SelectNetworkPath"                   = "Sélectionnez le chemin du réseau";
+"Title.SelectShare"                         = "Sélectionnez un partage";
+"Title.SelectSortOptions"                   = "Sélectionnez les options de tri";
+"Title.SelectSubFolder"                     = "Sélectionnez un sous-dossier";
+"Title.Settings"                            = "Paramètres";
+"Title.TransferringFiles"                   = "Transferencia de archivos";
+"Title.Unknown"                             = "Inconnu";
+"Title.UserAssignedDeviceName"              = "Nom de périphérique attribué par l'utilisateur";
+"Title.Viewer"                              = "Téléspectateur";

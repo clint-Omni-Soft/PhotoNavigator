@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="G66-g8-uVX">
+    <device id="ipad11_0rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="ZX8-Bn-jEe">
+            <objects>
+                <viewController id="G66-g8-uVX" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kb0-Qq-fJl">
+                        <rect key="frame" x="0.0" y="0.0" width="1194" height="834"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Navigator" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="29T-5o-ZhX" userLabel="titleLabel">
+                                <rect key="frame" x="20" y="44" width="1154" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="GfO-3q-E28"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreenImage" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jPb-Iz-hq9">
+                                <rect key="frame" x="294" y="98" width="606" height="576"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="jPb-Iz-hq9" secondAttribute="height" multiplier="1:1" constant="30" id="FkH-gt-QCd"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© Omni-Soft, Inc. 2024-2025" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="h8L-5t-cc1">
+                                <rect key="frame" x="20" y="695" width="1154" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="qNy-QC-KDa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All rights reserved.  Contact us at" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="pT6-TF-rOp">
+                                <rect key="frame" x="20" y="725" width="1154" height="29"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="FoD-6p-C7z"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="support@Omni-Soft.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="rtK-Lk-HYM">
+                                <rect key="frame" x="20" y="754" width="1154" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="egn-YL-bzh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="linkColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="UP8-jX-jdZ"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="jPb-Iz-hq9" firstAttribute="centerX" secondItem="kb0-Qq-fJl" secondAttribute="centerX" id="1EC-K5-wcT"/>
+                            <constraint firstItem="h8L-5t-cc1" firstAttribute="leading" secondItem="UP8-jX-jdZ" secondAttribute="leading" constant="20" id="6fp-uW-Pj2"/>
+                            <constraint firstItem="rtK-Lk-HYM" firstAttribute="leading" secondItem="UP8-jX-jdZ" secondAttribute="leading" constant="20" id="7c3-Ej-ies"/>
+                            <constraint firstItem="UP8-jX-jdZ" firstAttribute="trailing" secondItem="rtK-Lk-HYM" secondAttribute="trailing" constant="20" id="Kcr-RD-7fs"/>
+                            <constraint firstItem="jPb-Iz-hq9" firstAttribute="top" secondItem="29T-5o-ZhX" secondAttribute="bottom" constant="10" id="Oiy-4C-3UO"/>
+                            <constraint firstItem="UP8-jX-jdZ" firstAttribute="trailing" secondItem="29T-5o-ZhX" secondAttribute="trailing" constant="20" id="Rj5-Ts-1gc"/>
+                            <constraint firstItem="pT6-TF-rOp" firstAttribute="top" secondItem="h8L-5t-cc1" secondAttribute="bottom" constant="1" id="TIc-VY-4M0"/>
+                            <constraint firstItem="UP8-jX-jdZ" firstAttribute="trailing" secondItem="h8L-5t-cc1" secondAttribute="trailing" constant="20" id="VgA-GQ-oc6"/>
+                            <constraint firstItem="h8L-5t-cc1" firstAttribute="top" secondItem="jPb-Iz-hq9" secondAttribute="bottom" constant="21" id="aXI-H0-05N"/>
+                            <constraint firstItem="29T-5o-ZhX" firstAttribute="leading" secondItem="UP8-jX-jdZ" secondAttribute="leading" constant="20" id="b12-tW-atU"/>
+                            <constraint firstItem="UP8-jX-jdZ" firstAttribute="bottom" secondItem="rtK-Lk-HYM" secondAttribute="bottom" constant="39" id="bFM-PS-gCL"/>
+                            <constraint firstItem="rtK-Lk-HYM" firstAttribute="top" secondItem="pT6-TF-rOp" secondAttribute="bottom" id="hds-zi-H5R"/>
+                            <constraint firstItem="UP8-jX-jdZ" firstAttribute="trailing" secondItem="pT6-TF-rOp" secondAttribute="trailing" constant="20" id="ihj-70-c1U"/>
+                            <constraint firstItem="29T-5o-ZhX" firstAttribute="top" secondItem="UP8-jX-jdZ" secondAttribute="top" constant="20" id="knd-I1-4sR"/>
+                            <constraint firstItem="pT6-TF-rOp" firstAttribute="leading" secondItem="UP8-jX-jdZ" secondAttribute="leading" constant="20" id="tFj-TW-eDr"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ezm-Eg-Oi1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52.763819095477388" y="374.8201438848921"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="launchScreenImage" width="1920" height="1920"/>
+        <systemColor name="linkColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

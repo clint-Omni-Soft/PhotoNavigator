@@ -1,0 +1,157 @@
+/* 
+  Localizable.strings (English)
+  PhotoNavigator
+
+  Created by Clint Shank on 8/7/24.
+  
+*/
+
+"AlertMessage.CannotOpenDatabase"           = "Fatal Error!  Cannot open database.";
+"AlertMessage.CannotReadAllDbFiles"         = "The last update to the database on the remote device did not complete properly.  Please contact the user of '%@' and ask them to re-submit their last post.  The database will remain locked until this is resolved.";
+"AlertMessage.CannotReadFileData"           = "We cannot read this media file.";
+"AlertMessage.CannotSeeExternalDevice"      = "We cannot see your external device.  Move closer to your WiFi network and try again.";
+"AlertMessage.ConnectingToExternalDevice"   = "Connecting to your external device.";
+"AlertMessage.CsvFileSaved"                 = "A CSV file has successfully been saved on your NAS drive.";
+"AlertMessage.DatabaseNotOpen"              = "Fatal Error!  Database is NOT open!  Please delete and re-install the app.";
+"AlertMessage.DataCorrupted"                = "This media file has been corrupted!";
+"AlertMessage.DataWillBeMovedTo"            = "When you hit the OK button we will transfer your data then kill the app.  When you re-start the app your data will stored be on your ";
+"AlertMessage.DataWillBeShared"             = "When you hit the OK button we will transfer your data then kill the app.  When you re-start the app will SHARE the data in your ";
+"AlertMessage.DeviceNameRequired"           = "Please go to the Settings tab, tap on the 'User Assigned Device Name' entry in the table and enter a name for this device.";
+"AlertMessage.DuplicateName"                = "The name you entered already exists.  Please try again.";
+"AlertMessage.ExternalDriveLocked"          = "The database on your external drive is locked by another user [ %@ ].  You can wait until the other user closes the app (which unlocks it) or make you changes offline and upload them when the drive is no longer locked.";
+"AlertMessage.ImportAdvisory"               = "We have attempted to import the file you selected.  We will now kill the app.  When you re-start the app please check your data and take the approperiate action to correct or reload it.";
+"AlertMessage.ImportErrorsSavedTo"          = "Errors have been saved to ErrorLog.txt in the same location as your CSV file";
+"AlertMessage.ImportingIsDestructive"       = "Importing an improperly formatted CSV file can fail or have an unpredicable outcome.  To prevent this, we will attempt to validate your CSV file before importing it.  Even so, if the import fails, you may lose any data you have created and you may have to delete the app and start over again.";
+"AlertMessage.KeywordManagerInfo"           = "Use this tool to manage your keywords list.  Touch the (+) sign to add.  Swipe left to delete. Select to modify.";
+"AlertMessage.KeywordsMustBeUnique"         = "Keywords must be unique!";
+"AlertMessage.LoginFailed"                  = "Login failed!";
+"AlertMessage.MediaRepoNotSet"              = "Select using the Media Repository option";
+"AlertMessage.NameCannotBeBlank"            = "Name cannot be left blank!";
+"AlertMessage.NameMustBeUnique"             = "Name must be unique!";
+"AlertMessage.NetworkAddressCannotBeBlank"  = "Network address cannot be left blank";
+"AlertMessage.NoAccess"                     = "Unable to access this file server!";
+"AlertMessage.NoSharesOnDrive"              = "There are no shares available on this drive!";
+"AlertMessage.OfflineWarning"               = "We cannot connect to your remote storage.  Because this app is designed to work offline, you can make changes that we will upload the next time you connect to your remote storage.  Just be aware that if more than one person makes changes offline, your changes may be overwritten.";
+"AlertMessage.PhotoLibraryNotAuthorized"    = "This app requires your authorization to access the photo library on this device.  Please update Settings to allow us to view your photos.";
+"AlertMessage.ReadyToRestart"               = "Ready to Restart";
+"AlertMessage.ScanCompleteFormat"           = "Added %d media files and skipped %d files.";
+"AlertMessage.SelectHowToUseForInfo"        = "Select '%@' for helpful information on '%@', '%@' and '%@'.";
+"AlertMessage.UnableToAddMedia"             = "We are unable to add the media files we found!  Please try again.";
+"AlertMessage.UnableToConnect"              = "We are unable to connect to your external device.  Move closer to your WiFi network and try again.";
+"AlertMessage.UnableToCreate"               = "Unable to create our directory!";
+"AlertMessage.UnableToCreateCsvFile"        = "We are unable to create the Comma Separated Variable (CSV) file!";
+"AlertMessage.UnableToDeleteMediaRefs"      = "We were unable to delete all the media references from our database!  This may have left unwanted references in your database.";
+"AlertMessage.UnableToFetchDevices"         = "Unable to fetch devices!";
+"AlertMessage.UnableToFetchFileFromNAS"     = "Unable to fetch file from your Network Accessable Drive (NAS)!";
+"AlertMessage.UnableToOpenShare"            = "Unable to open the selected share!";
+"AlertMessage.UnableToReadFromCsvFile"      = "We are unable to read the data in the CSV file you selected.  Please try another file.";
+"AlertMessage.UnableToStartSession"         = "Unable to start a session with the selected share!";
+"AlertMessage.UnsupportedFileFormat"        = "Sorry, we currently don't support this file format.";
+"AlertMessage.UpdatingExternalDevice"       = "Please wait while we update the database with the most recent changes.";
+
+"AlertTitle.ActionForFile"                  = "What would you like to do with this file?";
+"AlertTitle.AreYouSure"                     = "Are you sure you want to discard your changes?";
+"AlertTitle.AuthorizationRequired"          = "Authorization Required!";
+"AlertTitle.AreYouSureImport"               = "Are you sure you want to import this file?";
+"AlertTitle.CannotReadAllDbFiles"           = "Cannot Read ALL Database Files on Remote!";
+"AlertTitle.DataWillBeSavedToNAS"           = "Preparing to save data to:";
+"AlertTitle.DeviceNameRequired"             = "Device Name is Required for NAS";
+"AlertTitle.DuplicateEntry"                 = "Duplicate Entry!";
+"AlertTitle.EnterDeviceName"                = "Enter Device Name";
+"AlertTitle.EnterName"                      = "Enter Name";
+"AlertTitle.EnterStartingPath"              = "Enter Starting Path";
+"AlertTitle.Error"                          = "Error";
+"AlertTitle.ExportComplete"                 = "Export Complete";
+"AlertTitle.GotAQuestion"                   = "Got a question?";
+"AlertTitle.ImportComplete"                 = "Import Complete";
+"AlertTitle.ImportErrors"                   = "Your CSV file has one or more errors that you need to correct before it can be imported.";
+"AlertTitle.LastUpdateDidNotComplete"       = "The Last Update Did NOT Complete!";
+"AlertTitle.MediaRepoNotSet"                = "The Media Repository has NOT been set yet!";
+"AlertTitle.ScanComplete"                   = "Scan Complete";
+"AlertTitle.ScanNowPrompt"                  = "Would you like for us to scan your repository now?";
+"AlertTitle.TransferComplete"               = "Transfer Complete!";
+"AlertTitle.UnableToDeleteMediaReference"   = "Delete Failed!";
+"AlertTitle.UpdateComplete"                 = "Update Complete!";
+"AlertTitle.Warning"                        = "Warning!";
+"AlertTitle.WhatAction"                     = "What would you like to do?";
+"AlertTitle.WouldYouLikeToSelectASubFolder" = "Would you like to select a sub-folder on this share?";
+
+"ButtonTitle.Add"                           = "Add";
+"ButtonTitle.AddToViewer"                   = "Add to Viewer";
+"ButtonTitle.Back"                          = "Back";
+"ButtonTitle.Cancel"                        = "Cancel";
+"ButtonTitle.CreateHere"                    = "Create Here";
+"ButtonTitle.Delete"                        = "Delete";
+"ButtonTitle.Done"                          = "Done";
+"ButtonTitle.DontRemindMeAgain"             = "Don't remind me again.";
+"ButtonTitle.Edit"                          = "Edit";
+"ButtonTitle.GotIt"                         = "Got it!";
+"ButtonTitle.Hide"                          = "Hide";
+"ButtonTitle.Next"                          = "Next";
+"ButtonTitle.No"                            = "No!";
+"ButtonTitle.OK"                            = "OK";
+"ButtonTitle.Open"                          = "Open";
+"ButtonTitle.QuickLook"                     = "Quick Look";
+"ButtonTitle.RemoveFromViewer"              = "Remove from Viewer";
+"ButtonTitle.Rename"                        = "Rename";
+"ButtonTitle.Replace"                       = "Replace";
+"ButtonTitle.Resubmit"                      = "Resubmit";
+"ButtonTitle.Save"                          = "Save";
+"ButtonTitle.SelectDirectory"               = "Select Directory";
+"ButtonTitle.SetAsMediaRepository"          = "Set as Media Repository";
+"ButtonTitle.SortAscending"                 = "Sort Ascending";
+"ButtonTitle.StayOffline"                   = "Stay Offline";
+"ButtonTitle.Yes"                           = "Yes";
+
+"InfoText.DataStoreLocation"                = "This app gives you the option to store your data either on...\n\n   (a) on your device (default) or\n   (b) on a Network Accessible Storage (NAS) drive. \n\nThe key point here is that there is no sharing on the device. If you prefer to use a NAS then anyone who has this app and access to your Wi-Fi can access your data.";
+"InfoText.FirstThingsFirst"                 = "Before you start using this app, you should consider where we can find your photos and media files (see Media Repository for details).";
+"InfoText.MediaRepository"                  = "Use this utility to specify where your photos and media files are located.  They can be on either (a) on this device or (b) on a Network Accessible Storage (NAS) unit.\n\nThis app ONLY recognizes photos and media files in the following file formats: JPG, JPEG, PNG, MPG, MPEG or MOV.";
+"InfoText.ScanMediaRepository"              = "Once you have specified where your photos and media files are located (your repository), you can this utility to scan the designated location and create a database on this device for easy access.\n\nThe time it takes to access and display a photo or media file will depend on where you store your files.  We do NOT copy your files to your device.";
+
+"LabelText.About"                           = "About";
+"LabelText.Added"                           = "Added";
+"LabelText.ContactUs"                       = "All rights reserved.  Contact us at";
+"LabelText.EnterName"                       = "Enter Name";
+"LabelText.ImageDuration"                   = "Image Duration";
+"LabelText.Name"                            = "Name";
+"LabelText.NetworkPath"                     = "Network Path";
+"LabelText.None"                            = "None";
+"LabelText.NotSet"                          = "Not Set";
+"LabelText.Password"                        = "Password:";
+"LabelText.PleaseWait"                      = "This may take a few minutes.\nPlease wait...";
+"LabelText.PleaseWaitWhileWeConnect"        = "Please wait while we connect to your external device ...";
+"LabelText.SortedOn"                        = "Sorted on: ";
+"LabelText.StartingPath"                    = "Starting Path";
+"LabelText.UserName"                        = "User Name:";
+
+"SortOption.Filename"                       = "Filename";
+"SortOption.RelativePath"                   = "Relative Path";
+
+"Title.About"                               = "About";
+"Title.App"                                 = "Photo Navigator";
+"Title.DataStoreLocation"                   = "Data Store Location";
+"Title.Device"                              = "Device";
+"Title.DisplaySettings"                     = "Display Settings";
+"Title.EnterCredentials"                    = "Enter Credentials for";
+"Title.FirstThingFirst"                     = "First Things First";
+"Title.HowToUse"                            = "How to Use";
+"Title.InNASDrive"                          = "Network Accessible Storage";
+"Title.LogViewer"                           = "Log Viewer";
+"Title.MediaRepository"                     = "Media Repository";
+"Title.MediaViewer"                         = "Media Viewer";
+"Title.Photos"                              = "Photos";
+"Title.QuickLook"                           = "Quick Look";
+"Title.RootPath"                            = "Root Path";
+"Title.SaveDataIn"                          = "Save Data In?";
+"Title.ScanMediaRepository"                 = "Scan Media Repository";
+"Title.SelectDirectory"                     = "Select Directory";
+"Title.SelectNASDrive"                      = "Select NAS Drive";
+"Title.SelectNetworkPath"                   = "Select Network Path";
+"Title.SelectShare"                         = "Select a Share";
+"Title.SelectSortOptions"                   = "Select Sort Options";
+"Title.SelectSubFolder"                     = "Select a Sub-Folder";
+"Title.Settings"                            = "Settings";
+"Title.TransferringFiles"                   = "Transferring files";
+"Title.Unknown"                             = "Unknown";
+"Title.UserAssignedDeviceName"              = "User Assigned Device Name";
+"Title.Viewer"                              = "Viewer";

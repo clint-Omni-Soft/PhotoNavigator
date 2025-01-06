@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="22H123" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="ImageRequest" representedClassName="ImageRequest" syncable="YES">
+        <attribute name="command" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="filename" optional="YES" attributeType="String"/>
+        <attribute name="index" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="MediaFile" representedClassName="MediaFile" syncable="YES">
+        <attribute name="filename" optional="YES" attributeType="String"/>
+        <attribute name="guid" optional="YES" attributeType="String"/>
+        <attribute name="keywords" optional="YES" attributeType="String"/>
+        <attribute name="relativePath" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="PhotoAssets" representedClassName="PhotoAssets" syncable="YES">
+        <attribute name="identifiers" optional="YES" attributeType="String"/>
+    </entity>
+</model>

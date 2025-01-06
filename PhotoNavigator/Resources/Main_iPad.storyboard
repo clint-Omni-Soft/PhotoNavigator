@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pPV-5w-2cN">
+    <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+    </dependencies>
+    <scenes>
+        <!--MediaListNavigationController-->
+        <scene sceneID="vSd-Ge-P74">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main_iPhone" referencedIdentifier="MediaListNavigationController" id="HXt-gn-uYe" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="zKb-PZ-BMO"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FZa-gL-mOR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-520" y="-813"/>
+        </scene>
+        <!--ViewerNavigationController-->
+        <scene sceneID="FCm-nB-Nag">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Main_iPhone" referencedIdentifier="ViewerNavigationController" id="jhm-Tq-wLY" sceneMemberID="viewController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eUz-az-uar" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-516" y="-228"/>
+        </scene>
+        <!--Split View Controller-->
+        <scene sceneID="0sL-yF-EK6">
+            <objects>
+                <splitViewController allowDoubleColumnStyle="YES" primaryBackgroundStyle="sidebar" id="pPV-5w-2cN" sceneMemberID="viewController">
+                    <connections>
+                        <segue destination="jhm-Tq-wLY" kind="relationship" relationship="detailViewController" id="bxv-io-iEU"/>
+                        <segue destination="HXt-gn-uYe" kind="relationship" relationship="masterViewController" id="NJu-Tm-9jW"/>
+                    </connections>
+                </splitViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ar9-jo-0Jd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-978" y="-520"/>
+        </scene>
+    </scenes>
+</document>
