@@ -851,7 +851,7 @@ extension CloudCentral {
          var     compareResult = LastUpdatedFileCompareResult.fileNotFound
          let     deviceFileUrl = documentDirectoryURL.appendingPathComponent( Filenames.lastUpdated )
          let     formatter     = DateFormatter()
-         var     updatedBy     = NSLocalizedString( "Title.Unknown", comment: "Unknown" )
+         let     updatedBy     = NSLocalizedString( "Title.Unknown", comment: "Unknown" )
 
          formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
          
@@ -872,13 +872,13 @@ extension CloudCentral {
                          if dateOnCloud < dateOnDevice {
                              compareResult = LastUpdatedFileCompareResult.deviceIsNewer
                          }
-                         else if dateOnDevice < dateOnCloud {
-                             compareResult = LastUpdatedFileCompareResult.cloudIsNewer
-                         }
-                         
-                         if cloudComponents.count == 2 {
-                             updatedBy = cloudComponents[1]
-                         }
+//                         else if dateOnDevice < dateOnCloud {
+//                             compareResult = LastUpdatedFileCompareResult.cloudIsNewer
+//                         }
+//                         
+//                         if cloudComponents.count == 2 {
+//                             updatedBy = cloudComponents[1]
+//                         }
                          
                      }
                      else {

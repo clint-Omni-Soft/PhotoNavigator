@@ -49,7 +49,6 @@ class MediaListViewController: UIViewController {
     private var searchEnabled       = false
     private var searchResults       : [MediaFile] = []
     private let userDefaults        = UserDefaults.standard
-    private var isVisible           = false
 
     
     // This is used only when we are sorting on Type
@@ -89,53 +88,40 @@ class MediaListViewController: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        logTrace()
+        logVerbose( "resigningActive[ %@ ]", stringFor( navigatorCentral.resigningActive ) )
         super.viewWillAppear( animated )
-        
-        configureSortButtonTitle()
-        loadBarButtonItems()
         
         if !navigatorCentral.didOpenDatabase {
             navigatorCentral.openDatabaseWith( self )
         }
         else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
-                if self.queuedSelection != GlobalIndexPaths.noSelection {
-                    self.updateAccessoryOnRowAt( self.queuedSelection )
-                    self.queuedSelection = GlobalIndexPaths.noSelection
-                }
+            if !navigatorCentral.resigningActive {
+                configureSortButtonTitle()
+                loadBarButtonItems()
+                registerForNotifications()
 
-                self.buildSectionTitleIndex()
-                self.myTableView.reloadData()
-
-                if self.lastSelection != GlobalIndexPaths.noSelection {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
-                        self.scrollToLastSelectedItem()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+                    if self.queuedSelection != GlobalIndexPaths.noSelection {
+                        self.updateAccessoryOnRowAt( self.queuedSelection )
+                        self.queuedSelection = GlobalIndexPaths.noSelection
                     }
-                    
-                }
 
-//                if self.navigatorCentral.dataSourceLocation == .nas {
-//                    if self.navigatorCentral.numberOfMediaFilesLoaded != 0 {
-//                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
-//                            self.scrollToLastSelectedItem()
-//                        }
-//                        
-//                    }
-//                    
-//                }
+                    self.buildSectionTitleIndex()
+                    self.myTableView.reloadData()
+
+                    if self.lastSelection != GlobalIndexPaths.noSelection {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+                            self.scrollToLastSelectedItem()
+                        }
+                        
+                    }
+
+                }
                 
             }
             
         }
         
-        registerForNotifications()
-    }
-    
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        isVisible = true
     }
     
     
@@ -144,7 +130,6 @@ class MediaListViewController: UIViewController {
         super.viewWillDisappear( animated )
         
         NotificationCenter.default.removeObserver( self )
-        isVisible = false
     }
     
     
@@ -442,8 +427,8 @@ extension MediaListViewController: MediaListViewControllerSectionCellDelegate {
 extension MediaListViewController: MediaViewerViewControllerDelegate {
 
     func mediaViewerViewController(_ mediaViewerVC: MediaViewerViewController, didShowMediaAt indexPath: IndexPath) {
-//        logVerbose( "[ %@ ]", stringFor( indexPath ) )
-        if isVisible {
+        logVerbose( "[ %@ ]  resigningActive[ %@ ]", stringFor( indexPath ), stringFor( navigatorCentral.resigningActive ) )
+        if !navigatorCentral.resigningActive {
             DispatchQueue.main.async {
                 self.updateAccessoryOnRowAt( indexPath )
                 self.myTableView.reloadData()
@@ -629,6 +614,7 @@ extension MediaListViewController: UITableViewDelegate {
                 let myTabBarViewController = appDelegate.window?.rootViewController as! TabBarViewController
                 
                 myTabBarViewController.selectedIndex = 1
+                logTrace( "switching to viewer" )
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
                     self.displayMediaAt( indexPath )

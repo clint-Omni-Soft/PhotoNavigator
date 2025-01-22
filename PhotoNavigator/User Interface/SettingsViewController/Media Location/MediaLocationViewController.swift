@@ -27,18 +27,15 @@ class MediaLocationViewController: UIViewController {
     
     private struct CellIndexes {
         static let device = 0
-        static let nas    = 2
-        static let unused = 3
+        static let nas    = 1
+        static let unused = 2
     }
     
     private struct StoryboardIds {
         static let nasSelector = "NasDriveSelectorViewController"
     }
     
-    private var canSeeCloud                 = false
     private var canSeeNasDataSourceFolders  = false
-    private var canSeeCount                 = 0
-    private let cloudCentral                = CloudCentral.sharedInstance
     private let nasCentral                  = NASCentral.sharedInstance
     private var navigatorCentral            = NavigatorCentral.sharedInstance
     private var notificationCenter          = NotificationCenter.default
@@ -77,11 +74,7 @@ class MediaLocationViewController: UIViewController {
         logTrace()
         super.viewWillAppear( animated )
         
-        canSeeCount = 1
-        canSeeCloud = false
         canSeeNasDataSourceFolders = false
-        
-        cloudCentral.canSeeCloud( self )
         nasCentral.canSeeNasDataSourceFolders( self )
 
         if selectedOption == CellIndexes.device  {
@@ -117,43 +110,11 @@ class MediaLocationViewController: UIViewController {
     // MARK: Utility Methods
     
     private func loadBarButtonItems() {
-//        logTrace()
+        logTrace()
         configureBackBarButtonItem()
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "question" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) )
     }
     
-
-}
-
-
-
-// MARK: CloudCentralDelegate Methods
-
-extension MediaLocationViewController: CloudCentralDelegate {
-    
-    func cloudCentral(_ cloudCentral: CloudCentral, canSeeCloud: Bool) {
-        logVerbose( "[ %@ ]", stringFor( canSeeCloud ) )
-        
-        self.canSeeCloud = canSeeCloud
-
-        if canSeeCloud {
-            canSeeCount += 1
-            
-            if canSeeCount > 1 {
-                myActivityIndicator.stopAnimating()
-                myActivityIndicator.isHidden = true
-            }
-
-            myTableView.reloadData()
-        }
-
-    }
-    
-    
-    func cloudCentral(_ cloudCentral: CloudCentral, rootDirectoryIsPresent: Bool ) {
-        logVerbose( "[ %@ ]", stringFor( rootDirectoryIsPresent ) )
-//        promptToScanNow()
-    }
 
 }
 
@@ -167,9 +128,8 @@ extension MediaLocationViewController: NASCentralDelegate {
         logVerbose( "[ %@ ]", stringFor( canSeeNasDataSourceFolders ) )
         
         self.canSeeNasDataSourceFolders = canSeeNasDataSourceFolders
-        canSeeCount += 1
         
-        if canSeeCount > 1 {
+        if canSeeNasDataSourceFolders {
             myActivityIndicator.stopAnimating()
             myActivityIndicator.isHidden = true
         }

@@ -35,9 +35,7 @@ class DataLocationViewController: UIViewController {
         static let transferProgress = "TransferProgressViewController"
     }
     
-    private var     canSeeCloud      = false
     private var     canSeeNasFolders = false
-    private let     cloudCentral     = CloudCentral.sharedInstance
     private let     nasCentral       = NASCentral.sharedInstance
     private var     navigatorCentral = NavigatorCentral.sharedInstance
     private var     selectedOption   = CellIndexes.device

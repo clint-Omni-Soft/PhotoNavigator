@@ -36,11 +36,11 @@ class MediaViewerViewController: UIViewController {
         deviceAsset       = navigatorCentral.deviceAssetAt( indexPath )
         presentingAssets  = true
         resourceIndexPath = indexPath
-        slideShowActive   = false
+        slideShowActive   = startImageSlideShow
         
-        logVerbose( "[ %@ ][ %@ ]", stringFor( indexPath ), deviceAsset.descriptorString() )
+        logVerbose( "[ %@ ][ %@ ]  resigningActive[ %@ ]", stringFor( indexPath ), deviceAsset.descriptorString(), stringFor( navigatorCentral.resigningActive ) )
         
-        if visible {
+        if !navigatorCentral.resigningActive {
             requestAssetData()
             loadBarButtonItems()
         }
@@ -56,11 +56,11 @@ class MediaViewerViewController: UIViewController {
         mediaFile         = navigatorCentral.mediaFileAt( indexPath )
         presentingAssets  = false
         resourceIndexPath = indexPath
-        slideShowActive   = false
+        slideShowActive   = startImageSlideShow
 
-        logVerbose( "[ %@ ][ %@ ]", stringFor( indexPath ), mediaFile.filename! )
+        logVerbose( "[ %@ ][ %@ ]  resigningActive[ %@ ]", stringFor( indexPath ), mediaFile.filename!, stringFor( navigatorCentral.resigningActive ) )
         
-        if visible {
+        if !navigatorCentral.resigningActive {
             requestMediaFileData()
             loadBarButtonItems()
         }
@@ -93,7 +93,6 @@ class MediaViewerViewController: UIViewController {
     
     private let appDelegate             = UIApplication.shared.delegate as! AppDelegate
     private let cachingImageManager     = PHCachingImageManager()
-    private let cloudCentral            = CloudCentral.sharedInstance
     private var connectedShare          : SMBShare!
     private let deviceAccessControl     = DeviceAccessControl.sharedInstance
     private var deviceAsset             : PHAsset!
@@ -114,8 +113,8 @@ class MediaViewerViewController: UIViewController {
     private var nasSessionActive        = false
     private var slideShowActive         = false
     private var slideShowTimer          : Timer!
+    private var startImageSlideShow     = false
     private var videoFileUrl            : URL!
-    private var visible                 = true
     
     
     
@@ -125,10 +124,12 @@ class MediaViewerViewController: UIViewController {
         logTrace()
         super.viewDidLoad()
         
-        navigationItem.title = NSLocalizedString( "Title.MediaViewer",   comment: "Media Viewer" )
+//        navigationItem.title = NSLocalizedString( "Title.MediaViewer",   comment: "Media Viewer" )
+        navigationItem.title = ""
         
         appDelegate.mediaViewer = self
         documentDirctoryUrl     = fileManager.urls( for: .documentDirectory, in: .userDomainMask ).last
+        myActivityIndicator.isHidden = true
     }
     
     
@@ -136,9 +137,9 @@ class MediaViewerViewController: UIViewController {
         logTrace()
         super.viewWillAppear( animated )
         
-        visible = true
-        mediaNameLabel.text = ""
+        registerForNotifications()
         
+        mediaNameLabel.text = ""
         myImageView.isHidden = true
         
         myWebView.allowsBackForwardNavigationGestures = false
@@ -148,16 +149,22 @@ class MediaViewerViewController: UIViewController {
         
         loadBarButtonItems()
         
-        if requestPending {
-            requestPending = false
-            
-            if presentingAssets {
-                requestAssetData()
+        if startImageSlideShow {
+            startImageSlideShowTimer()
+        }
+        else {
+            if requestPending {
+                requestPending = false
+                
+                if presentingAssets {
+                    requestAssetData()
+                }
+                else {
+                    requestMediaFileData()
+                }
+                
             }
-            else {
-                requestMediaFileData()
-            }
-            
+
         }
         
     }
@@ -167,16 +174,16 @@ class MediaViewerViewController: UIViewController {
         logTrace()
         super.viewWillDisappear(animated)
         
-        visible = false
+        disableImageSlideShowTimer()
         notificationCenter.removeObserver( self )
     }
     
     
     override func viewWillTransition( to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator ) {
-        logVerbose( "%@", stringFor( size ) )
         super.viewWillTransition( to: size, with: coordinator )
         
-        if visible {
+        if !navigatorCentral.resigningActive {
+            logVerbose( "[ %@ ]", stringFor( size ) )
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 ) {
                 if let _ = self.playerLayer {
                     // Since myImageView has constraints on it that will automatically reposition and resize itself,
@@ -197,6 +204,15 @@ class MediaViewerViewController: UIViewController {
     
     
     // MARK: Notification Methods
+    
+    @objc func enteringForeground( notification: NSNotification ) {
+        logTrace()
+        if startImageSlideShow {
+            startImageSlideShowTimer()
+        }
+        
+    }
+    
     
     @objc func playerDidFinishPlayingVideo( notification: NSNotification ) {
         logTrace()
@@ -334,6 +350,12 @@ class MediaViewerViewController: UIViewController {
     }
     
     
+    private func registerForNotifications() {
+        logTrace()
+        NotificationCenter.default.addObserver( self, selector: #selector( self.enteringForeground( notification: ) ), name: NSNotification.Name( rawValue: Notifications.enteringForeground ), object: nil )
+    }
+    
+    
     private func resetViews() {
         logTrace()
         if playerLayer != nil {
@@ -345,7 +367,7 @@ class MediaViewerViewController: UIViewController {
         myImageView.isHidden = true
         myWebView  .isHidden = true
         
-        myActivityIndicator.startAnimating()
+//        myActivityIndicator.startAnimating()
     }
     
     
@@ -381,7 +403,7 @@ extension MediaViewerViewController {
                 }
                 else {
                     logTrace( "image loaded" )
-                    self.myActivityIndicator.stopAnimating()
+//                    self.myActivityIndicator.stopAnimating()
                     
                     if self.slideShowActive {
                         self.startImageSlideShowTimer()
@@ -396,7 +418,7 @@ extension MediaViewerViewController {
             loadVideoFromAsset()
         }
         else {
-            myActivityIndicator.stopAnimating()
+//            myActivityIndicator.stopAnimating()
             logVerbose( "ERROR!!! We don't support this style[ %@ ]", deviceAsset.stringForPlaybackStyle() )
         }
         
@@ -437,14 +459,14 @@ extension MediaViewerViewController {
                                                      name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem )
             }
             
-            self.myActivityIndicator.stopAnimating()
+//            self.myActivityIndicator.stopAnimating()
         })
         
     }
     
     
     private func requestNextAsset( forward: Bool ) {
-        logTrace()
+        logVerbose( "forward[ %@ ]", stringFor( forward ) )
         resourceIndexPath = forward ? navigatorCentral.nextAssetAfter( resourceIndexPath ) : navigatorCentral.previousAssetBefore( resourceIndexPath )
         deviceAsset       = navigatorCentral.deviceAssetAt( resourceIndexPath )
         
@@ -464,6 +486,7 @@ extension MediaViewerViewController {
         if let timer = slideShowTimer {
             if timer.isValid {
                 timer.invalidate()
+                startImageSlideShow = true
             }
             
         }
@@ -473,20 +496,30 @@ extension MediaViewerViewController {
 
 
     func startImageSlideShowTimer() {
-        logTrace()
-        DispatchQueue.main.async {
-            self.slideShowTimer = Timer.scheduledTimer( withTimeInterval: Double( self.navigatorCentral.imageDuration ), repeats: false ) { (timer) in
-                logTrace( "Timer Expired" )
-                if self.presentingAssets {
-                    self.requestNextAsset( forward: true )
-                }
-                else {
-                    self.requestNextMediaFile( forward: true )
+        logVerbose( "resigningActive[ %@ ]", stringFor( navigatorCentral.resigningActive ) )
+        
+        if !navigatorCentral.resigningActive {
+            DispatchQueue.main.async {
+                self.slideShowTimer = Timer.scheduledTimer( withTimeInterval: Double( self.navigatorCentral.imageDuration ), repeats: false ) { (timer) in
+                    logVerbose( "Timer Expired  resigningActive[ %@ ]", stringFor( self.navigatorCentral.resigningActive ) )
+                   
+                    self.startImageSlideShow = self.navigatorCentral.resigningActive
+                    
+                    if !self.navigatorCentral.resigningActive {
+                        if self.presentingAssets {
+                            self.requestNextAsset( forward: true )
+                        }
+                        else {
+                            self.requestNextMediaFile( forward: true )
+                        }
+                        
+                        self.delegate.mediaViewerViewController( self, didShowMediaAt: self.resourceIndexPath )
+                    }
+
                 }
                 
-                self.delegate.mediaViewerViewController( self, didShowMediaAt: self.resourceIndexPath )
             }
-            
+
         }
         
     }
@@ -506,7 +539,6 @@ extension MediaViewerViewController {
         let fullPathAndFilename = ( filePath.isEmpty ? "" : filePath + "/" ) + mediaFile.filename!
         
         mediaNameLabel.text = fullPathAndFilename
-        resetViews()
         disableImageSlideShowTimer()
 
         if nasSessionActive {
@@ -588,7 +620,7 @@ extension MediaViewerViewController {
                                             name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: self.playerLayer.player!.currentItem )
         }
         
-        myActivityIndicator.stopAnimating()
+//        myActivityIndicator.stopAnimating()
     }
     
     
@@ -631,7 +663,7 @@ extension MediaViewerViewController: NASCentralDelegate {
             nasCentral.startDataSourceSession( self )
         }
         else {
-            myActivityIndicator.stopAnimating()
+//            myActivityIndicator.stopAnimating()
             presentAlert( title  : NSLocalizedString( "AlertTitle.Error", comment:  "Error" ),
                           message: NSLocalizedString( "AlertMessage.CannotSeeExternalDevice", comment: "We cannot see your external device.  Move closer to your WiFi network and try again." ) )
         }
@@ -648,7 +680,7 @@ extension MediaViewerViewController: NASCentralDelegate {
             presentMediaFileDocument()
         }
         else {
-            myActivityIndicator.stopAnimating()
+//            myActivityIndicator.stopAnimating()
             presentAlert( title  : NSLocalizedString( "AlertTitle.Error", comment:  "Error" ),
                           message: NSLocalizedString( "AlertMessage.UnableToFetchFileFromNAS", comment: "Unable to fetch file from NAS!" ) )
         }
@@ -669,7 +701,7 @@ extension MediaViewerViewController: NASCentralDelegate {
             nasCentral.fetchFileOn( connectedShare, filePathAndName, self )
         }
         else {
-            myActivityIndicator.stopAnimating()
+//            myActivityIndicator.stopAnimating()
             presentAlert( title  : NSLocalizedString( "AlertTitle.Error", comment:  "Error" ),
                           message: NSLocalizedString( "AlertMessage.UnableToFetchFileFromNAS", comment: "Unable to fetch file from NAS!" ) )
         }
@@ -685,7 +717,7 @@ extension MediaViewerViewController: NASCentralDelegate {
             nasCentral.openShare( share, self )
         }
         else {
-            myActivityIndicator.stopAnimating()
+//            myActivityIndicator.stopAnimating()
             presentAlert( title  : NSLocalizedString( "AlertTitle.Error", comment:  "Error" ),
                           message: NSLocalizedString( "AlertMessage.UnableToStartSession", comment: "Unable to start a session with the selected share!" ) )
         }
@@ -698,9 +730,10 @@ extension MediaViewerViewController: NASCentralDelegate {
     
     private func presentMediaFileDocument() {
         logTrace()
+        resetViews()
         loadingData = false
         
-        myActivityIndicator.stopAnimating()
+//        myActivityIndicator.stopAnimating()
         myImageView.isHidden = true
         myWebView  .isHidden = true
         

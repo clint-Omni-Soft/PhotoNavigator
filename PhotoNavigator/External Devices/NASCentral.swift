@@ -1891,8 +1891,7 @@ struct LastUpdatedFileCompareResult {
     static let deviceIsNewer = Int( 0 )
     static let equal         = Int( 1 )
     static let nasIsNewer    = Int( 2 )
-    static let cloudIsNewer  = Int( 3 )
-    static let fileNotFound  = Int( 4 )
+    static let fileNotFound  = Int( 3 )
 }
 
 
@@ -1903,7 +1902,6 @@ func descriptionForCompare(_ lastUpdatedCompare: Int ) -> String {
     case LastUpdatedFileCompareResult.deviceIsNewer:    description = "Device is Newer"
     case LastUpdatedFileCompareResult.equal:            description = "Equal"
     case LastUpdatedFileCompareResult.nasIsNewer:       description = "NAS is Newer"
-    case LastUpdatedFileCompareResult.cloudIsNewer:     description = "Cloud is Newer"
     case LastUpdatedFileCompareResult.fileNotFound:     description = "File NOT Found"
     default:    break
     }

@@ -297,7 +297,6 @@ class NavigatorCentral: NSObject {
     }
     
     var backgroundTaskID        : UIBackgroundTaskIdentifier = .invalid
-    var cloudCentral            = CloudCentral.sharedInstance
     let deviceAccessControl     = DeviceAccessControl.sharedInstance
     let fileManager             = FileManager.default
     var imageRequestQueue       : [(String, NavigatorCentralDelegate)] = []      // This queue is used to serialize NAS transactions while online
@@ -451,7 +450,7 @@ class NavigatorCentral: NSObject {
             return
         }
         
-//        logTrace()
+        logTrace()
         persistentContainer.viewContext.perform {
             let mediaFileArray = self.flatMediaFileArray()
 

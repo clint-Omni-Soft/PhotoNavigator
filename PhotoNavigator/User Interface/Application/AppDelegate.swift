@@ -132,6 +132,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let splitVC = self.window!.rootViewController as? UISplitViewController {
                 self.splitViewController = splitVC
                 self.splitViewController.presentsWithGesture = false
+                
+                let minimumWidth = min( CGRectGetWidth( self.splitViewController.view.bounds ), CGRectGetHeight( self.splitViewController.view.bounds ) )
+                
+                self.splitViewController.minimumPrimaryColumnWidth = minimumWidth / 2;
+                self.splitViewController.maximumPrimaryColumnWidth = minimumWidth;
                 logTrace( "Captured pointer to SplitViewController" )
             }
             else {

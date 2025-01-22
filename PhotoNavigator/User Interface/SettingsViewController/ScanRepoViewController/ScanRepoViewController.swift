@@ -25,7 +25,6 @@ class ScanRepoViewController: UIViewController {
     
     // MARK: Private Variables
     
-    private let cloudCentral            = CloudCentral.sharedInstance
     private var connectedShare          : SMBShare!
     private var currentPath             = ""
     private var directoryArray          : [SMBFile] = []
@@ -286,6 +285,7 @@ extension ScanRepoViewController: NASCentralDelegate {
         logVerbose( "[ %@ ]", stringFor( didOpenShare ) )
 
         if didOpenShare {
+            // TODO: This can take a loooong time.  Put up an activity indicator & disable the back button
             navigatorCentral.deleteAllMediaData( self )
         }
         

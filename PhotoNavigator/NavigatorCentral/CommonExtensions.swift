@@ -50,12 +50,12 @@ extension NavigatorCentral: CloudCentralDelegate {
            }
            
        }
-       else if didCompareLastUpdatedFiles == LastUpdatedFileCompareResult.cloudIsNewer {
-           logTrace( "Verify that we can access all the database files before we start the tranfer" )
-           missingDbFiles = []
-           
-           cloudCentral.fetchDbFiles( self )
-       }
+//       else if didCompareLastUpdatedFiles == LastUpdatedFileCompareResult.cloudIsNewer {
+//           logTrace( "Verify that we can access all the database files before we start the tranfer" )
+//           missingDbFiles = []
+//           
+//           cloudCentral.fetchDbFiles( self )
+//       }
        else {  // This tells the ReceivingVC to reload the barButtonItems and table data
            notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.ready ), object: self )
        }
