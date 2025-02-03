@@ -6,6 +6,7 @@
   
 */
 
+"AlertMessage.AreYouReady"                  = "Are you ready to begin?";
 "AlertMessage.CannotOpenDatabase"           = "Fatal Error!  Cannot open database.";
 "AlertMessage.CannotReadAllDbFiles"         = "The last update to the database on the remote device did not complete properly.  Please contact the user of '%@' and ask them to re-submit their last post.  The database will remain locked until this is resolved.";
 "AlertMessage.CannotReadFileData"           = "We cannot read this media file.";
@@ -69,6 +70,7 @@
 "AlertTitle.MediaRepoNotSet"                = "The Media Repository has NOT been set yet!";
 "AlertTitle.ScanComplete"                   = "Scan Complete";
 "AlertTitle.ScanNowPrompt"                  = "Would you like for us to scan your repository now?";
+"AlertTitle.ThisCouldTakeSomeTime"          = "Scanning your repo may take some time.";
 "AlertTitle.TransferComplete"               = "Transfer Complete!";
 "AlertTitle.UnableToDeleteMediaReference"   = "Delete Failed!";
 "AlertTitle.UpdateComplete"                 = "Update Complete!";
@@ -105,7 +107,12 @@
 
 "InfoText.DataStoreLocation"                = "This app gives you the option to store your data either on...\n\n   (a) on your device (default) or\n   (b) on a Network Accessible Storage (NAS) drive. \n\nThe key point here is that there is no sharing on the device. If you prefer to use a NAS then anyone who has this app and access to your Wi-Fi can access your data.";
 "InfoText.FirstThingsFirst"                 = "Before you start using this app, you should consider where we can find your photos and media files (see Media Repository for details).";
-"InfoText.MediaRepository"                  = "Use this utility to specify where your photos and media files are located.  They can be on either (a) on this device or (b) on a Network Accessible Storage (NAS) unit.\n\nThis app ONLY recognizes photos and media files in the following file formats: JPG, JPEG, PNG, MPG, MPEG or MOV.";
+"InfoText.MediaRepository"                  = "Use this utility to specify where your photos and media files are located.  They can be on either (a) on this device or (b) on a Network Accessible Storage (NAS) unit.\n\nThis app ONLY recognizes photos and media files in the following file formats: JPEG, JPG, HEIC, HEIF, HTM, HTML, MOV, MP4, MPEG, MPEG4, PNG, QT, TIF, TIFF, TS, WEBM, WEBP, WMV.";
+"InfoText.MediaList1"                       = "Touching any photo title will load it into the Media Viewer.  \n\nTouch the 'Sorted on:' button to change the sort of the media.\n\n";
+"InfoText.MediaList2"                       = "If the media is sorted on Relative Path, a up or down caret will be displayed to open or close all sections of the table.   \n\nTouch the magnifying glass to search on the name of a media file.\n\n";
+"InfoText.MediaList3"                       = "If you are on an iPad, an icon with a shaded circle and a X in the middle will be displayed on the left to hide/show the media list and make the Media View full screen.  A gears icon will be also be displayed on the right to take you to the Setting view.";
+"InfoText.MediaViewer1"                     = "When a photo is presented, 3 buttons will appear at the top to control the slide show.  A double back caret will go back one photo followed by a start/stop icon to start/stop the slide show and a double forward cart to go forward on photo.\n\n";
+"InfoText.MediaViewer2"                     = "When a video is presented, a button will appear on the left to pause/resume playing the video.  \n\nWhen on the iPad, a 'hamburger' icon will appear that will allow you to display the Photo list view.";
 "InfoText.ScanMediaRepository"              = "Once you have specified where your photos and media files are located (your repository), you can this utility to scan the designated location and create a database on this device for easy access.\n\nThe time it takes to access and display a photo or media file will depend on where you store your files.  We do NOT copy your files to your device.";
 
 "LabelText.About"                           = "About";

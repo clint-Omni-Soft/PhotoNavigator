@@ -159,15 +159,9 @@ class TabBarViewController: UITabBarController {
     
     private func setupTabBar() {
         logTrace()
-        tabBar.items![0].title = NSLocalizedString( "Title.MediaFiles", comment: "Media Files" )
-        
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            tabBar.items![1].title = NSLocalizedString( "Title.Settings", comment: "Settings" )
-        }
-        else {
-            tabBar.items![1].title = NSLocalizedString( "Title.MediaViewer", comment: "Media Viewer" )
-            tabBar.items![2].title = NSLocalizedString( "Title.Settings",    comment: "Settings" )
-        }
+        tabBar.items![0].title = NSLocalizedString( "Title.Photos",      comment: "Photos"       )
+        tabBar.items![1].title = NSLocalizedString( "Title.MediaViewer", comment: "Media Viewer" )
+        tabBar.items![2].title = NSLocalizedString( "Title.Settings",    comment: "Settings"     )
         
         // Switch to the last active tab
         for index in 0 ..< tabBar.items!.count {

@@ -15,11 +15,12 @@ class ScanRepoViewController: UIViewController {
     
     // MARK: Public Variables
     
-    @IBOutlet weak var deviceShareLabel: UILabel!
-    @IBOutlet weak var pathLabel       : UILabel!
-    @IBOutlet weak var myTextView      : UITextView!
-    @IBOutlet weak var startButton     : UIButton!
-    @IBOutlet weak var stopButton      : UIButton!
+    @IBOutlet weak var deviceShareLabel   : UILabel!
+    @IBOutlet weak var pathLabel          : UILabel!
+    @IBOutlet weak var myActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var myTextView         : UITextView!
+    @IBOutlet weak var startButton        : UIButton!
+    @IBOutlet weak var stopButton         : UIButton!
     
     
     
@@ -33,10 +34,12 @@ class ScanRepoViewController: UIViewController {
     private let nasCentral              = NASCentral.sharedInstance
     private var networkPath             = ""
     private let navigatorCentral        = NavigatorCentral.sharedInstance
+    private var notificationCenter      = NotificationCenter.default
     private var numberOfFilesSkipped    = 0
     private var numberOfMediaAdded      = 0
     private var rootUrl                 = URL.init( fileURLWithPath: "" )
     private var startingUrl             = URL.init( fileURLWithPath: "" )
+    private var scanComplete            = false
     private var scanning                = false
     
     
@@ -48,6 +51,7 @@ class ScanRepoViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.title = NSLocalizedString( "Title.ScanMediaRepository", comment: "Scan Media Repository" )
+        myActivityIndicator.isHidden = true
         myTextView.text = ""
     }
     
@@ -66,21 +70,7 @@ class ScanRepoViewController: UIViewController {
     
     @IBAction func startButtonTouched(_ sender: UIButton) {
         logTrace()
-        scanning = true
-        configureControls()
-        
-        myTextView.text = ""
-        
-        numberOfFilesSkipped = 0
-        numberOfMediaAdded   = 0
-        
-        if navigatorCentral.dataSourceLocation == .nas {
-            scanNAS()
-        }
-        else {
-            scanAssetsWith( .typeUserLibrary )
-        }
-        
+        warnUser()
     }
     
     
@@ -94,11 +84,52 @@ class ScanRepoViewController: UIViewController {
     // MARK: Utility Methods
     
     private func configureControls() {
-        startButton.isEnabled = !scanning
+        logTrace()
+        startButton.isEnabled = !scanning && !scanComplete
         stopButton .isEnabled = scanning
     }
     
     
+    private func warnUser() {
+        let     alert = UIAlertController.init( title  : NSLocalizedString( "AlertTitle.ThisCouldTakeSomeTime", comment: "Scanning your repo may take some time." ),
+                                                message: NSLocalizedString( "AlertMessage.AreYouReady",         comment: "Are you ready to begin?" ), preferredStyle: .alert )
+        
+        let     yesAction = UIAlertAction.init( title: NSLocalizedString( "ButtonTitle.Yes", comment: "Yes" ), style: .default )
+        { ( alertAction ) in
+            logTrace( "Yes Action" )
+            self.scanning = true
+            self.configureControls()
+            
+            self.myTextView.text = ""
+            
+            self.numberOfFilesSkipped = 0
+            self.numberOfMediaAdded   = 0
+            
+            if self.navigatorCentral.dataSourceLocation == .nas {
+                self.myActivityIndicator.isHidden = false
+                self.myActivityIndicator.startAnimating()
+                
+                self.scanNAS()
+            }
+            else {
+                self.scanAssetsWith( .typeUserLibrary )
+            }
+            
+        }
+        
+        let     noAction = UIAlertAction.init( title: NSLocalizedString( "ButtonTitle.No", comment: "No!" ), style: .default )
+        { ( alertAction ) in
+            logTrace( "No Action" )
+        }
+        
+        alert.addAction( yesAction )
+        alert.addAction( noAction  )
+        
+        present( alert, animated: true, completion: nil )
+
+    }
+    
+
     private func loadLabels() {
         logTrace()
         if navigatorCentral.dataSourceLocation == .device {
@@ -177,6 +208,12 @@ extension ScanRepoViewController {
             scrollTextViewToBottom()
             navigatorCentral.populateWith( filteredAssetArray )
             
+            navigatorCentral.didRescanRepo = true
+            notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.mediaDataReloaded ), object: self )  // Tells the list controller to reload
+            
+            scanComplete = true
+            configureControls()
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 ) {
                 self.presentAlert( title  :                 NSLocalizedString( "AlertTitle.ScanComplete",         comment: "Scan Complete" ),
                                    message: String( format: NSLocalizedString( "AlertMessage.ScanCompleteFormat", comment: "Added %d media files and skipped %d files." ), filteredAssetArray.count, 0 ) )
@@ -285,7 +322,6 @@ extension ScanRepoViewController: NASCentralDelegate {
         logVerbose( "[ %@ ]", stringFor( didOpenShare ) )
 
         if didOpenShare {
-            // TODO: This can take a loooong time.  Put up an activity indicator & disable the back button
             navigatorCentral.deleteAllMediaData( self )
         }
         
@@ -333,6 +369,9 @@ extension ScanRepoViewController: NavigatorCentralDelegate {
         logVerbose( "[ %@ ]", stringFor( didDeleteMediaData ) )
         
         if didDeleteMediaData {
+            myActivityIndicator.isHidden = true
+            myActivityIndicator.stopAnimating()
+
             nasCentral.fetchFilesAt( currentPath, self )
         }
         else {
@@ -349,6 +388,12 @@ extension ScanRepoViewController: NavigatorCentralDelegate {
         logVerbose( "loaded [ %d ] media files", navigatorCentral.numberOfMediaFilesLoaded )
         
         if !scanning {
+            navigatorCentral.didRescanRepo = true
+            notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.mediaDataReloaded ), object: self )  // Tells the list controller to reload
+            
+            scanComplete = true
+            configureControls()
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0 ) {
                 self.presentAlert( title  :                 NSLocalizedString( "AlertTitle.ScanComplete",         comment: "Scan Complete" ),
                                    message: String( format: NSLocalizedString( "AlertMessage.ScanCompleteFormat", comment: "Added %d media files and skipped %d files." ), self.numberOfMediaAdded, self.numberOfFilesSkipped ) )

@@ -704,7 +704,7 @@
 				GCC_PREFIX_HEADER = "PhotoNavigator/PhotoNavigator-Prefix.pch";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PhotoNavigator/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Photo Navigator";
+				INFOPLIST_KEY_CFBundleDisplayName = "Photo Stock";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;
@@ -742,7 +742,7 @@
 				GCC_PREFIX_HEADER = "PhotoNavigator/PhotoNavigator-Prefix.pch";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = PhotoNavigator/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Photo Navigator";
+				INFOPLIST_KEY_CFBundleDisplayName = "Photo Stock";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIRequiredDeviceCapabilities = armv7;

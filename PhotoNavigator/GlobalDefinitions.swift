@@ -68,9 +68,9 @@ struct GlobalConstants {
     static let sortAscendingFlag                = "A"
     static let sortDescending                   = "↓"    // "▾"
     static let sortDescendingFlag               = "D"
-    static let supportedFilenameExtensions      = ["AVI", "JPEG", "JPG", "HEIC", "HEIF", "HTM", "HTML", "MOV", "MP4", "MPEG", "MPEG4", "PNG", "QT", "TIF", "TIFF", "TS", "WEBM", "WEBP", "WMV"]
+    static let supportedFilenameExtensions      = ["JPEG", "JPG", "HEIC", "HEIF", "HTM", "HTML", "M4V", "MOV", "MP4", "MPEG", "MPEG4", "PNG", "QT", "TIF", "TIFF", "TS", "WEBM", "WEBP", "WMV"]
     static let imageFilenameExtensions          = ["JPEG", "JPG", "HEIC", "HEIF", "PNG", "TIF", "TIFF"]
-    static let videoFilenameExtensions          = ["AVI", "MOV", "MP4", "MPEG", "MPEG4", "QT", "TS", "WEBP", "WMV"]
+    static let videoFilenameExtensions          = ["M4V",  "MOV",  "MP4", "MPEG", "MPEG4", "QT", "TS", "WEBP", "WMV"]
     static let webFilenameExtensions            = ["HTM", "HTML", "WEBP"]
 }
 
@@ -87,6 +87,7 @@ struct FileMimeTypes {
     static let heif  = "image.heic"
     static let htm   = "text/html"
     static let html  = "text/html"
+    static let m4v   = "video/mp4"
     static let mov   = "video/quicktime"
     static let mp4   = "video/mp4"
     static let mpeg  = "video/mpeg"

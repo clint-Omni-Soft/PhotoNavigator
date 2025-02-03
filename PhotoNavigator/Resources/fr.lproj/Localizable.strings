@@ -6,6 +6,7 @@
 
 */
 
+"AlertMessage.AreYouReady"                  = "Êtes-vous prêt à commencer ?";
 "AlertMessage.CannotOpenDatabase"           = "Erreur fatale!  Impossible d'ouvrir la base de données.";
 "AlertMessage.CannotReadAllDbFiles"         = "La dernière mise à jour de la base de données sur le périphérique distant ne s'est pas terminée correctement. Veuillez contacter l'utilisateur de '%@' et lui demander de soumettre à nouveau son dernier message. La base de données restera verrouillée jusqu'à ce que ce problème soit résolu.";
 "AlertMessage.CannotReadFileData"           = "Nous ne pouvons pas lire ce fichier multimédia.";
@@ -69,6 +70,7 @@
 "AlertTitle.MediaRepoNotSet"                = "Le référentiel multimédia n'a PAS encore été défini !";
 "AlertTitle.ScanComplete"                   = "Analyse terminée";
 "AlertTitle.ScanNowPrompt"                  = "Souhaitez-vous que nous analysions votre référentiel maintenant ?";
+"AlertTitle.ThisCouldTakeSomeTime"          = "L'analyse de votre dépôt peut prendre un certain temps.";
 "AlertTitle.TransferComplete"               = "Transfert complet!";
 "AlertTitle.UnableToDeleteMediaReference"   = "Échec de la suppression !";
 "AlertTitle.UpdateComplete"                 = "Mise à jour terminée!";
@@ -105,7 +107,12 @@
 
 "InfoText.DataStoreLocation"                = "Cette application vous offre la possibilité de stocker vos données soit sur...\n\n (a) sur votre appareil (par défaut) ou\n (b) sur un lecteur de stockage accessible en réseau (NAS). \n\nLe point clé ici est qu’il n’y a pas de partage sur l’appareil. Si vous préférez utiliser un NAS, toute personne disposant de cette application et ayant accès à votre Wi-Fi peut accéder à vos données.";
 "InfoText.FirstThingsFirst"                 = "Avant de commencer à utiliser cette application, vous devez déterminer où nous pouvons trouver vos photos et fichiers multimédias (voir Media Repository pour plus de détails).";
-"InfoText.MediaRepository"                  = "Utilisez cet utilitaire pour spécifier où se trouvent vos photos et fichiers multimédias.  Ils peuvent se trouver soit (a) sur cet appareil, soit (b) sur une unité de stockage accessible en réseau (NAS).\n\nCette application reconnaît UNIQUEMENT les photos et les fichiers multimédias dans les formats de fichiers suivants : JPG, JPEG, PNG, MPG, MPEG ou MOV.";
+"InfoText.MediaRepository"                  = "Utilisez cet utilitaire pour spécifier où se trouvent vos photos et fichiers multimédias.  Ils peuvent se trouver soit (a) sur cet appareil, soit (b) sur une unité de stockage accessible en réseau (NAS).\n\nCette application reconnaît UNIQUEMENT les photos et les fichiers multimédias dans les formats de fichiers suivants : JPEG, JPG, HEIC, HEIF, HTM, HTML, MOV, MP4, MPEG, MPEG4, PNG, QT, TIF, TIFF, TS, WEBM, WEBP, WMV.";
+"InfoText.MediaList1"                       = "Appuyez sur n'importe quel titre de photo pour le charger dans la visionneuse multimédia. \n\nAppuyez sur le bouton « Trié sur : » pour modifier le type de média.\n\n";
+"InfoText.MediaList2"                       = "Si le média est trié selon le chemin relatif, un curseur vers le haut ou vers le bas s'affiche pour ouvrir ou fermer toutes les sections du tableau. \n\nAppuyez sur la loupe pour rechercher le nom d'un fichier multimédia.\n\n";
+"InfoText.MediaList3"                       = "Si vous utilisez un iPad, une icône avec un cercle ombré et un X au milieu s'affiche à gauche pour masquer/afficher la liste des médias et afficher la vue Média en plein écran. Une icône en forme d'engrenage s'affiche également à droite pour vous amener à la vue Paramètres.";
+"InfoText.MediaViewer1"                     = "Lorsqu'une photo est présentée, 3 boutons apparaissent en haut pour contrôler le diaporama. Un double curseur arrière permet de revenir à la photo précédente suivi d'une icône de démarrage/arrêt pour démarrer/arrêter le diaporama et d'un double curseur avant pour avancer sur la photo.\n\n";
+"InfoText.MediaViewer2"                     = "Lorsqu'une vidéo est présentée, un bouton apparaît sur la gauche pour mettre en pause/reprendre la lecture de la vidéo. \n\nSur l'iPad, une icône « hamburger » apparaît qui vous permettra d'afficher la vue de la liste des photos.";
 "InfoText.ScanMediaRepository"              = "Une fois que vous avez spécifié l'emplacement de vos photos et fichiers multimédias (votre référentiel), vous pouvez utiliser cet utilitaire pour analyser l'emplacement désigné et créer une base de données sur cet appareil pour un accès facile.\n\nLe temps nécessaire pour accéder et afficher une photo ou le fichier multimédia dépendra de l'endroit où vous stockez vos fichiers.  Nous ne copions PAS vos fichiers sur votre appareil.";
 
 "LabelText.About"                           = "Sur";

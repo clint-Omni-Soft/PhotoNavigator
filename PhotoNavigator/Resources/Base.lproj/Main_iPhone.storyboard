@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Viewer-->
+        <!--Media Viewer View Controller-->
         <scene sceneID="pHt-ZX-lyY">
             <objects>
                 <viewController storyboardIdentifier="MediaViewerViewController" id="vi5-iD-nVC" customClass="MediaViewerViewController" customModule="PhotoNavigator" customModuleProvider="target" sceneMemberID="viewController">
@@ -64,7 +64,6 @@
                             <constraint firstItem="xPx-ab-Pes" firstAttribute="bottom" secondItem="ocB-5d-Ikn" secondAttribute="bottom" id="uzQ-GI-5YG"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Viewer" image="viewer" id="CJu-oQ-VoF"/>
                     <navigationItem key="navigationItem" id="Jig-U0-4JU"/>
                     <connections>
                         <outlet property="mediaNameLabel" destination="xPx-ab-Pes" id="B4e-Fd-7en"/>
@@ -316,7 +315,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RSO-P9-YIl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4367" y="-24"/>
+            <point key="canvasLocation" x="4307" y="-24"/>
         </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="Qd4-hn-YTF">
@@ -341,7 +340,7 @@
         <scene sceneID="b7B-dR-8k4">
             <objects>
                 <navigationController storyboardIdentifier="SettingsNavigationController" id="uF4-sZ-tat" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Settings" selectedImage="settings" id="4NU-AZ-Rf5"/>
+                    <tabBarItem key="tabBarItem" title="Settings" image="gear" id="4NU-AZ-Rf5"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="K2l-PJ-JJ6">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -354,7 +353,7 @@
             </objects>
             <point key="canvasLocation" x="2752" y="563"/>
         </scene>
-        <!--Settings-->
+        <!--Settings View Controller-->
         <scene sceneID="1Xb-9v-Qdk">
             <objects>
                 <viewController storyboardIdentifier="SettingsViewController" id="sVd-8J-C2T" customClass="SettingsViewController" customModule="PhotoNavigator" customModuleProvider="target" sceneMemberID="viewController">
@@ -404,7 +403,6 @@
                             <constraint firstItem="ab7-vt-ZCO" firstAttribute="trailing" secondItem="zte-QN-q8j" secondAttribute="trailing" constant="20" id="tsv-co-cDc"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Settings" image="settings" id="MXl-9U-Fc5"/>
                     <navigationItem key="navigationItem" id="6QL-I2-IVV"/>
                     <connections>
                         <outlet property="myActivityIndicator" destination="e5E-tz-YEM" id="E7B-3f-22r"/>
@@ -435,12 +433,12 @@
                                     <constraint firstAttribute="width" secondItem="VDH-GD-Ohy" secondAttribute="height" multiplier="1:1" constant="87" id="wlq-Lc-YjM"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Navigator" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RRW-hi-UIZ" userLabel="Photo Navigator">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Repo Navigator" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RRW-hi-UIZ" userLabel="Photo Navigator">
                                 <rect key="frame" x="16" y="104" width="382" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="heo-E0-xpT"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -697,6 +695,14 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="V3l-o5-r2M">
+                                <rect key="frame" x="188.66666666666666" y="429.66666666666669" width="37" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="1eL-5r-g9X"/>
+                                    <constraint firstAttribute="width" constant="37" id="hU4-Ia-fkm"/>
+                                </constraints>
+                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Hme-LU-Izb"/>
                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
@@ -718,14 +724,17 @@
                             <constraint firstItem="7cc-Pk-ER7" firstAttribute="leading" secondItem="Hme-LU-Izb" secondAttribute="leading" constant="20" id="fcv-rP-vlT"/>
                             <constraint firstItem="OyA-Bg-tT3" firstAttribute="leading" secondItem="cnf-Iw-CPm" secondAttribute="trailing" constant="16" id="iaC-C1-CLs"/>
                             <constraint firstItem="Hme-LU-Izb" firstAttribute="trailing" secondItem="aSi-fl-KEH" secondAttribute="trailing" constant="20" id="l8U-o3-gCJ"/>
+                            <constraint firstItem="V3l-o5-r2M" firstAttribute="centerX" secondItem="xzb-S9-LNU" secondAttribute="centerX" id="lWi-QD-0XK"/>
                             <constraint firstItem="Hme-LU-Izb" firstAttribute="trailing" secondItem="7cc-Pk-ER7" secondAttribute="trailing" constant="20" id="lfK-LV-biG"/>
                             <constraint firstItem="VDM-ws-GGh" firstAttribute="leading" secondItem="OyA-Bg-tT3" secondAttribute="trailing" constant="16" id="m1P-bQ-suT"/>
+                            <constraint firstItem="V3l-o5-r2M" firstAttribute="centerY" secondItem="xzb-S9-LNU" secondAttribute="centerY" id="vti-R7-Kxl"/>
                             <constraint firstItem="PGH-UM-bu5" firstAttribute="top" secondItem="7cc-Pk-ER7" secondAttribute="bottom" constant="17" id="zxQ-Ye-kny"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qXn-da-ZDv"/>
                     <connections>
                         <outlet property="deviceShareLabel" destination="aSi-fl-KEH" id="G0j-7E-gFX"/>
+                        <outlet property="myActivityIndicator" destination="V3l-o5-r2M" id="Rnp-43-o9a"/>
                         <outlet property="myTextView" destination="PGH-UM-bu5" id="LkB-Xf-pRo"/>
                         <outlet property="pathLabel" destination="7cc-Pk-ER7" id="4Sg-8A-g6B"/>
                         <outlet property="startButton" destination="cnf-Iw-CPm" id="As7-9V-Td4"/>
@@ -1382,11 +1391,11 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="uRd-xb-oLc"/>
+        <segue reference="DQY-7J-Mhb"/>
     </inferredMetricsTieBreakers>
     <resources>
+        <image name="gear" width="28" height="28"/>
         <image name="launchScreenImage" width="1920" height="1920"/>
-        <image name="settings" width="28" height="28"/>
         <image name="shipsWheel" width="28" height="28"/>
         <image name="upOneLevel" width="24.333333969116211" height="20.333333969116211"/>
         <image name="viewer" width="22" height="28"/>

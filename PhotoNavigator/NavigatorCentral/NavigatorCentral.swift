@@ -44,6 +44,7 @@ class NavigatorCentral: NSObject {
     
     var deviceAssetArrayOfArrays        = [[PHAsset]]()
     var didOpenDatabase                 = false
+    var didRescanRepo                   = false
     var externalDeviceLastUpdatedBy     = ""
     var mediaFileDataReloaded           = false
     var mediaFileArrayOfArrays          = [[MediaFile]]()
@@ -452,14 +453,18 @@ class NavigatorCentral: NSObject {
         
         logTrace()
         persistentContainer.viewContext.perform {
-            let mediaFileArray = self.flatMediaFileArray()
-
-            for mediaFile in mediaFileArray {
-                self.managedObjectContext.delete( mediaFile )
+            var objectsDeleted = 0
+            
+            for array in self.mediaFileArrayOfArrays {
+                for mediaFile in array {
+                    self.managedObjectContext.delete( mediaFile )
+                }
+                
+                objectsDeleted += array.count
+                self.saveContext()
             }
-            
-            self.saveContext()
-            
+
+            logVerbose( "deleted [ %d ] objects", objectsDeleted )
             delegate.navigatorCentral( self, didDeleteMediaData: true )
         }
         
@@ -1007,23 +1012,6 @@ class NavigatorCentral: NSObject {
     }
     
     
-    private func flatMediaFileArray() -> [MediaFile] {
-        var flatArray: [MediaFile] = []
-        
-        for array in mediaFileArrayOfArrays {
-            for mediaFile in array {
-                if !flatArray.contains( mediaFile ) {
-                    flatArray.append( mediaFile )
-                }
-                
-            }
-            
-        }
-        
-        return flatArray
-    }
-    
-    
     private func loadBasicData() {
         let primedFlag = userDefaults.bool( forKey: Constants.primedFlag )
         logVerbose( "primedFlag[ %@ ]", stringFor( primedFlag ) )
@@ -1031,14 +1019,14 @@ class NavigatorCentral: NSObject {
         // Load and sort our public convenience arrays and sample data when priming
         self.persistentContainer.viewContext.perform {
             if !primedFlag {
-                let _ = self.pictureDirectoryPath()   // Creates the directory
-
                 self.imageDuration = 5
                
                 self.userDefaults.set( true, forKey: Constants.primedFlag )
                 self.userDefaults.synchronize()
             }
             
+            let _ = self.pictureDirectoryPath()   // Creates the directory if it does not exist
+
             if self.dataSourceLocation == .device {
                 self.fetchAllPhotoAssets()
                 logVerbose( "Loaded Device Assets[ %d ]", self.numberOfDeviceAssetsLoaded )
@@ -1148,7 +1136,7 @@ extension NavigatorCentral {
         var     workingArray: [MediaFile] = []
         
         for mediaFile in sortedArray {
-            let     nameStartsWith: String = ( mediaFile.filename?.prefix(1).uppercased() )!
+            let     nameStartsWith = String( mediaFile.filename!.prefix(1) )
             
             if nameStartsWith == currentStartingCharacter {
                 workingArray.append( mediaFile )
@@ -1159,7 +1147,8 @@ extension NavigatorCentral {
                     sectionTitleArray     .append( currentStartingCharacter )
                     workingArray = []
                 }
-                
+
+                workingArray.append( mediaFile )
                 currentStartingCharacter = nameStartsWith
             }
 

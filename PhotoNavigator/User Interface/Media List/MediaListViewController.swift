@@ -42,6 +42,7 @@ class MediaListViewController: UIViewController {
     private let deviceAccessControl = DeviceAccessControl.sharedInstance
     private var lastSelection       = GlobalIndexPaths.noSelection
     private var navigatorCentral    = NavigatorCentral.sharedInstance
+    private var notificationCenter  = NotificationCenter.default
     private var queuedSelection     = GlobalIndexPaths.noSelection
     private var sectionIndexTitles  : [String] = []
     private var sectionTitleIndexes : [Int]    = []
@@ -79,7 +80,7 @@ class MediaListViewController: UIViewController {
         logTrace()
         super.viewDidLoad()
         
-        self.navigationItem.title = NSLocalizedString( "Title.Photos", comment: "Photos" )
+        navigationItem.title = NSLocalizedString( "Title.Photos", comment: "Photos" )
         
         myTextField.delegate      = self
         myTextField.isHidden      = !searchEnabled
@@ -95,19 +96,27 @@ class MediaListViewController: UIViewController {
             navigatorCentral.openDatabaseWith( self )
         }
         else {
+            if navigatorCentral.didRescanRepo {
+                logTrace( "Resetting after rescan" )
+                navigatorCentral.didRescanRepo = false
+                
+                lastSelection   = GlobalIndexPaths.noSelection
+                queuedSelection = GlobalIndexPaths.noSelection
+            }
+            
             if !navigatorCentral.resigningActive {
                 configureSortButtonTitle()
-                loadBarButtonItems()
                 registerForNotifications()
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+                    self.buildSectionTitleIndex()
+                    self.myTableView.reloadData()
+                    self.loadBarButtonItems()
+
                     if self.queuedSelection != GlobalIndexPaths.noSelection {
                         self.updateAccessoryOnRowAt( self.queuedSelection )
                         self.queuedSelection = GlobalIndexPaths.noSelection
                     }
-
-                    self.buildSectionTitleIndex()
-                    self.myTableView.reloadData()
 
                     if self.lastSelection != GlobalIndexPaths.noSelection {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
@@ -145,6 +154,11 @@ class MediaListViewController: UIViewController {
 
     @objc func mediaDataReloaded( notification: NSNotification ) {
         logTrace()
+        navigatorCentral.didRescanRepo = false
+        
+        lastSelection   = GlobalIndexPaths.noSelection
+        queuedSelection = GlobalIndexPaths.noSelection
+        
         myTableView.reloadData()
     }
 
@@ -157,6 +171,15 @@ class MediaListViewController: UIViewController {
         appDelegate.hidePrimaryView( true )
     }
 
+    
+    @IBAction func questionBarButtonTouched(_ sender : UIBarButtonItem ) {
+        let message = NSLocalizedString( "InfoText.MediaList1", comment: "Touching any photo title will load it into the Media Viewer.  \n\nTouch the 'Sorted on:' button to change the sort of the media.\n\n" )
+                    + NSLocalizedString( "InfoText.MediaList2", comment: "If the media is sorted on Relative Path, a up or down caret will be displayed to open or close all sections of the table.   \n\nTouch the magnifying glass to search on the name of a media file.\n\n" )
+                    + NSLocalizedString( "InfoText.MediaList3", comment: "If you are on an iPad, an icon with a shaded circle and a X in the middle will be displayed on the left to hide/show the media list and make the Media View full screen.  A gears icon will be also be displayed on the right to take you to the Setting view." )
+        
+        presentAlert( title: NSLocalizedString( "AlertTitle.GotAQuestion", comment: "Got a question?" ), message: message )
+    }
+    
     
     @IBAction func searchToggleBarButtonTouched(_ sender : UIBarButtonItem ) {
         searchEnabled = !searchEnabled
@@ -294,24 +317,26 @@ class MediaListViewController: UIViewController {
     
     private func loadBarButtonItems() {
         logTrace()
-        let arrowImage          = UIImage(named: showAllSections      ? "arrowUp"         : "arrowDown" )
-        let searchImage         = UIImage(named: myTextField.isHidden ? "magnifyingGlass" : "magnifyingGlassXout" )
+        let caretImage          = UIImage(named: showAllSections ? "arrowUp" : "arrowDown" )
         var leftBarButtonItems  = [UIBarButtonItem]()
         var rightBarButtonItems = [UIBarButtonItem]()
+        let searchImage         = UIImage(named: myTextField.isHidden ? "magnifyingGlass" : "magnifyingGlassXout" )
         let weHaveData          = ( navigatorCentral.dataSourceLocation == .nas ) ? ( navigatorCentral.numberOfMediaFilesLoaded > 0 ) : ( navigatorCentral.numberOfDeviceAssetsLoaded > 0 )
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             leftBarButtonItems.append( UIBarButtonItem.init( barButtonSystemItem: .close, target: self, action: #selector( hidePrimaryBarButtonTouched(_: ) ) ) )
         }
 
-        if weHaveData {
-            leftBarButtonItems.append( UIBarButtonItem.init( image: arrowImage,  style: .plain, target: self, action: #selector( showAllBarButtonTouched(_ :) ) ) )
+        if weHaveData && ( navigatorCentral.sortDescriptor.0 == SortOptions.byRelativePath ) {
+            leftBarButtonItems.append( UIBarButtonItem.init( image: caretImage,  style: .plain, target: self, action: #selector( showAllBarButtonTouched(_ :) ) ) )
         }
         
+        leftBarButtonItems.append( UIBarButtonItem.init( image: UIImage(named: "question" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) ) )
+
         navigationItem.leftBarButtonItems = leftBarButtonItems
 
         if UIDevice.current.userInterfaceIdiom == .pad {
-            rightBarButtonItems.append( UIBarButtonItem.init( image: UIImage(named: "settings" ), style: .plain, target: self, action: #selector( settingsBarButtonTouched(_:) ) ) )
+            rightBarButtonItems.append( UIBarButtonItem.init( image: UIImage(named: "gear" ), style: .plain, target: self, action: #selector( settingsBarButtonTouched(_:) ) ) )
         }
         
         if weHaveData && navigatorCentral.dataSourceLocation == .nas {
@@ -344,8 +369,8 @@ class MediaListViewController: UIViewController {
     
     private func registerForNotifications() {
         logTrace()
-        NotificationCenter.default.addObserver( self, selector: #selector( self.ready(                    notification: ) ), name: NSNotification.Name( rawValue: Notifications.ready             ), object: nil )
-        NotificationCenter.default.addObserver( self, selector: #selector( self.mediaDataReloaded(        notification: ) ), name: NSNotification.Name( rawValue: Notifications.mediaDataReloaded ), object: nil )
+        notificationCenter.addObserver( self, selector: #selector( self.ready(             notification: ) ), name: NSNotification.Name( rawValue: Notifications.ready             ), object: nil )
+        notificationCenter.addObserver( self, selector: #selector( self.mediaDataReloaded( notification: ) ), name: NSNotification.Name( rawValue: Notifications.mediaDataReloaded ), object: nil )
     }
     
     
@@ -606,20 +631,23 @@ extension MediaListViewController: UITableViewDelegate {
         logVerbose( "last[ %@ ]  new[ %@ ]", stringFor( lastSelection ), stringFor( indexPath ) )
         updateAccessoryOnRowAt( indexPath )
         
-        if appDelegate.mediaViewer != nil {
-            displayMediaAt( indexPath )
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            let myTabBarViewController = appDelegate.window?.rootViewController as! TabBarViewController
+            
+            myTabBarViewController.selectedIndex = 1
+            logTrace( "switching to viewer" )
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+                self.displayMediaAt( indexPath )
+            }
+            
         }
         else {
-            if UIDevice.current.userInterfaceIdiom == .phone {
-                let myTabBarViewController = appDelegate.window?.rootViewController as! TabBarViewController
-                
-                myTabBarViewController.selectedIndex = 1
-                logTrace( "switching to viewer" )
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
-                    self.displayMediaAt( indexPath )
-                }
-                
+            if appDelegate.mediaViewer != nil {
+                displayMediaAt( indexPath )
+            }
+            else {
+                logTrace( "ERROR!!!  iPad unable to register mediaViewer" )
             }
             
         }
