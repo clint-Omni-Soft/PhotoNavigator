@@ -36,7 +36,7 @@
 "AlertMessage.PhotoLibraryNotAuthorized"    = "This app requires your authorization to access the photo library on this device.  Please update Settings to allow us to view your photos.";
 "AlertMessage.ReadyToRestart"               = "Ready to Restart";
 "AlertMessage.ScanCompleteFormat"           = "Added %d media files and skipped %d files.";
-"AlertMessage.SelectHowToUseForInfo"        = "Select '%@' for helpful information on '%@', '%@' and '%@'.";
+"AlertMessage.SelectHowToUseForInfo"        = "Select '%@' for helpful information on '%@' and '%@'.";
 "AlertMessage.UnableToAddMedia"             = "We are unable to add the media files we found!  Please try again.";
 "AlertMessage.UnableToConnect"              = "We are unable to connect to your external device.  Move closer to your WiFi network and try again.";
 "AlertMessage.UnableToCreate"               = "Unable to create our directory!";

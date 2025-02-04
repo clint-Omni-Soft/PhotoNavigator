@@ -36,7 +36,7 @@
 "AlertMessage.PhotoLibraryNotAuthorized"    = "Esta aplicación requiere su autorización para acceder a la biblioteca de fotos de este dispositivo.  Actualice la Configuración para permitirnos ver sus fotos.";
 "AlertMessage.ReadyToRestart"               = "Listo para reiniciar";
 "AlertMessage.ScanCompleteFormat"           = "Se agregaron %d archivos multimedia y se omitieron %d archivos.";
-"AlertMessage.SelectHowToUseForInfo"        = "Seleccione '%@' para obtener información útil sobre '%@', '%@' y '%@'.";
+"AlertMessage.SelectHowToUseForInfo"        = "Seleccione '%@' para obtener información útil sobre '%@' y '%@'.";
 "AlertMessage.UnableToAddMedia"             = "¡No podemos agregar los archivos multimedia que encontramos!  Inténtalo de nuevo.";
 "AlertMessage.UnableToConnect"              = "No podemos conectarnos a su dispositivo externo. Acérquese a su red WiFi e intente nuevamente.";
 "AlertMessage.UnableToCreate"               = "¡No se puede crear nuestro directorio!";

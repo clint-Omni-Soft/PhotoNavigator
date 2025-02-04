@@ -36,7 +36,7 @@
 "AlertMessage.PhotoLibraryNotAuthorized"    = "Cette application nécessite votre autorisation pour accéder à la photothèque sur cet appareil.  Veuillez mettre à jour les paramètres pour nous permettre de visualiser vos photos.";
 "AlertMessage.ReadyToRestart"               = "Prêt à redémarrer";
 "AlertMessage.ScanCompleteFormat"           = "%d fichiers multimédias ajoutés et %d fichiers ignorés.";
-"AlertMessage.SelectHowToUseForInfo"        = "Sélectionnez '%@' pour obtenir des informations utiles sur '%@', '%@' et '%@'.";
+"AlertMessage.SelectHowToUseForInfo"        = "Sélectionnez '%@' pour obtenir des informations utiles sur '%@' et '%@'.";
 "AlertMessage.UnableToAddMedia"             = "Nous ne pouvons pas ajouter les fichiers multimédias que nous avons trouvés !  Veuillez réessayer.";
 "AlertMessage.UnableToConnect"              = "Nous ne pouvons pas nous connecter à votre appareil externe. Rapprochez-vous de votre réseau WiFi et réessayez.";
 "AlertMessage.UnableToCreate"               = "Impossible de créer notre annuaire!";
