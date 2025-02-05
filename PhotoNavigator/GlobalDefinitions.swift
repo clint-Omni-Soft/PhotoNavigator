@@ -160,6 +160,7 @@ struct UserDefaultKeys {
     static let dataStoreLocation         = "DataStoreLocation"
     static let deviceName                = "DeviceName"
     static let dontRemindMeAgain         = "DontRemindMeAgain"
+    static let firstTimeIn               = "FirstTimeIn"
     static let howToUseShown             = "HowToUseShown"
     static let imageDuration             = "ImageDuration"
     static let lastAccessedMediaFileGuid = "LastAccessedMediaFileGuid"

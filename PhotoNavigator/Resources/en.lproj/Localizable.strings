@@ -18,6 +18,7 @@
 "AlertMessage.DataWillBeMovedTo"            = "When you hit the OK button we will transfer your data then kill the app.  When you re-start the app your data will stored be on your ";
 "AlertMessage.DataWillBeShared"             = "When you hit the OK button we will transfer your data then kill the app.  When you re-start the app will SHARE the data in your ";
 "AlertMessage.DeviceNameRequired"           = "Please go to the Settings tab, tap on the 'User Assigned Device Name' entry in the table and enter a name for this device.";
+"AlertMessage.DidYouKnow"                   = "Items selected from the Photos list will be displayed in the Media Viewer.";
 "AlertMessage.DuplicateName"                = "The name you entered already exists.  Please try again.";
 "AlertMessage.ExternalDriveLocked"          = "The database on your external drive is locked by another user [ %@ ].  You can wait until the other user closes the app (which unlocks it) or make you changes offline and upload them when the drive is no longer locked.";
 "AlertMessage.ImportAdvisory"               = "We have attempted to import the file you selected.  We will now kill the app.  When you re-start the app please check your data and take the approperiate action to correct or reload it.";

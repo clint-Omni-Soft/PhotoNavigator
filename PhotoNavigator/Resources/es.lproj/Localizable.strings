@@ -18,6 +18,7 @@
 "AlertMessage.DataWillBeMovedTo"            = "Cuando presione el botón Aceptar, transferiremos sus datos y luego eliminaremos la aplicación. Cuando reinicie la aplicación, sus datos se almacenarán en su ";
 "AlertMessage.DataWillBeShared"             = "Cuando presione el botón Aceptar, transferiremos sus datos y luego eliminaremos la aplicación. Cuando reinicie la aplicación, COMPARTIRÁ los datos en su ";
 "AlertMessage.DeviceNameRequired"           = "Vaya a la pestaña Configuración, toque la entrada 'Nombre de dispositivo asignado por el usuario' en la tabla e ingrese un nombre para este dispositivo.";
+"AlertMessage.DidYouKnow"                   = "Los elementos seleccionados de la lista de Fotos se mostrarán en el Visor de medios.";
 "AlertMessage.DuplicateName"                = "El nombre que ingresó ya existe. Inténtalo de nuevo.";
 "AlertMessage.ExternalDriveLocked"          = "La base de datos en su disco externo está bloqueada por otro usuario [ %@ ]. Puede esperar hasta que el otro usuario cierre la aplicación (lo que la desbloquea) o realizar cambios sin conexión y cargarlos cuando la unidad ya no esté bloqueada.";
 "AlertMessage.ImportAdvisory"               = "Hemos intentado importar el archivo que seleccionó. Ahora mataremos la aplicación. Cuando reinicie la aplicación, verifique sus datos y tome las medidas apropiadas para corregirlos o volver a cargarlos.";

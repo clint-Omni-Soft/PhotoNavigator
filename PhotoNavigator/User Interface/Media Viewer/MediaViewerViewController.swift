@@ -203,6 +203,19 @@ class MediaViewerViewController: UIViewController {
     }
     
     
+    override func viewDidAppear(_ animated: Bool) {
+        logTrace()
+        super.viewDidAppear(animated)
+        
+        if !flagIsPresentInUserDefaults( UserDefaultKeys.firstTimeIn ) {
+            saveFlagInUserDefaults( UserDefaultKeys.firstTimeIn )
+            
+            presentAlert( title: "", message: NSLocalizedString( "AlertMessage.DidYouKnow", comment: "Items selected from the Photos list it will display here." ) )
+        }
+            
+    }
+    
+    
     override func viewWillDisappear(_ animated: Bool) {
         logTrace()
         super.viewWillDisappear(animated)

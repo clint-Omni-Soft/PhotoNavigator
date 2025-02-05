@@ -18,6 +18,7 @@
 "AlertMessage.DataWillBeMovedTo"            = "Lorsque vous appuyez sur le bouton OK, nous transférerons vos données, puis tuerons l'application. Lorsque vous redémarrez l'application, vos données seront stockées sur votre ";
 "AlertMessage.DataWillBeShared"             = "Lorsque vous appuyez sur le bouton OK, nous transférerons vos données, puis tuerons l'application. Lorsque vous redémarrerez, l'application PARTAGERA les données de votre ";
 "AlertMessage.DeviceNameRequired"           = "Veuillez accéder à l'onglet Paramètres, appuyez sur l'entrée 'Nom de l'appareil attribué à l'utilisateur' dans le tableau et entrez un nom pour cet appareil.";
+"AlertMessage.DidYouKnow"                   = "Les éléments sélectionnés dans la liste Photos seront affichés dans la visionneuse multimédia.";
 "AlertMessage.DuplicateName"                = "Le nom que vous avez entré existe déjà. Veuillez réessayer.";
 "AlertMessage.ExternalDriveLocked"          = "La base de données de votre disque externe est verrouillée par un autre utilisateur [ %@ ]. Vous pouvez attendre que l'autre utilisateur ferme l'application (ce qui la déverrouille) ou apporter des modifications hors ligne et les télécharger lorsque le lecteur n'est plus verrouillé.";
 "AlertMessage.ImportAdvisory"               = "Nous avons tenté d'importer le fichier que vous avez sélectionné. Nous allons maintenant tuer l'application. Lorsque vous redémarrez l'application, veuillez vérifier vos données et prendre les mesures appropriées pour les corriger ou les recharger.";
