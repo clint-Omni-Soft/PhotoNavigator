@@ -211,7 +211,7 @@ class NavigatorCentral: NSObject {
     
     var deviceName: String {
         get {
-            var     nameOfDevice = ""
+            var     nameOfDevice = NSLocalizedString( "LabelText.ThisDevice", comment: "This Device" )
             
             if let deviceNameString = userDefaults.string( forKey: UserDefaultKeys.deviceName ) {
                 if !deviceNameString.isEmpty && deviceNameString.count > 0 {
@@ -658,7 +658,10 @@ class NavigatorCentral: NSObject {
 
         }
         
-        startReverseGeoCoding()
+//        startReverseGeoCoding()
+
+        didRescanRepo = true
+        notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.mediaDataReloaded ), object: self )  // Tells the media list controller to reload
     }
     
     
@@ -696,7 +699,7 @@ class NavigatorCentral: NSObject {
     }
     
     
-    func reloadData(_ delegate: NavigatorCentralDelegate ) {
+    func reloadMediaData(_ delegate: NavigatorCentralDelegate ) {
         if !self.didOpenDatabase {
             logTrace( "ERROR!  Database NOT open yet!" )
             return
@@ -1088,12 +1091,14 @@ class NavigatorCentral: NSObject {
     // Must be called from within a persistentContainer.viewContext
     private func refetchMediaDataAndNotifyDelegate() {
         fetchAllMediaData()
-        
+        didRescanRepo = true
+
         DispatchQueue.main.async {
             self.delegate?.navigatorCentral( self, didReloadMediaData: true )
+            
+            self.notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.mediaDataReloaded ), object: self )  // Tells the list controller to reload
         }
         
-        notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.mediaDataReloaded ), object: self )
     }
     
 

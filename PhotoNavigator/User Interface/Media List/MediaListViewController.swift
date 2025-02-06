@@ -80,7 +80,7 @@ class MediaListViewController: UIViewController {
         logTrace()
         super.viewDidLoad()
         
-        navigationItem.title = NSLocalizedString( "Title.Photos", comment: "Photos" )
+        navigationItem.title = NSLocalizedString( "Title.Media", comment: "Media" )
         
         myTextField.delegate      = self
         myTextField.isHidden      = !searchEnabled
@@ -89,8 +89,10 @@ class MediaListViewController: UIViewController {
     
     
     override func viewWillAppear(_ animated: Bool) {
-        logVerbose( "resigningActive[ %@ ]", stringFor( navigatorCentral.resigningActive ) )
+        logTrace()
         super.viewWillAppear( animated )
+        
+        var scrollToTop = false
         
         if !navigatorCentral.didOpenDatabase {
             navigatorCentral.openDatabaseWith( self )
@@ -102,33 +104,54 @@ class MediaListViewController: UIViewController {
                 
                 lastSelection   = GlobalIndexPaths.noSelection
                 queuedSelection = GlobalIndexPaths.noSelection
+                scrollToTop     = true
             }
-            
-            if !navigatorCentral.resigningActive {
-                configureSortButtonTitle()
-                registerForNotifications()
+
+            configureSortButtonTitle()
+            registerForNotifications()
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+                self.buildSectionTitleIndex()
+                self.myTableView.reloadData()
+
+                if scrollToTop {
+                    self.myTableView.setContentOffset( .zero, animated: true )
+                }
+                
+                if self.queuedSelection != GlobalIndexPaths.noSelection {
+                    self.updateAccessoryOnRowAt( self.queuedSelection )
+                    self.queuedSelection = GlobalIndexPaths.noSelection
+                }
+
+                if self.lastSelection != GlobalIndexPaths.noSelection {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+                        self.scrollToLastSelectedItem()
+                    }
+                    
+                }
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
-                    self.buildSectionTitleIndex()
-                    self.myTableView.reloadData()
                     self.loadBarButtonItems()
-
-                    if self.queuedSelection != GlobalIndexPaths.noSelection {
-                        self.updateAccessoryOnRowAt( self.queuedSelection )
-                        self.queuedSelection = GlobalIndexPaths.noSelection
-                    }
-
-                    if self.lastSelection != GlobalIndexPaths.noSelection {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
-                            self.scrollToLastSelectedItem()
-                        }
-                        
-                    }
-
                 }
                 
             }
             
+        }
+        
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        logTrace()
+        super.viewDidAppear(animated)
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            if let _ = userDefaults.string(forKey: UserDefaultKeys.howToUseShown ) {
+            }
+            else {
+                launchSettingsViewController()
+            }
+
         }
         
     }
@@ -173,10 +196,15 @@ class MediaListViewController: UIViewController {
 
     
     @IBAction func questionBarButtonTouched(_ sender : UIBarButtonItem ) {
-        let message = NSLocalizedString( "InfoText.MediaList1", comment: "Touching any photo title will load it into the Media Viewer.  \n\nTouch the 'Sorted on:' button to change the sort of the media.\n\n" )
-                    + NSLocalizedString( "InfoText.MediaList2", comment: "If the media is sorted on Relative Path, a up or down caret will be displayed to open or close all sections of the table.   \n\nTouch the magnifying glass to search on the name of a media file.\n\n" )
-                    + NSLocalizedString( "InfoText.MediaList3", comment: "If you are on an iPad, an icon with a shaded circle and a X in the middle will be displayed on the left to hide/show the media list and make the Media View full screen.  A gears icon will be also be displayed on the right to take you to the Setting view." )
-        
+        let message = NSLocalizedString( "InfoText.MediaList1", comment: "Touching any media title in the list will load the it into the Media Viewer.\n\nNavigation Bar Buttons:\n\n" )
+                    + NSLocalizedString( "InfoText.MediaList2", comment: "When your media can be grouped, an up/down caret will be displayed which you can use to open/close all sections of the table.  Touching on a section header will open/close that section." )
+                    + NSLocalizedString( "InfoText.MediaList3", comment: "When reading from a NAS drive, you have two more controls\n" )
+                    + NSLocalizedString( "InfoText.MediaList4", comment: "(1) A 'Sorted on:' button which you can use to have the the list sorted by Filename or Relative Path.\n" )
+                    + NSLocalizedString( "InfoText.MediaList5", comment: "(2) A 'Magnifying glass' icon - Touch to search on the name of a media file.\n\n" )
+                    + NSLocalizedString( "InfoText.MediaList6", comment: "If you are on an iPad, you have two more controls.\n" )
+                    + NSLocalizedString( "InfoText.MediaList7", comment: "(1) A 'Shaded Circle with a X in the middle' icon - Touch to hide the media list and make the Media View full screen.\n" )
+                    + NSLocalizedString( "InfoText.MediaList8", comment: "(2) A 'Gears' icon - Touch to go to the Setting view." )
+
         presentAlert( title: NSLocalizedString( "AlertTitle.GotAQuestion", comment: "Got a question?" ), message: message )
     }
     
@@ -217,13 +245,10 @@ class MediaListViewController: UIViewController {
 
         myTableView.reloadData()
 
-        if self.navigatorCentral.numberOfMediaFilesLoaded != 0 {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
-                self.scrollToLastSelectedItem()
-            }
-            
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+            self.scrollToLastSelectedItem()
         }
-
+            
     }
     
     
@@ -265,16 +290,12 @@ class MediaListViewController: UIViewController {
     
     private func configureSortButtonTitle() {
 //        logTrace()
-        if navigatorCentral.dataSourceLocation == .nas {
-            let title = NSLocalizedString( "LabelText.SortedOn", comment: "Sorted on: " ) + navigatorCentral.nameForCurrentSortOption()
-            
-            sortButton.setTitle( title, for: .normal )
-            sortButton.isHidden = false
-        }
-        else {
-            sortButton.isHidden = true
-        }
+        let isEnabled = navigatorCentral.dataSourceLocation == .nas
+        let title     = isEnabled ? NSLocalizedString( "LabelText.SortedOn", comment: "Sorted on: " ) + navigatorCentral.nameForCurrentSortOption() : NSLocalizedString( "LabelText.ThisDevice", comment: "This Device" )
 
+
+        sortButton.setTitle( title, for: .normal )
+        sortButton.isEnabled = isEnabled
     }
     
     
@@ -327,12 +348,12 @@ class MediaListViewController: UIViewController {
             leftBarButtonItems.append( UIBarButtonItem.init( barButtonSystemItem: .close, target: self, action: #selector( hidePrimaryBarButtonTouched(_: ) ) ) )
         }
 
-        if weHaveData && ( navigatorCentral.sortDescriptor.0 == SortOptions.byRelativePath ) {
+        leftBarButtonItems.append( UIBarButtonItem.init( image: UIImage(named: "question" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) ) )
+
+        if myTableView.numberOfSections > 1 {
             leftBarButtonItems.append( UIBarButtonItem.init( image: caretImage,  style: .plain, target: self, action: #selector( showAllBarButtonTouched(_ :) ) ) )
         }
         
-        leftBarButtonItems.append( UIBarButtonItem.init( image: UIImage(named: "question" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) ) )
-
         navigationItem.leftBarButtonItems = leftBarButtonItems
 
         if UIDevice.current.userInterfaceIdiom == .pad {
@@ -428,7 +449,6 @@ extension MediaListViewController: MediaListViewControllerSectionCellDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             self.buildSectionTitleIndex()
             self.configureSortButtonTitle()
-            self.loadBarButtonItems()
             
             self.myTableView.reloadData()
 
@@ -436,6 +456,7 @@ extension MediaListViewController: MediaListViewControllerSectionCellDelegate {
                 let indexPath = IndexPath( row: NSNotFound, section: section )
                 
                 self.myTableView.scrollToRow(at: indexPath, at: .top, animated: false )
+                self.loadBarButtonItems()
             }
 
         }
@@ -452,12 +473,15 @@ extension MediaListViewController: MediaListViewControllerSectionCellDelegate {
 extension MediaListViewController: MediaViewerViewControllerDelegate {
 
     func mediaViewerViewController(_ mediaViewerVC: MediaViewerViewController, didShowMediaAt indexPath: IndexPath) {
-        logVerbose( "[ %@ ]  resigningActive[ %@ ]", stringFor( indexPath ), stringFor( navigatorCentral.resigningActive ) )
-        if !navigatorCentral.resigningActive {
+        logVerbose( "[ %@ ]", stringFor( indexPath ) )
+        if self.viewIfLoaded?.window != nil {
             DispatchQueue.main.async {
                 self.updateAccessoryOnRowAt( indexPath )
+                
                 self.myTableView.reloadData()
+                
                 self.scrollToLastSelectedItem()
+                self.loadBarButtonItems()
             }
 
         }
@@ -481,12 +505,12 @@ extension MediaListViewController: NavigatorCentralDelegate {
 
         buildSectionTitleIndex()
         configureSortButtonTitle()
-        loadBarButtonItems()
 
         myTableView.reloadData()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
             self.scrollToLastSelectedItem()
+            self.loadBarButtonItems()
         }
 
     }
@@ -497,12 +521,15 @@ extension MediaListViewController: NavigatorCentralDelegate {
         
         buildSectionTitleIndex()
         configureSortButtonTitle()
-        loadBarButtonItems()
 
+        lastSelection   = GlobalIndexPaths.noSelection
+        queuedSelection = GlobalIndexPaths.noSelection
+        
         myTableView.reloadData()
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
-            self.scrollToLastSelectedItem()
+            self.myTableView.setContentOffset( .zero, animated: true )
+            self.loadBarButtonItems()
         }
 
     }

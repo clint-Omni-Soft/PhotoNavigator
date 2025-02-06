@@ -37,16 +37,10 @@ class MediaViewerViewController: UIViewController {
         presentingAssets  = true
         resourceIndexPath = indexPath
         
-        logVerbose( "[ %@ ][ %@ ]  resigningActive[ %@ ]", stringFor( indexPath ), deviceAsset.descriptorString(), stringFor( navigatorCentral.resigningActive ) )
+        logVerbose( "[ %@ ][ %@ ]", stringFor( indexPath ), deviceAsset.descriptorString() )
         
-        if !navigatorCentral.resigningActive {
-            requestAssetData()
-            loadBarButtonItems()
-        }
-        else {
-            requestPending = true
-        }
-        
+        requestAssetData()
+        loadBarButtonItems()
     }
     
     
@@ -56,16 +50,10 @@ class MediaViewerViewController: UIViewController {
         presentingAssets  = false
         resourceIndexPath = indexPath
 
-        logVerbose( "[ %@ ][ %@ ]  resigningActive[ %@ ]", stringFor( indexPath ), mediaFile.filename!, stringFor( navigatorCentral.resigningActive ) )
+        logVerbose( "[ %@ ][ %@ ]", stringFor( indexPath ), mediaFile.filename! )
         
-        if !navigatorCentral.resigningActive {
-            requestMediaFileData()
-            loadBarButtonItems()
-        }
-        else {
-            requestPending = true
-        }
-        
+        requestMediaFileData()
+        loadBarButtonItems()
     }
     
     
@@ -145,9 +133,9 @@ class MediaViewerViewController: UIViewController {
         logTrace()
         super.viewDidLoad()
         
-        navigationItem.title = NSLocalizedString( "Title.MediaViewer",   comment: "Media Viewer" )
-        mediaNameLabel.text  = ""
-        
+        navigationItem.title = NSLocalizedString( "Title.MediaViewer",       comment: "Media Viewer"    )
+        mediaNameLabel.text  = NSLocalizedString( "LabelText.NoMediaLoaded", comment: "No Media Loaded" )
+
         hideControls()
 
         myWebView.allowsBackForwardNavigationGestures = false
@@ -181,7 +169,7 @@ class MediaViewerViewController: UIViewController {
             playVideo()
         }
         else {
-            mediaNameLabel.text = ""
+            mediaNameLabel.text  = NSLocalizedString( "LabelText.NoMediaLoaded", comment: "No Media Loaded" )
             myImageView.isHidden = true
             
             hideControls()
@@ -203,19 +191,6 @@ class MediaViewerViewController: UIViewController {
     }
     
     
-    override func viewDidAppear(_ animated: Bool) {
-        logTrace()
-        super.viewDidAppear(animated)
-        
-        if !flagIsPresentInUserDefaults( UserDefaultKeys.firstTimeIn ) {
-            saveFlagInUserDefaults( UserDefaultKeys.firstTimeIn )
-            
-            presentAlert( title: "", message: NSLocalizedString( "AlertMessage.DidYouKnow", comment: "Items selected from the Photos list it will display here." ) )
-        }
-            
-    }
-    
-    
     override func viewWillDisappear(_ animated: Bool) {
         logTrace()
         super.viewWillDisappear(animated)
@@ -233,21 +208,18 @@ class MediaViewerViewController: UIViewController {
     
     
     override func viewWillTransition( to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator ) {
+        logVerbose( "[ %@ ]", stringFor( size ) )
         super.viewWillTransition( to: size, with: coordinator )
-        
-        if !navigatorCentral.resigningActive {
-            logVerbose( "[ %@ ]", stringFor( size ) )
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 ) {
-                if let _ = self.playerLayer {
-                    // Since myImageView has constraints on it that will automatically reposition and resize itself,
-                    // we attach the playerLayer to it so it can just tag along for the ride
-                    self.playerLayer.frame = self.myImageView.layer.bounds
-                }
-                
-                if !self.primaryWindowIsHidden {
-                    self.primaryWindowIsHidden = UIDevice.current.orientation == .portrait || UIDevice.current.orientation == .portraitUpsideDown
-                }
-                
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 ) {
+            if let _ = self.playerLayer {
+                // Since myImageView has constraints on it that will automatically reposition and resize itself,
+                // we attach the playerLayer to it so it can just tag along for the ride
+                self.playerLayer.frame = self.myImageView.layer.bounds
+            }
+            
+            if !self.primaryWindowIsHidden {
+                self.primaryWindowIsHidden = UIDevice.current.orientation == .portrait || UIDevice.current.orientation == .portraitUpsideDown
             }
             
         }
@@ -274,7 +246,7 @@ class MediaViewerViewController: UIViewController {
     @objc func mediaDataReloaded( notification: NSNotification ) {
         logTrace()
 
-        mediaNameLabel.text  = ""
+        mediaNameLabel.text = NSLocalizedString( "LabelText.NoMediaLoaded", comment: "No Media Loaded" )
         resetViews()
     }
 
@@ -365,6 +337,7 @@ class MediaViewerViewController: UIViewController {
         logTrace()
         slideShowActive                 = !slideShowActive
         application.isIdleTimerDisabled =  slideShowActive
+        loadBarButtonItems()
         
         if slideShowActive {
             appDelegate.hidePrimaryView( true )
@@ -437,7 +410,7 @@ class MediaViewerViewController: UIViewController {
         var leftBarButtonItems : [UIBarButtonItem] = []
         var rightBarButtonItems: [UIBarButtonItem] = []
         
-        if UIDevice.current.userInterfaceIdiom == .pad && primaryWindowIsHidden {
+        if UIDevice.current.userInterfaceIdiom == .pad {
             leftBarButtonItems.append( UIBarButtonItem.init(image: UIImage(named: "hamburger" ), style: .plain, target: self, action: #selector( showPrimaryBarButtonItemTouched(_:) ) ) )
         }
         
@@ -528,7 +501,6 @@ extension MediaViewerViewController {
                 }
                 else {
                     logTrace( "image loaded" )
-//                    self.myActivityIndicator.stopAnimating()
                     
                     if self.slideShowActive {
                         self.startImageSlideShowTimer()
@@ -543,7 +515,6 @@ extension MediaViewerViewController {
             loadVideoFromAsset()
         }
         else {
-//            myActivityIndicator.stopAnimating()
             logVerbose( "ERROR!!! We don't support this style[ %@ ]", deviceAsset.stringForPlaybackStyle() )
         }
         
@@ -616,28 +587,22 @@ extension MediaViewerViewController {
 
 
     func startImageSlideShowTimer() {
-        logVerbose( "resigningActive[ %@ ]", stringFor( navigatorCentral.resigningActive ) )
+        logTrace()
         
-        if !navigatorCentral.resigningActive {
-            DispatchQueue.main.async {
-                self.slideShowTimer = Timer.scheduledTimer( withTimeInterval: Double( self.navigatorCentral.imageDuration ), repeats: false ) { (timer) in
-                    logVerbose( "Timer Expired  resigningActive[ %@ ]", stringFor( self.navigatorCentral.resigningActive ) )
-                   
-                    if !self.navigatorCentral.resigningActive {
-                        if self.presentingAssets {
-                            self.requestNextAsset( forward: true )
-                        }
-                        else {
-                            self.requestNextMediaFile( forward: true )
-                        }
-                        
-                        self.delegate.mediaViewerViewController( self, didShowMediaAt: self.resourceIndexPath )
-                    }
-
+        DispatchQueue.main.async {
+            self.slideShowTimer = Timer.scheduledTimer( withTimeInterval: Double( self.navigatorCentral.imageDuration ), repeats: false ) { (timer) in
+                logVerbose( "Timer Expired" )
+               
+                if self.presentingAssets {
+                    self.requestNextAsset( forward: true )
+                }
+                else {
+                    self.requestNextMediaFile( forward: true )
                 }
                 
+                self.delegate.mediaViewerViewController( self, didShowMediaAt: self.resourceIndexPath )
             }
-
+                
         }
         
     }

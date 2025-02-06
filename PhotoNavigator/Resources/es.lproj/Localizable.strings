@@ -109,11 +109,16 @@
 "InfoText.DataStoreLocation"                = "Esta aplicación le brinda la opción de almacenar sus datos en...\n\n (a) en su dispositivo (predeterminado) o\n (b) en una unidad de almacenamiento accesible en red (NAS). \n\nEl punto clave aquí es que no se puede compartir en el dispositivo. Si prefiere utilizar un NAS, cualquiera que tenga esta aplicación y acceso a su Wi-Fi podrá acceder a sus datos.";
 "InfoText.FirstThingsFirst"                 = "Antes de comenzar a usar esta aplicación, debe considerar dónde podemos encontrar sus fotos y archivos multimedia (consulte el Repositorio multimedia para obtener más detalles).";
 "InfoText.MediaRepository"                  = "Utilice esta utilidad para especificar dónde se encuentran sus fotos y archivos multimedia.  Pueden estar en (a) este dispositivo o (b) en una unidad de almacenamiento accesible en red (NAS).\n\nEsta aplicación SÓLO reconoce fotos y archivos multimedia en los siguientes formatos de archivo: JPEG, JPG, HEIC, HEIF, HTM, HTML, MOV, MP4, MPEG, MPEG4, PNG, QT, TIF, TIFF, TS, WEBM, WEBP, WMV.";
-"InfoText.MediaList1"                       = "Al tocar el título de cualquier foto, se cargará en el Visor de medios. \n\nToque el botón 'Ordenado por:' para cambiar el tipo de medio.\n\n";
-"InfoText.MediaList2"                       = "Si los medios están ordenados por ruta relativa, se mostrará un cursor hacia arriba o hacia abajo para abrir o cerrar todas las secciones de la tabla. \n\nToque la lupa para buscar el nombre de un archivo multimedia.\n\n";
-"InfoText.MediaList3"                       = "Si está utilizando un iPad, se mostrará un ícono con un círculo sombreado y una X en el medio a la izquierda para ocultar o mostrar la lista de medios y hacer que la Vista de medios se muestre en pantalla completa. También se mostrará un ícono de engranaje a la derecha para llevarlo a la vista de Configuración.";
-"InfoText.MediaViewer1"                     = "Cuando se presenta una foto, aparecerán 3 botones en la parte superior para controlar la presentación de diapositivas. Un doble cursor hacia atrás retrocederá una foto, seguido de un ícono de inicio/detención para iniciar/detener la presentación de diapositivas y un doble cursor hacia adelante para avanzar en la foto.\n\n";
-"InfoText.MediaViewer2"                     = "Cuando se presenta un video, aparecerá un botón a la izquierda para pausar/reanudar la reproducción del video. \n\nCuando esté en el iPad, aparecerá un ícono de 'hamburguesa' que le permitirá mostrar la vista de la lista de fotos.";
+"InfoText.MediaList1"                       = "Al tocar cualquier título de medio en la lista, se cargará en el Visor de medios.\n\nBotones de la barra de navegación:\n\nBotones de la barra de navegación:\n\n";
+"InfoText.MediaList2"                       = "Cuando se puedan agrupar los archivos multimedia, se mostrará un cursor hacia arriba o hacia abajo que podrá utilizar para abrir o cerrar todas las secciones de la tabla. Si toca el encabezado de una sección, se abrirá o cerrará esa sección.\n\n";
+"InfoText.MediaList3"                       = "Al leer desde una unidad NAS, tienes dos controles más:\n";
+"InfoText.MediaList4"                       = "(1) Un botón 'Ordenado por:' que puede usar para ordenar la lista por nombre de archivo o ruta relativa.\n";
+"InfoText.MediaList5"                       = "(2) Un icono de 'lupa': tóquelo para buscar el nombre de un archivo multimedia.\n\n";
+"InfoText.MediaList6"                       = "Si estás en un iPad, tienes dos controles más:\n";
+"InfoText.MediaList7"                       = "(1) Un ícono de 'Círculo sombreado con una X en el medio': toque para ocultar la lista de medios y hacer que la Vista de medios aparezca en pantalla completa.\n";
+"InfoText.MediaList8"                       = "(2) Un ícono de 'Engranajes': tóquelo para ir a la vista de Configuración.";
+"InfoText.MediaViewer1"                     = "Cuando se presentan los medios, aparecerán 3 botones en la parte superior para controlar la presentación de diapositivas. Un doble cursor hacia atrás retrocederá una foto, seguido de un ícono de inicio/detención para iniciar/detener la presentación de diapositivas y un doble cursor hacia adelante para avanzar en la foto.\n\n";
+"InfoText.MediaViewer2"                     = "Cuando se presenta un video, aparecerá un botón a la izquierda para pausar/reanudar la reproducción del video. \n\nCuando esté en el iPad, aparecerá un ícono de 'hamburguesa' que le permitirá mostrar la vista de la lista de medios.";
 "InfoText.ScanMediaRepository"              = "Une fois que vous avez spécifié l'emplacement de vos photos et fichiers multimédias (votre référentiel), vous pouvez utiliser cet utilitaire pour analyser l'emplacement désigné et créer une base de données sur cet appareil pour un accès facile.\n\nLe temps nécessaire pour accéder et afficher une photo ou le fichier multimédia dépendra de l'endroit où vous stockez vos fichiers.  Nous ne copions PAS vos fichiers sur votre appareil.";
 
 "LabelText.About"                           = "Acerca de";
@@ -123,6 +128,7 @@
 "LabelText.ImageDuration"                   = "Duración de la imagen";
 "LabelText.Name"                            = "Nombre";
 "LabelText.NetworkPath"                     = "Ruta de red";
+"LabelText.NoMediaLoaded"                   = "No hay medios cargados";
 "LabelText.None"                            = "Ninguno";
 "LabelText.NotSet"                          = "No establecido";
 "LabelText.Password"                        = "Contraseña:";
@@ -131,6 +137,7 @@
 "LabelText.SortedOn"                        = "Ordenado por: ";
 "LabelText.StartingPath"                    = "Camino de inicio";
 "LabelText.UserName"                        = "Nombre de usuario:";
+"LabelText.ThisDevice"                      = "Este dispositivo";
 
 "SortOption.Filename"                       = "Nombre del archivo";
 "SortOption.RelativePath"                   = "Camino relativo";
@@ -145,6 +152,7 @@
 "Title.HowToUse"                            = "Cómo Utilizar";
 "Title.InNASDrive"                          = "Almacenamiento accesible en red";
 "Title.LogViewer"                           = "Visor de registro";
+"Title.Media"                               = "Medios de comunicación";
 "Title.MediaRepository"                     = "Repositorio de medios";
 "Title.MediaViewer"                         = "Visor de medios";
 "Title.Photos"                              = "Fotos";

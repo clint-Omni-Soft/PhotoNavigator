@@ -109,11 +109,16 @@
 "InfoText.DataStoreLocation"                = "This app gives you the option to store your data either on...\n\n   (a) on your device (default) or\n   (b) on a Network Accessible Storage (NAS) drive. \n\nThe key point here is that there is no sharing on the device. If you prefer to use a NAS then anyone who has this app and access to your Wi-Fi can access your data.";
 "InfoText.FirstThingsFirst"                 = "Before you start using this app, you should consider where we can find your photos and media files (see Media Repository for details).";
 "InfoText.MediaRepository"                  = "Use this utility to specify where your photos and media files are located.  They can be on either (a) on this device or (b) on a Network Accessible Storage (NAS) unit.\n\nThis app ONLY recognizes photos and media files in the following file formats: JPEG, JPG, HEIC, HEIF, HTM, HTML, MOV, MP4, MPEG, MPEG4, PNG, QT, TIF, TIFF, TS, WEBM, WEBP, WMV.";
-"InfoText.MediaList1"                       = "Touching any photo title will load it into the Media Viewer.  \n\nTouch the 'Sorted on:' button to change the sort of the media.\n\n";
-"InfoText.MediaList2"                       = "If the media is sorted on Relative Path, a up or down caret will be displayed to open or close all sections of the table.   \n\nTouch the magnifying glass to search on the name of a media file.\n\n";
-"InfoText.MediaList3"                       = "If you are on an iPad, an icon with a shaded circle and a X in the middle will be displayed on the left to hide/show the media list and make the Media View full screen.  A gears icon will be also be displayed on the right to take you to the Setting view.";
-"InfoText.MediaViewer1"                     = "When a photo is presented, 3 buttons will appear at the top to control the slide show.  A double back caret will go back one photo followed by a start/stop icon to start/stop the slide show and a double forward cart to go forward on photo.\n\n";
-"InfoText.MediaViewer2"                     = "When a video is presented, a button will appear on the left to pause/resume playing the video.  \n\nWhen on the iPad, a 'hamburger' icon will appear that will allow you to display the Photo list view.";
+"InfoText.MediaList1"                       = "Touching any media title in the list will load the it into the Media Viewer.\n\nNavigation Bar Buttons:\n\n";
+"InfoText.MediaList2"                       = "When your media can be grouped, an up/down caret will be displayed which you can use to open/close all sections of the table.  Touching on a section header will open/close that section.\n\n";
+"InfoText.MediaList3"                       = "When reading from a NAS drive, you have two more controls:\n";
+"InfoText.MediaList4"                       = "(1) A 'Sorted on:' button which you can use to have the the list sorted by Filename or Relative Path.\n";
+"InfoText.MediaList5"                       = "(2) A 'Magnifying glass' icon - Touch to search on the name of a media file.\n\n";
+"InfoText.MediaList6"                       = "If you are on an iPad, you have two more controls:\n";
+"InfoText.MediaList7"                       = "(1) A 'Shaded Circle with a X in the middle' icon - Touch to hide the media list and make the Media View full screen.\n";
+"InfoText.MediaList8"                       = "(2) A 'Gears' icon - Touch to go to the Setting view.";
+"InfoText.MediaViewer1"                     = "When media is being presented, 3 buttons will appear at the top to control the slide show.  A double back caret will go back one photo followed by a start/stop icon to start/stop the slide show and a double forward cart to go forward on photo.\n\n";
+"InfoText.MediaViewer2"                     = "When a Video is presented, a button will appear on the left to pause/resume playing the video.  \n\nWhen on the iPad, a 'hamburger' icon will appear that will allow you to display the Media list view.";
 "InfoText.ScanMediaRepository"              = "Once you have specified where your photos and media files are located (your repository), you can this utility to scan the designated location and create a database on this device for easy access.\n\nThe time it takes to access and display a photo or media file will depend on where you store your files.  We do NOT copy your files to your device.";
 
 "LabelText.About"                           = "About";
@@ -123,6 +128,7 @@
 "LabelText.ImageDuration"                   = "Image Duration";
 "LabelText.Name"                            = "Name";
 "LabelText.NetworkPath"                     = "Network Path";
+"LabelText.NoMediaLoaded"                   = "No Media Loaded";
 "LabelText.None"                            = "None";
 "LabelText.NotSet"                          = "Not Set";
 "LabelText.Password"                        = "Password:";
@@ -130,6 +136,7 @@
 "LabelText.PleaseWaitWhileWeConnect"        = "Please wait while we connect to your external device ...";
 "LabelText.SortedOn"                        = "Sorted on: ";
 "LabelText.StartingPath"                    = "Starting Path";
+"LabelText.ThisDevice"                      = "This Device";
 "LabelText.UserName"                        = "User Name:";
 
 "SortOption.Filename"                       = "Filename";
@@ -145,6 +152,7 @@
 "Title.HowToUse"                            = "How to Use";
 "Title.InNASDrive"                          = "Network Accessible Storage";
 "Title.LogViewer"                           = "Log Viewer";
+"Title.Media"                               = "Media";
 "Title.MediaRepository"                     = "Media Repository";
 "Title.MediaViewer"                         = "Media Viewer";
 "Title.Photos"                              = "Photos";

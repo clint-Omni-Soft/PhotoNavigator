@@ -86,7 +86,7 @@ class ScanRepoViewController: UIViewController {
     private func configureControls() {
         logTrace()
         startButton.isEnabled = !scanning && !scanComplete
-        stopButton .isEnabled = scanning
+        stopButton .isEnabled =  scanning && !scanComplete
     }
     
     
@@ -105,14 +105,17 @@ class ScanRepoViewController: UIViewController {
             self.numberOfFilesSkipped = 0
             self.numberOfMediaAdded   = 0
             
+            self.myActivityIndicator.isHidden = false
+            self.myActivityIndicator.startAnimating()
+            
             if self.navigatorCentral.dataSourceLocation == .nas {
-                self.myActivityIndicator.isHidden = false
-                self.myActivityIndicator.startAnimating()
-                
                 self.scanNAS()
             }
             else {
-                self.scanAssetsWith( .typeUserLibrary )
+                DispatchQueue.main.asyncAfter(wallDeadline: .now() + 0.5 ) {
+                    self.scanAssetsWith( .typeUserLibrary )
+                }
+                
             }
             
         }
@@ -134,7 +137,7 @@ class ScanRepoViewController: UIViewController {
         logTrace()
         if navigatorCentral.dataSourceLocation == .device {
             deviceShareLabel.text = navigatorCentral.deviceName
-            pathLabel       .text = NSLocalizedString( "Title.App", comment: "Photo Navigator" )
+            pathLabel       .text = ""
         }
         else {  // Must be NAS
             let descriptor = navigatorCentral.dataSourceDescriptor
@@ -181,12 +184,8 @@ extension ScanRepoViewController {
                 phAssetArray.append( phAsset )
             }
             
-            phAssetArray = phAssetArray.sorted(by: { phAsset1, phAsset2 in
-                phAsset1.creationDate! < phAsset2.creationDate!
-            })
-            
             var filteredAssetArray = [PHAsset]()
-            
+
             for asset in phAssetArray {
                 if asset.sourceType == sourceType {
                     filteredAssetArray.append( asset )
@@ -194,23 +193,17 @@ extension ScanRepoViewController {
                 
             }
             
+            navigatorCentral.populateWith( filteredAssetArray )
+            
             for index in 0..<filteredAssetArray.count {
-                myTextView.text.append( "\n" )
-                myTextView.text.append( filteredAssetArray[index].descriptorString() )
-
-//              logVerbose( "\n    %@", filteredAssetArray[index].descriptorString() )
-                if index > 10 && index/20 == 0 {
-                    scrollTextViewToBottom()
-                }
-                
+                myTextView.text.append( filteredAssetArray[index].descriptorString() + "\n" )
             }
             
             scrollTextViewToBottom()
-            navigatorCentral.populateWith( filteredAssetArray )
             
-            navigatorCentral.didRescanRepo = true
-            notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.mediaDataReloaded ), object: self )  // Tells the list controller to reload
-            
+            myActivityIndicator.isHidden = true
+            myActivityIndicator.stopAnimating()
+
             scanComplete = true
             configureControls()
 
@@ -249,7 +242,7 @@ extension ScanRepoViewController {
         else {
             scanning = false
             configureControls()
-            navigatorCentral.reloadData( self )
+            navigatorCentral.reloadMediaData( self )
         }
         
     }
@@ -388,9 +381,6 @@ extension ScanRepoViewController: NavigatorCentralDelegate {
         logVerbose( "loaded [ %d ] media files", navigatorCentral.numberOfMediaFilesLoaded )
         
         if !scanning {
-            navigatorCentral.didRescanRepo = true
-            notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.mediaDataReloaded ), object: self )  // Tells the list controller to reload
-            
             scanComplete = true
             configureControls()
             
