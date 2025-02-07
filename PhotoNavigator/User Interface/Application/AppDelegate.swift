@@ -137,6 +137,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 self.splitViewController.minimumPrimaryColumnWidth = minimumWidth * 0.5
                 self.splitViewController.maximumPrimaryColumnWidth = minimumWidth;
+                
+                self.hidePrimaryView( false )
                 logTrace( "Captured pointer to SplitViewController" )
             }
             else {
