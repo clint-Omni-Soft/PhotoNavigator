@@ -27,6 +27,7 @@
 "AlertMessage.KeywordManagerInfo"           = "Use this tool to manage your keywords list.  Touch the (+) sign to add.  Swipe left to delete. Select to modify.";
 "AlertMessage.KeywordsMustBeUnique"         = "Keywords must be unique!";
 "AlertMessage.LoginFailed"                  = "Login failed!";
+"AlertMessage.MediaListRepoNotSet"          = "Tap on the Settings icon (cog wheel) then select Media Repository and designate the location of your repository.  Once you have done that, go back to Settings then select Scan Media Repository.";
 "AlertMessage.MediaRepoNotSet"              = "Select using the Media Repository option";
 "AlertMessage.NameCannotBeBlank"            = "Name cannot be left blank!";
 "AlertMessage.NameMustBeUnique"             = "Name must be unique!";
@@ -68,6 +69,7 @@
 "AlertTitle.ImportComplete"                 = "Import Complete";
 "AlertTitle.ImportErrors"                   = "Your CSV file has one or more errors that you need to correct before it can be imported.";
 "AlertTitle.LastUpdateDidNotComplete"       = "The Last Update Did NOT Complete!";
+"AlertTitle.MediaListRepoNotSet"            = "Media Repo NOT Set!";
 "AlertTitle.MediaRepoNotSet"                = "The Media Repository has NOT been set yet!";
 "AlertTitle.ScanComplete"                   = "Scan Complete";
 "AlertTitle.ScanNowPrompt"                  = "Would you like for us to scan your repository now?";

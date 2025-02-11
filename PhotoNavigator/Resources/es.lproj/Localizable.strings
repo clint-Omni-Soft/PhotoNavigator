@@ -27,6 +27,7 @@
 "AlertMessage.KeywordManagerInfo"           = "Utilice esta herramienta para administrar su lista de palabras clave.  Toca el signo (+) para agregar.  Desliza hacia la izquierda para eliminar. Seleccione para modificar.";
 "AlertMessage.KeywordsMustBeUnique"         = "Las palabras clave deben ser únicos!";
 "AlertMessage.LoginFailed"                  = "¡Error de inicio de sesion!";
+"AlertMessage.MediaListRepoNotSet"          = "Pulsa el icono de Configuración (rueda dentada), luego selecciona Repositorio de medios y designa la ubicación de tu repositorio. Una vez que hayas hecho eso, vuelve a Configuración y selecciona Escanear repositorio de medios.";
 "AlertMessage.MediaRepoNotSet"              = "Seleccione usando la opción Repositorio de medios";
 "AlertMessage.NameCannotBeBlank"            = "El nombre no puede dejarse en blanco";
 "AlertMessage.NameMustBeUnique"             = "¡El nombre debe ser único!";
@@ -68,6 +69,7 @@
 "AlertTitle.ImportComplete"                 = "Importación completada";
 "AlertTitle.ImportErrors"                   = "Su archivo CSV tiene uno o más errores que debe corregir antes de poder importarlo.";
 "AlertTitle.LastUpdateDidNotComplete"       = "¡La última actualización NO se completó!";
+"AlertTitle.MediaListRepoNotSet"            = "¡El repositorio de medios NO está configurado!";
 "AlertTitle.MediaRepoNotSet"                = "¡El repositorio de medios aún NO se ha configurado!";
 "AlertTitle.ScanComplete"                   = "Escaneo completo";
 "AlertTitle.ScanNowPrompt"                  = "¿Le gustaría que escaneemos su repositorio ahora?";

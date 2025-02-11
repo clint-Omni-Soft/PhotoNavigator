@@ -145,13 +145,23 @@ class MediaListViewController: UIViewController {
         logTrace()
         super.viewDidAppear(animated)
         
+        var howToUseShown = false
+        var tableIsEmpty  = myTableView.numberOfSections == 0
+        
+        if let _ = userDefaults.string(forKey: UserDefaultKeys.howToUseShown ) {
+            howToUseShown = true
+        }
+
         if UIDevice.current.userInterfaceIdiom == .pad {
-            if let _ = userDefaults.string(forKey: UserDefaultKeys.howToUseShown ) {
-            }
-            else {
+            if !howToUseShown {
                 launchSettingsViewController()
             }
 
+        }
+        
+        if tableIsEmpty && howToUseShown {
+            presentAlert( title  : NSLocalizedString( "AlertTitle.MediaListRepoNotSet",   comment: "Media Repo NOT Set!" ),
+                          message: NSLocalizedString( "AlertMessage.MediaListRepoNotSet", comment: "Tap on the Settings icon (cog wheel) then select Media Repository and designate the location of your repository.  Once you have done that, go back to Settings then select Scan Media Repository." ) )
         }
         
     }

@@ -27,6 +27,7 @@
 "AlertMessage.KeywordManagerInfo"           = "Utilisez cet outil pour gérer votre liste de mots-clés.  Appuyez sur le signe (+) pour ajouter.  Balayez vers la gauche pour supprimer. Sélectionnez pour modifier.";
 "AlertMessage.KeywordsMustBeUnique"         = "Les mots-clés doivent être uniques !";
 "AlertMessage.LoginFailed"                  = "Échec de la connexion!";
+"AlertMessage.MediaListRepoNotSet"          = "Appuyez sur l'icône Paramètres (roue dentée), puis sélectionnez Référentiel multimédia et désignez l'emplacement de votre référentiel. Une fois cette opération effectuée, revenez aux Paramètres, puis sélectionnez Analyser le référentiel multimédia.";
 "AlertMessage.MediaRepoNotSet"              = "Sélectionnez à l'aide de l'option Media Repository";
 "AlertMessage.NameCannotBeBlank"            = "Le nom ne peut pas être laissé en blanc";
 "AlertMessage.NameMustBeUnique"             = "Le nom doit être unique!";
@@ -68,6 +69,7 @@
 "AlertTitle.ImportComplete"                 = "Importation terminée";
 "AlertTitle.ImportErrors"                   = "Votre fichier CSV contient une ou plusieurs erreurs que vous devez corriger avant de pouvoir l'importer.";
 "AlertTitle.LastUpdateDidNotComplete"       = "La dernière mise à jour n'a PAS été terminée!";
+"AlertTitle.MediaListRepoNotSet"            = "Le dépôt multimédia n'est PAS défini !";
 "AlertTitle.MediaRepoNotSet"                = "Le référentiel multimédia n'a PAS encore été défini !";
 "AlertTitle.ScanComplete"                   = "Analyse terminée";
 "AlertTitle.ScanNowPrompt"                  = "Souhaitez-vous que nous analysions votre référentiel maintenant ?";
