@@ -696,7 +696,7 @@
 				CODE_SIGN_ENTITLEMENTS = PhotoNavigator/PhotoNavigator.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = YEJQTHXY7Y;
 				"EXCLUDED_ARCHS[sdk=*]" = x86_64;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -736,7 +736,7 @@
 				CODE_SIGN_ENTITLEMENTS = PhotoNavigator/PhotoNavigator.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = YEJQTHXY7Y;
 				FRAMEWORK_SEARCH_PATHS = "../ZKits/ZKits-Debug";
 				GCC_PREFIX_HEADER = "PhotoNavigator/PhotoNavigator-Prefix.pch";
