@@ -46,7 +46,6 @@ struct Filenames {
 }
 
 struct GlobalConstants {
-    static let sortByCreationDate               = "creationDate"
     static let dataFileExtension                = ".dat"
     static let fileExtensionSeparator           = "."
     static let filePathSeparator                = "/"
@@ -66,6 +65,7 @@ struct GlobalConstants {
     static let separatorForSorts                = ";"
     static let sortAscending                    = "↑"    // "▴"
     static let sortAscendingFlag                = "A"
+    static let sortByCreationDate               = "creationDate"
     static let sortDescending                   = "↓"    // "▾"
     static let sortDescendingFlag               = "D"
     static let supportedFilenameExtensions      = ["JPEG", "JPG", "HEIC", "HEIF", "HTM", "HTML", "M4V", "MOV", "MP4", "MPEG", "MPEG4", "PNG", "QT", "TIF", "TIFF", "TS", "WEBM", "WEBP", "WMV"]

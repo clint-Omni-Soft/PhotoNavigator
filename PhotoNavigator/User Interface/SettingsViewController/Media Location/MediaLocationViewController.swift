@@ -39,7 +39,7 @@ class MediaLocationViewController: UIViewController {
     private let nasCentral                  = NASCentral.sharedInstance
     private var navigatorCentral            = NavigatorCentral.sharedInstance
     private var notificationCenter          = NotificationCenter.default
-    private var selectedOption              = CellIndexes.device
+    private var selectedOption              = CellIndexes.unused
     private var userDefaults                = UserDefaults.standard
     
     private let optionArray = [ NSLocalizedString( "Title.Device",     comment: "Device" ),
@@ -80,7 +80,7 @@ class MediaLocationViewController: UIViewController {
         if selectedOption == CellIndexes.device  {
             PHPhotoLibrary.requestAuthorization(for: .readWrite ) { (status) in
                 if PHPhotoLibrary.authorizationStatus() != .authorized {
-                    self.presentAlert( title  : NSLocalizedString( "AlertTitle.AuthorizationRequired",      comment: "Authorization Required!" ),
+                    self.presentAlert( title  : NSLocalizedString( "AlertTitle.AuthorizationRequired",       comment: "Authorization Required!" ),
                                        message: NSLocalizedString( "AlertMessage.PhotoLibraryNotAuthorized", comment: "This app requires your authorization to access the photo library on this device.  Please update Settings to allow us to view your photos." ) )
                 }
                 

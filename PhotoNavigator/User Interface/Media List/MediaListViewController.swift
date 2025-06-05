@@ -111,18 +111,23 @@ class MediaListViewController: UIViewController {
             registerForNotifications()
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
-                self.buildSectionTitleIndex()
-                self.myTableView.reloadData()
+                if self.queuedSelection != GlobalIndexPaths.noSelection {
+                    self.selectedSection = self.queuedSelection.section
+                    self.buildSectionTitleIndex()
+                    self.myTableView.reloadData()
+                    
+                    self.updateAccessoryOnRowAt( self.queuedSelection )
+                    self.queuedSelection = GlobalIndexPaths.noSelection
+                }
+                else {
+                    self.buildSectionTitleIndex()
+                    self.myTableView.reloadData()
+                }
 
                 if scrollToTop {
                     self.myTableView.setContentOffset( .zero, animated: true )
                 }
                 
-                if self.queuedSelection != GlobalIndexPaths.noSelection {
-                    self.updateAccessoryOnRowAt( self.queuedSelection )
-                    self.queuedSelection = GlobalIndexPaths.noSelection
-                }
-
                 if self.lastSelection != GlobalIndexPaths.noSelection {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
                         self.scrollToLastSelectedItem()
@@ -146,7 +151,6 @@ class MediaListViewController: UIViewController {
         super.viewDidAppear(animated)
         
         var howToUseShown = false
-        var tableIsEmpty  = myTableView.numberOfSections == 0
         
         if let _ = userDefaults.string(forKey: UserDefaultKeys.howToUseShown ) {
             howToUseShown = true
@@ -159,9 +163,14 @@ class MediaListViewController: UIViewController {
 
         }
         
-        if tableIsEmpty && howToUseShown {
-            presentAlert( title  : NSLocalizedString( "AlertTitle.MediaListRepoNotSet",   comment: "Media Repo NOT Set!" ),
-                          message: NSLocalizedString( "AlertMessage.MediaListRepoNotSet", comment: "Tap on the Settings icon (cog wheel) then select Media Repository and designate the location of your repository.  Once you have done that, go back to Settings then select Scan Media Repository." ) )
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
+            let tableIsEmpty = self.myTableView.numberOfSections == 0
+
+            if tableIsEmpty && howToUseShown {
+                self.presentAlert( title  : NSLocalizedString( "AlertTitle.MediaListRepoNotSet",   comment: "Media Repo NOT Set!" ),
+                                   message: NSLocalizedString( "AlertMessage.MediaListRepoNotSet", comment: "Tap on the Settings icon (cog wheel) then select Media Repository and designate the location of your repository.  Once you have done that, go back to Settings then select Scan Media Repository." ) )
+            }
+
         }
         
     }
@@ -277,7 +286,7 @@ class MediaListViewController: UIViewController {
             return
         }
        
-        logTrace()
+//        logTrace()
         sectionIndexTitles .removeAll()
         sectionTitleIndexes.removeAll()
         
@@ -347,7 +356,7 @@ class MediaListViewController: UIViewController {
 
     
     private func loadBarButtonItems() {
-        logTrace()
+//        logTrace()
         let caretImage          = UIImage(named: showAllSections ? "arrowUp" : "arrowDown" )
         var leftBarButtonItems  = [UIBarButtonItem]()
         var rightBarButtonItems = [UIBarButtonItem]()
@@ -452,7 +461,7 @@ class MediaListViewController: UIViewController {
 extension MediaListViewController: MediaListViewControllerSectionCellDelegate {
     
     func mediaListViewControllerSectionCell(_ mediaListViewControllerSectionCell: MediaListViewControllerSectionCell, section: Int, isOpen: Bool) {
-        logVerbose( "section[ %d ]  isOpen[ %@ ]", section, stringFor( isOpen ) )
+//        logVerbose( "section[ %d ]  isOpen[ %@ ]", section, stringFor( isOpen ) )
         selectedSection = ( selectedSection == section ) ? GlobalConstants.noSelection : section
         showAllSections = false
 
@@ -484,7 +493,7 @@ extension MediaListViewController: MediaViewerViewControllerDelegate {
 
     func mediaViewerViewController(_ mediaViewerVC: MediaViewerViewController, didShowMediaAt indexPath: IndexPath) {
         logVerbose( "[ %@ ]", stringFor( indexPath ) )
-        if self.viewIfLoaded?.window != nil {
+        if self.viewIfLoaded?.window != nil {   // We have to be visible to do this
             DispatchQueue.main.async {
                 self.updateAccessoryOnRowAt( indexPath )
                 

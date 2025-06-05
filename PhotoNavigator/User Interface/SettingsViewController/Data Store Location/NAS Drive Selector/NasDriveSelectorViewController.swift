@@ -760,6 +760,7 @@ extension NasDriveSelectorViewController : UITableViewDelegate {
                                     nasCentral.connectTo( selectedDevice, deviceUserName, devicePassword, self )
                                 }
                                 else {
+                                    nasCentral.connectTo( selectedDevice, "", "", self )    // This will force the OS to prompt the user for permission to scan their network
                                     promptForLoginCredentialsFor( selectedDevice )
                                 }
                                 

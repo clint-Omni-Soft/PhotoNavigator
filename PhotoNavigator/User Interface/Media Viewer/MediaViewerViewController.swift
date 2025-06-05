@@ -23,10 +23,12 @@ class MediaViewerViewController: UIViewController {
     
     var delegate: MediaViewerViewControllerDelegate!
     
-    @IBOutlet weak var mediaNameLabel     : UILabel!
-    @IBOutlet weak var myActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var myImageView        : UIImageView!
-    @IBOutlet weak var myWebView          : WKWebView!
+    @IBOutlet weak var mediaNameLabel        : UILabel!
+    @IBOutlet weak var myActivityIndicator   : UIActivityIndicatorView!
+    @IBOutlet weak var myImageView           : UIImageView!
+    @IBOutlet weak var myWebView             : WKWebView!
+    @IBOutlet      var panGestureRecognizer  : UIPanGestureRecognizer!
+    @IBOutlet      var pinchGestureRecognizer: UIPinchGestureRecognizer!
     
     
     // MARK: Public Interfaces
@@ -138,6 +140,8 @@ class MediaViewerViewController: UIViewController {
 
         hideControls()
 
+        myImageView.isUserInteractionEnabled = true
+
         myWebView.allowsBackForwardNavigationGestures = false
         myWebView.contentMode        = .scaleAspectFit
         myWebView.navigationDelegate = self
@@ -208,7 +212,7 @@ class MediaViewerViewController: UIViewController {
     
     
     override func viewWillTransition( to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator ) {
-        logVerbose( "[ %@ ]", stringFor( size ) )
+//        logVerbose( "[ %@ ]", stringFor( size ) )
         super.viewWillTransition( to: size, with: coordinator )
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 ) {
@@ -245,7 +249,6 @@ class MediaViewerViewController: UIViewController {
     
     @objc func mediaDataReloaded( notification: NSNotification ) {
         logTrace()
-
         mediaNameLabel.text = NSLocalizedString( "LabelText.NoMediaLoaded", comment: "No Media Loaded" )
         resetViews()
     }
@@ -253,11 +256,10 @@ class MediaViewerViewController: UIViewController {
 
     @objc func playerDidFinishPlayingVideo( notification: NSNotification ) {
         logVerbose( "slideShowActive[ %@ ]", stringFor( slideShowActive ) )
-        
-        if slideShowActive {
-            cleanUpPlayer()
-            hideControls()
+        cleanUpPlayer()
+        hideControls()
 
+        if slideShowActive {
             if presentingAssets {
                 requestNextAsset( forward: true )
             }
@@ -273,6 +275,25 @@ class MediaViewerViewController: UIViewController {
     
     
     // MARK: Target/Action Methods
+    @IBAction func panGestureRecognizerTouched(_ gestureRecognizer: UIPanGestureRecognizer ) {
+        if !slideShowActive && ( gestureRecognizer.state == .began || gestureRecognizer.state == .changed ) {
+            let translation = gestureRecognizer.translation(in: myImageView )
+            
+            gestureRecognizer.view?.layer.setAffineTransform( ( gestureRecognizer.view?.transform.translatedBy(x: translation.x, y: translation.y ) )! )
+        }
+        
+        gestureRecognizer.setTranslation( CGPoint.zero, in: gestureRecognizer.view )
+    }
+    
+    
+    @IBAction func pinchGestureRecognizerTouched(_ gestureRecognizer: UIPinchGestureRecognizer) {
+        if !slideShowActive && ( gestureRecognizer.state == .began || gestureRecognizer.state == .changed ) {
+            gestureRecognizer.view?.transform = ( gestureRecognizer.view?.transform.scaledBy( x: gestureRecognizer.scale, y: gestureRecognizer.scale ) )!
+        }
+        
+        gestureRecognizer.scale = 1.0
+    }
+    
     
     @IBAction func questionBarButtonTouched(_ sender : UIBarButtonItem ) {
         let message = NSLocalizedString( "InfoText.MediaViewer1", comment: "When a photo is presented, 3 buttons will appear at the top to control the slide show.  A double back caret will go back one photo followed by a start/stop icon to start/stop the slide show and a double forward cart to go forward on photo.\n\n" )
@@ -368,7 +389,7 @@ class MediaViewerViewController: UIViewController {
     
     @IBAction func videoStartStopButtonTouched(_ sender: UIButton) {
         logTrace()
-        if videoState == .paused {
+        if videoState == .paused || videoState == .loaded {
             playVideo()
         }
         else {
@@ -376,6 +397,7 @@ class MediaViewerViewController: UIViewController {
             videoState = .paused
         }
         
+        loadBarButtonItems()
     }
     
     
@@ -459,12 +481,15 @@ class MediaViewerViewController: UIViewController {
     private func resetViews() {
         logTrace()
         if playerLayer != nil {
+            logTrace( "playerLayer != nil" )
             playerLayer?.removeFromSuperlayer()
             playerLayer = nil
             videoState  = .notLoaded
         }
 
-        myImageView.image = nil
+        myImageView.image     = nil
+        myImageView.transform = .identity
+
         hideControls()
     }
     
@@ -500,7 +525,7 @@ extension MediaViewerViewController {
                     firstSegmentLoaded = true
                 }
                 else {
-                    logTrace( "image loaded" )
+//                    logTrace( "image loaded" )
                     
                     if self.slideShowActive {
                         self.startImageSlideShowTimer()
@@ -545,8 +570,7 @@ extension MediaViewerViewController {
             self.myImageView.isHidden = false
 
             self.playerLayer = playerLayer
-            
-            self.videoState = .loaded
+            self.videoState  = .loaded
             
             if self.slideShowActive {
                 self.playVideo()
@@ -621,7 +645,7 @@ extension MediaViewerViewController {
         let filePath            = mediaFile.relativePath ?? ""
         let fullPathAndFilename = ( filePath.isEmpty ? "" : filePath + "/" ) + mediaFile.filename!
         
-        mediaNameLabel.text = fullPathAndFilename
+        mediaNameLabel.text = navigatorCentral.sectionTitleArray[ resourceIndexPath.section ] + "/" + mediaFile.filename!
         
         disableImageSlideShowTimer()
         

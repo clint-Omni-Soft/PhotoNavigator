@@ -696,7 +696,7 @@
 				CODE_SIGN_ENTITLEMENTS = PhotoNavigator/PhotoNavigator.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YEJQTHXY7Y;
 				"EXCLUDED_ARCHS[sdk=*]" = x86_64;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
@@ -717,7 +717,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Omni-Soft.PhotoNavigator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -736,7 +736,7 @@
 				CODE_SIGN_ENTITLEMENTS = PhotoNavigator/PhotoNavigator.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = YEJQTHXY7Y;
 				FRAMEWORK_SEARCH_PATHS = "../ZKits/ZKits-Debug";
 				GCC_PREFIX_HEADER = "PhotoNavigator/PhotoNavigator-Prefix.pch";
@@ -755,7 +755,7 @@
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Omni-Soft.PhotoNavigator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;

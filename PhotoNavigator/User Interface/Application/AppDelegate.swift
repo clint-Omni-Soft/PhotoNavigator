@@ -13,19 +13,21 @@ import UIKit
 
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    // Public Definitions
+    // MARK: Public Definitions
     var hidePrimary = false
     var mediaViewer : MediaViewerViewController!
     var window      : UIWindow?
     
     
-    // Private Definitions
+    // MARK: Private Definitions
     private let navigatorCentral   = NavigatorCentral.sharedInstance
     private let notificationCenter = NotificationCenter.default
     private var splitViewController: UISplitViewController!
 
     
     
+    // MARK: UIApplication Lifecycle Methods
+
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? ) -> Bool {
         LogCentral.sharedInstance.setupLogging()
         navigatorCentral.enteringForeground()
@@ -33,13 +35,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if navigatorCentral.dataStoreLocation != .device {
             showPleaseWaitScreen()
         }
+        else {
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                getLinkToSplitViewController()
+            }
+            
+        }
 
         if #available(iOS 15, *) {
             UITableView.appearance().sectionHeaderTopPadding = 0.0
-        }
-        
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            getLinkToSplitViewController()
         }
         
         return true

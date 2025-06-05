@@ -77,7 +77,7 @@ class DataLocationViewController: UIViewController {
         super.viewWillAppear( animated )
         
         canSeeNasFolders = false
-        nasCentral.canSeeNasFolders( self )
+        nasCentral.canSeeNasDataSourceFolders( self )
         
         myActivityIndicator.isHidden = false
         myActivityIndicator.startAnimating()

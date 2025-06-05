@@ -259,7 +259,7 @@ class NavigatorCentral: NSObject {
                 
             }
             
-            return ( SortOptions.byFilename, true )
+            return ( SortOptions.byRelativePath, true )
         }
         
         set ( sortTuple ) {
