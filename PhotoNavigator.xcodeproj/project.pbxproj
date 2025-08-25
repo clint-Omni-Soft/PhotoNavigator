@@ -15,6 +15,9 @@
 		F49B7B5A2C642CE500CD2848 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49B7B592C642CE500CD2848 /* SettingsViewController.swift */; };
 		F49F05802CADE42F001CD190 /* PhotoAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49F057E2CADE42F001CD190 /* PhotoAssets.swift */; };
 		F49F05812CADE42F001CD190 /* PhotoAssets+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49F057F2CADE42F001CD190 /* PhotoAssets+CoreDataProperties.swift */; };
+		F4A61F5A2E2EFDD0009E09E5 /* SplitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A61F592E2EFDD0009E09E5 /* SplitViewController.swift */; };
+		F4A61F5E2E2EFE9B009E09E5 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A61F5D2E2EFE9B009E09E5 /* SceneDelegate.swift */; };
+		F4A61F602E2F089E009E09E5 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4A61F5F2E2F089D009E09E5 /* WebKit.framework */; };
 		F4D684F82C617023008BE359 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D684F72C617023008BE359 /* AppDelegate.swift */; };
 		F4D684FF2C617023008BE359 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4D684FD2C617023008BE359 /* Main_iPhone.storyboard */; };
 		F4D685022C617023008BE359 /* NavigatorCentral.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F4D685002C617023008BE359 /* NavigatorCentral.xcdatamodeld */; };
@@ -82,6 +85,9 @@
 		F49B7B592C642CE500CD2848 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F49F057E2CADE42F001CD190 /* PhotoAssets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoAssets.swift; sourceTree = "<group>"; };
 		F49F057F2CADE42F001CD190 /* PhotoAssets+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PhotoAssets+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		F4A61F592E2EFDD0009E09E5 /* SplitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplitViewController.swift; sourceTree = "<group>"; };
+		F4A61F5D2E2EFE9B009E09E5 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		F4A61F5F2E2F089D009E09E5 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		F4D684F42C617023008BE359 /* PhotoNavigator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PhotoNavigator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4D684F72C617023008BE359 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4D684FE2C617023008BE359 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
@@ -135,6 +141,7 @@
 			files = (
 				F4D6855C2C617B02008BE359 /* SMBClient.framework in Frameworks */,
 				F4D6855A2C617AD1008BE359 /* CoreData.framework in Frameworks */,
+				F4A61F602E2F089E009E09E5 /* WebKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,6 +208,7 @@
 		F4D6850F2C617144008BE359 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				F4A61F592E2EFDD0009E09E5 /* SplitViewController.swift */,
 				F4D685522C61790F008BE359 /* TabBarViewController.swift */,
 				F4D685102C617153008BE359 /* Application */,
 				F4D6856B2C619B6D008BE359 /* Media List */,
@@ -216,6 +224,7 @@
 			isa = PBXGroup;
 			children = (
 				F4D684F72C617023008BE359 /* AppDelegate.swift */,
+				F4A61F5D2E2EFE9B009E09E5 /* SceneDelegate.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -389,6 +398,7 @@
 		F4D685582C617AD0008BE359 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F4A61F5F2E2F089D009E09E5 /* WebKit.framework */,
 				F4D6855B2C617B02008BE359 /* SMBClient.framework */,
 				F4D685592C617AD1008BE359 /* CoreData.framework */,
 			);
@@ -444,7 +454,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1520;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1640;
 				TargetAttributes = {
 					F4D684F32C617023008BE359 = {
 						CreatedOnToolsVersion = 15.2;
@@ -507,6 +517,7 @@
 				F4D685532C617910008BE359 /* TabBarViewController.swift in Sources */,
 				F4D685652C61883D008BE359 /* ImageRequest.swift in Sources */,
 				F4D685292C6173D2008BE359 /* DeviceAccessControl.swift in Sources */,
+				F4A61F5A2E2EFDD0009E09E5 /* SplitViewController.swift in Sources */,
 				F4D6854B2C6178A2008BE359 /* NasLoginViewController.swift in Sources */,
 				F4D6854E2C6178A2008BE359 /* MediaLocationViewController.swift in Sources */,
 				F4D685342C6177D4008BE359 /* PleaseWaitViewController.swift in Sources */,
@@ -527,6 +538,7 @@
 				F49B7B582C6421CA00CD2848 /* MediaViewerViewController.swift in Sources */,
 				F49B7B5A2C642CE500CD2848 /* SettingsViewController.swift in Sources */,
 				F4D684F82C617023008BE359 /* AppDelegate.swift in Sources */,
+				F4A61F5E2E2EFE9B009E09E5 /* SceneDelegate.swift in Sources */,
 				F4D685262C6173D2008BE359 /* SMBCentral.swift in Sources */,
 				F4D685282C6173D2008BE359 /* NASCentral.swift in Sources */,
 				F44EF2D92CAC9DDE00ADC4AE /* PhotosExtensions.swift in Sources */,
@@ -602,6 +614,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = YEJQTHXY7Y;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -666,6 +679,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = YEJQTHXY7Y;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
@@ -697,7 +711,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YEJQTHXY7Y;
 				"EXCLUDED_ARCHS[sdk=*]" = x86_64;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				FRAMEWORK_SEARCH_PATHS = "../ZKits/ZKits-Debug";
@@ -711,13 +724,13 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Omni-Soft.PhotoNavigator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -737,7 +750,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = YEJQTHXY7Y;
 				FRAMEWORK_SEARCH_PATHS = "../ZKits/ZKits-Debug";
 				GCC_PREFIX_HEADER = "PhotoNavigator/PhotoNavigator-Prefix.pch";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -749,13 +761,13 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = NO;
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Omni-Soft.PhotoNavigator";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pPV-5w-2cN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pPV-5w-2cN">
     <device id="ipad12_9rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
     </dependencies>
     <scenes>
         <!--MediaListNavigationController-->
@@ -27,7 +27,7 @@
         <!--Split View Controller-->
         <scene sceneID="0sL-yF-EK6">
             <objects>
-                <splitViewController allowDoubleColumnStyle="YES" primaryBackgroundStyle="sidebar" id="pPV-5w-2cN" sceneMemberID="viewController">
+                <splitViewController storyboardIdentifier="SplitViewController" allowDoubleColumnStyle="YES" primaryBackgroundStyle="sidebar" id="pPV-5w-2cN" customClass="SplitViewController" customModule="PhotoNavigator" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="jhm-Tq-wLY" kind="relationship" relationship="detailViewController" id="bxv-io-iEU"/>
                         <segue destination="HXt-gn-uYe" kind="relationship" relationship="masterViewController" id="NJu-Tm-9jW"/>

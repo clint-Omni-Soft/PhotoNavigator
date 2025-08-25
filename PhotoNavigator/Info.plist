@@ -12,5 +12,24 @@
 	<string>This allows us to access and display images in your photo library.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>This allows us to add images to your photo library.</string>
+	<key>UIApplicationSceneManifest</key>
+	<dict>
+		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UISceneConfigurations</key>
+		<dict>
+			<key>UIWindowSceneSessionRoleApplication</key>
+			<array>
+				<dict>
+					<key>UISceneDelegateClassName</key>
+					<string>$(PRODUCT_MODULE_NAME).SceneDelegate</string>
+					<key>UISceneConfigurationName</key>
+					<string>Default</string>
+					<key>UISceneStoryboardFile</key>
+					<string>LaunchScreen</string>
+				</dict>
+			</array>
+		</dict>
+	</dict>
 </dict>
 </plist>

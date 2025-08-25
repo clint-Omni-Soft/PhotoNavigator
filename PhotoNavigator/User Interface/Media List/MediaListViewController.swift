@@ -40,7 +40,6 @@ class MediaListViewController: UIViewController {
     
     private let appDelegate         = UIApplication.shared.delegate as! AppDelegate
     private let deviceAccessControl = DeviceAccessControl.sharedInstance
-    private var lastSelection       = GlobalIndexPaths.noSelection
     private var navigatorCentral    = NavigatorCentral.sharedInstance
     private var notificationCenter  = NotificationCenter.default
     private var queuedSelection     = GlobalIndexPaths.noSelection
@@ -51,6 +50,22 @@ class MediaListViewController: UIViewController {
     private var searchResults       : [MediaFile] = []
     private let userDefaults        = UserDefaults.standard
 
+    private var lastSelection: IndexPath {
+        get {
+            let lastValue = getStringFromUserDefaults( UserDefaultKeys.lastSelectionIndexPath )
+            let indexPath = indexPathFrom( lastValue )
+            
+            return indexPath
+        }
+        
+        set ( indexPath ) {
+            let newIndexPathString = stringFor( indexPath )
+            
+            saveStringToUserDefaults( newIndexPathString, for: UserDefaultKeys.lastSelectionIndexPath )
+        }
+        
+    }
+    
     
     // This is used only when we are sorting on Type
     private var selectedSection: Int {
@@ -131,6 +146,7 @@ class MediaListViewController: UIViewController {
                 if self.lastSelection != GlobalIndexPaths.noSelection {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
                         self.scrollToLastSelectedItem()
+                        self.displayMediaAt( self.lastSelection )
                     }
                     
                 }
@@ -530,6 +546,7 @@ extension MediaListViewController: NavigatorCentralDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
             self.scrollToLastSelectedItem()
             self.loadBarButtonItems()
+            self.displayMediaAt( self.lastSelection )
         }
 
     }
@@ -678,7 +695,20 @@ extension MediaListViewController: UITableViewDelegate {
         updateAccessoryOnRowAt( indexPath )
         
         if UIDevice.current.userInterfaceIdiom == .phone {
-            let myTabBarViewController = appDelegate.window?.rootViewController as! TabBarViewController
+            var myTabBarViewController: TabBarViewController!
+            
+            if appDelegate.window?.rootViewController != nil {
+                if let tabBarController = appDelegate.window?.rootViewController as? TabBarViewController {
+                    myTabBarViewController = tabBarController
+                }
+                
+            }
+            else {
+                if let tabBarController = appDelegate.activeWindow?.rootViewController as? TabBarViewController {
+                    myTabBarViewController = tabBarController
+                }
+
+            }
             
             myTabBarViewController.selectedIndex = 1
             logTrace( "switching to viewer" )
@@ -772,6 +802,7 @@ extension MediaListViewController: UITableViewDelegate {
     // MARK: UITableViewDelegate Utility Methods
 
     private func displayMediaAt(_ indexPath: IndexPath ) {
+        logTrace()
         if navigatorCentral.dataSourceLocation == .nas {
             appDelegate.mediaViewer.displayMediaFileAt( indexPath, self )
         }

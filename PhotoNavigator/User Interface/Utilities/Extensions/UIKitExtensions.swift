@@ -115,6 +115,17 @@ extension UIViewController {
     }
     
     
+    func getStringFromUserDefaults(_ key: String ) -> String {
+        var savedString = ""
+        
+        if let string = UserDefaults.standard.string( forKey: key ) {
+            savedString = string
+        }
+
+        return savedString
+    }
+    
+    
     func flagIsPresentInUserDefaults(_ key : String ) -> Bool {
         var     flagIsPresent = false
         
@@ -144,6 +155,14 @@ extension UIViewController {
         let     todayString = String( format: "%d", today )
         
         UserDefaults.standard.set( todayString, forKey: key )
+        UserDefaults.standard.synchronize()
+    }
+    
+    
+    func saveStringToUserDefaults(_ value: String, for key: String ) {
+        UserDefaults.standard.removeObject( forKey: key )
+        UserDefaults.standard.set( value,   forKey: key )
+        
         UserDefaults.standard.synchronize()
     }
     
@@ -269,11 +288,6 @@ func stringFor(_ decimalValue : NSDecimalNumber, withCurrentSymbol : Bool ) -> S
 }
 
 
-func stringFor(_ indexPath: IndexPath ) -> String {
-    return String( format: "%d, %d", indexPath.section, indexPath.row )
-}
-
-
 func stringFor(_ frame: CGRect ) -> String {
     return String( format: "[ %4.1f, %4.1f ][ %4.1f, %4.1f ]", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height )
 }
@@ -281,6 +295,27 @@ func stringFor(_ frame: CGRect ) -> String {
 
 func stringFor(_ size: CGSize ) -> String {
     return String( format: "[ %4.1f, %4.1f ]", size.width, size.height )
+}
+
+
+func indexPathFrom(_ string: String ) -> IndexPath {
+    let components = string.components(separatedBy: "," )
+    var indexPath  = GlobalIndexPaths.noSelection
+
+    if components.count == 2 {
+        let trimmedComponents = components.map {
+            $0.trimmingCharacters( in: .whitespaces )
+        }
+        
+        indexPath = IndexPath(row: Int( trimmedComponents[1] )!, section: Int( trimmedComponents[0] )! )
+    }
+    
+    return indexPath
+}
+
+
+func stringFor(_ indexPath: IndexPath ) -> String {
+    return String( format: "%d, %d", indexPath.section, indexPath.row )
 }
 
 

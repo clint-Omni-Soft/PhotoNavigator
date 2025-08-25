@@ -1036,7 +1036,10 @@ extension NavigatorCentral: NASCentralDelegate {
         logVerbose( "[ %@ ]", stringFor( didStartSession ) )
         
         if didStartSession {
-            nasCentral.lockNas( self )
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1 ) {
+                nasCentral.lockNas( self )
+            }
+            
         }
         else {
             notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.unableToConnect ), object: self )

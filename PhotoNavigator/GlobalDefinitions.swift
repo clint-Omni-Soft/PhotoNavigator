@@ -164,6 +164,7 @@ struct UserDefaultKeys {
     static let howToUseShown             = "HowToUseShown"
     static let imageDuration             = "ImageDuration"
     static let lastAccessedMediaFileGuid = "LastAccessedMediaFileGuid"
+    static let lastSelectionIndexPath    = "LastSelectionIndexPath"
     static let lastTabSelected           = "LastTabSelected"
     static let networkAccessGranted      = "NetworkAccessGranted"
     static let networkPath               = "NetworkPath"
