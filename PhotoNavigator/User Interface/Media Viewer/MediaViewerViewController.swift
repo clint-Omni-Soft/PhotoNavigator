@@ -199,7 +199,9 @@ class MediaViewerViewController: UIViewController {
         logTrace()
         super.viewWillDisappear(animated)
         
-        slideShowActive = false
+        nasSessionActive = false
+        slideShowActive  = false
+
         disableImageSlideShowTimer()
 
         if playerLayer != nil {
@@ -375,7 +377,6 @@ class MediaViewerViewController: UIViewController {
         else {
             appDelegate.hidePrimaryView( false )
             disableImageSlideShowTimer()
-            nasSessionActive = false
             
             if playerLayer != nil {
                 playerLayer.player?.pause()
@@ -759,8 +760,23 @@ extension MediaViewerViewController: NASCentralDelegate {
     
     func nasCentral(_ nasCentral: NASCentral, canSeeNasDataSourceFolders: Bool) {
         logVerbose( "[ %@ ]", stringFor( canSeeNasDataSourceFolders ) )
+        
         if canSeeNasDataSourceFolders {
-            nasCentral.startDataSourceSession( self )
+            if !nasSessionActive {
+                nasCentral.startDataSourceSession( self )
+            }
+            else {
+                var filePathAndName = ""
+                
+                if let relativePath = mediaFile.relativePath,
+                   let filename     = mediaFile.filename {
+                    filePathAndName = relativePath + "/" + filename
+                }
+                
+                logVerbose( "requesting data from [ %@ ]", filePathAndName )
+                nasCentral.fetchFileOn( connectedShare, filePathAndName, self )
+            }
+
         }
         else {
             presentAlert( title  : NSLocalizedString( "AlertTitle.Error", comment:  "Error" ),
@@ -773,9 +789,10 @@ extension MediaViewerViewController: NASCentralDelegate {
     func nasCentral(_ nasCentral: NASCentral, didFetchFile: Bool, _ data: Data ) {
         logVerbose( "[ %@ ]", stringFor( didFetchFile ) )
         
+        nasSessionActive = didFetchFile
+
         if didFetchFile {
             fileData = data
-            nasSessionActive = slideShowActive
             presentMediaFileDocument()
         }
         else {

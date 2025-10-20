@@ -46,12 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LogCentral.sharedInstance.setupLogging()
         logTrace()
         
-        navigatorCentral.enteringForeground()
-
-        if navigatorCentral.dataStoreLocation != .device {
-            showPleaseWaitScreen()
-        }
-
         if #available(iOS 15, *) {
             UITableView.appearance().sectionHeaderTopPadding = 0.0
         }
@@ -143,11 +137,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             activeWindow?.rootViewController = initialViewController
             activeWindow?.makeKeyAndVisible()
-            
-            if UIDevice.current.userInterfaceIdiom == .pad {
-                configureSplitViewController()
-            }
-            
         }
         else {
             logTrace( "ERROR!!!!  Unable to instantiate initial view controller!" )

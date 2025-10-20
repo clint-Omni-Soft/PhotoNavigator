@@ -803,11 +803,14 @@ extension MediaListViewController: UITableViewDelegate {
 
     private func displayMediaAt(_ indexPath: IndexPath ) {
         logTrace()
-        if navigatorCentral.dataSourceLocation == .nas {
-            appDelegate.mediaViewer.displayMediaFileAt( indexPath, self )
-        }
-        else {  // Device
-            appDelegate.mediaViewer.displayAssetAt( indexPath, self )
+        if let mediaViewer = appDelegate.mediaViewer {
+            if navigatorCentral.dataSourceLocation == .nas {
+                mediaViewer.displayMediaFileAt( indexPath, self )
+            }
+            else {  // Device
+                mediaViewer.displayAssetAt( indexPath, self )
+            }
+
         }
 
     }

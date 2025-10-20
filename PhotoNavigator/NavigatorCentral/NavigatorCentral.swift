@@ -54,6 +54,7 @@ class NavigatorCentral: NSObject {
     var pleaseWaiting                   = false
     var resigningActive                 = false
     var sectionTitleArray: [String]     = []
+    var sessionActive                   = false
     var stayOffline                     = false
     let userDefaults                    = UserDefaults.standard
     
@@ -272,9 +273,26 @@ class NavigatorCentral: NSObject {
     }
     
     
+    var nasQueueContents: String {
+        get {
+            nasCentral.queueContents()
+        }
+        
+    }
+    
+    
+    var nasQueueIsEmpty: Bool {
+        get {
+            return nasCentral.queueIsEmpty()
+        }
+        
+    }
+
+    
 
     // MARK: Private Variables & Definitions
     
+    private var canSeeNasInProgress         = false
     private var databaseUpdated             = false
     private var dataSourceLocationBacking   = DataLocation.notAssigned
     private var dataStoreLocationBacking    = DataLocation.notAssigned
@@ -307,7 +325,7 @@ class NavigatorCentral: NSObject {
     var offlineImageRequestQueue: [ImageRequest] = []                             // This queue is used to flush offline NAS image transactions to disk after we reconnect
     var openInProgress          = false
     var persistentContainer     : NSPersistentContainer!
-    
+
     var updatedOffline: Bool {
         get {
             return flagIsPresentInUserDefaults( UserDefaultKeys.updatedOffline )
@@ -341,6 +359,11 @@ class NavigatorCentral: NSObject {
         
 //        stopTimer()
         notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.enteringBackground ), object: self )
+
+        if dataStoreLocation != .device {
+            logVerbose( "NAS queue contents: [ %@ ]", nasCentral.queueContents() )
+        }
+        
     }
     
     
@@ -349,11 +372,96 @@ class NavigatorCentral: NSObject {
         resigningActive = false
         
         notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.enteringForeground ), object: self )
-//        canSeeExternalStorage()
+        canSeeExternalStorage()
+    }
+
+
+    func canSeeExternalStorage() {
+        if dataStoreLocation == .device {
+            deviceAccessControl.initForDevice()
+            logVerbose( "on device ... %@", deviceAccessControl.descriptor() )
+            return
+        }
+
+        // We must be on the NAS
+        logVerbose( "nameForDataLocation[ %@ ]", nameForDataLocation( dataStoreLocation ) )
+
+        if stayOffline {
+            logTrace( "stayOffline ... do nothing!" )
+        }
+        else {
+            if sessionActive {
+                if nasCentral.queueIsEmpty() {
+                    logTrace( "sessionActive & queueIsEmpty ..." )
+
+                    // Add app specific stuff here
+                }
+                else {
+                    if nasCentral.queueContents() == "CanSeeNasFolders" {
+                        logTrace( "Do nothing ... CanSeeNasFolders already in queue" )
+                    }
+                    else {
+                        logVerbose( "NAS is busy ... queue[ %@ ]", nasCentral.queueContents() )
+                    }
+
+                }
+
+            }
+            else {  // !sessionActive
+                logTrace( "Starting a new session" )
+                if !nasQueueIsEmpty {
+                    nasCentral.emptyQueue()
+                }
+
+                nasCentral.canSeeNasFolders( self )
+           }
+
+        }
+
     }
     
     
-    
+    func nasIsIdle() -> Bool {      // Must be called from inside DispatchQueue.global(qos: .background).async {}
+        logVerbose( "sessionActive[ %@ ], nasQueueContents[ %@ ]", stringFor( sessionActive ), nasQueueContents )
+        var nasIsIdle  = false
+        var retryCount = 0
+
+        if !sessionActive {
+            if nasCentral.queueIsEmpty() {
+                nasCentral.canSeeNasFolders( self )
+            }
+            else {
+                if nasCentral.queueContents() == "CanSeeNasFolders" {
+                    logTrace( "Do nothing ... CanSeeNasFolders already in queue" )
+                }
+                else {
+                    logVerbose( "ERROR!!!  Emptying queue ... nasQueueContents[ %@ ]", nasCentral.queueContents() )
+                    nasCentral.emptyQueue()
+                    nasCentral.canSeeNasFolders( self )
+                }
+
+            }
+
+        }
+
+        while retryCount < 10 {
+            if sessionActive && nasQueueIsEmpty {
+                nasIsIdle = true
+                break
+            }
+
+            retryCount += 1
+            sleep( 2 )
+            logVerbose( "retryCount[ %d ] ... sessionActive[ %@ ]  queue[ %@ ]", retryCount, stringFor( sessionActive ), nasQueueContents )
+        }
+
+        logVerbose( "[ %@ ]", stringFor( nasIsIdle ) )
+
+        return nasIsIdle
+    }
+
+
+
     // MARK: Database Access Methods (Public)
     
     func openDatabaseWith(_ delegate: NavigatorCentralDelegate ) {
@@ -855,24 +963,6 @@ class NavigatorCentral: NSObject {
     
     // MARK: Utility Methods (Private)
     
-    private func canSeeExternalStorage() {
-        if dataStoreLocation == .device {
-            deviceAccessControl.initForDevice()
-            logVerbose( "on device ... %@", deviceAccessControl.descriptor() )
-            return
-        }
-        
-        // We must be on the NAS
-        logVerbose( "[ %@ ]", nameForDataLocation( dataStoreLocation ) )
-        
-        if !stayOffline {
-            nasCentral.emptyQueue()
-            nasCentral.canSeeNasFolders( self )
-        }
-
-    }
-    
-    
     private func deleteDatabase() {
         guard let docURL = fileManager.urls( for: .documentDirectory, in: .userDomainMask ).last else {
             logTrace( "Error!  Unable to resolve document directory" )
@@ -1292,6 +1382,7 @@ extension NavigatorCentral {
                 else {
                     logTrace( "ending NAS session" )
                     self.nasCentral.endSession( self )
+                    self.sessionActive = false
                 }
                 
             }

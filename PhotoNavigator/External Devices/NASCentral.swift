@@ -524,7 +524,7 @@ extension NASCentral {
             return
         }
         
-        logVerbose( "[ %@ ]", stringForCommand( command ) )
+        logVerbose( "[ %@ ] ... queued requests[ %d ]", stringForCommand( command ), requestQueue.count )
         currentCommand = command
 
         switch currentCommand {
@@ -616,6 +616,15 @@ extension NASCentral {
         }
         
         return description
+    }
+    
+    
+    private func stringForDate(_ date: Date ) -> String {
+        let     formatter = DateFormatter()
+        
+        formatter.dateFormat = "yyyy-MM-dd@HH_mm_ss.SSS"
+
+        return formatter.string( from: date )
     }
     
     
@@ -913,6 +922,7 @@ extension NASCentral {
             
             if allFilesTransferred {
                 self.delegate?.nasCentral( self, didCopyDatabaseFromNasToDevice:  true )
+                processNextRequest()
             }
             else {
                 deleteFilesFromDevice()
