@@ -59,6 +59,7 @@
 "AlertTitle.CannotReadAllDbFiles"           = "Cannot Read ALL Database Files on Remote!";
 "AlertTitle.DataWillBeSavedToNAS"           = "Preparing to save data to:";
 "AlertTitle.DeviceNameRequired"             = "Device Name is Required for NAS";
+"AlertTitle.DisplayOptions"                 = "Display Options";
 "AlertTitle.DuplicateEntry"                 = "Duplicate Entry!";
 "AlertTitle.EnterDeviceName"                = "Enter Device Name";
 "AlertTitle.EnterName"                      = "Enter Name";
@@ -92,6 +93,7 @@
 "ButtonTitle.Edit"                          = "Edit";
 "ButtonTitle.GotIt"                         = "Got it!";
 "ButtonTitle.Hide"                          = "Hide";
+"ButtonTitle.Loop"                          = "Loop in Folder";
 "ButtonTitle.Next"                          = "Next";
 "ButtonTitle.No"                            = "No!";
 "ButtonTitle.OK"                            = "OK";
@@ -104,8 +106,10 @@
 "ButtonTitle.Save"                          = "Save";
 "ButtonTitle.SelectDirectory"               = "Select Directory";
 "ButtonTitle.SetAsMediaRepository"          = "Set as Media Repository";
+"ButtonTitle.Shuffle"                       = "Shuffle in Folder";
 "ButtonTitle.SortAscending"                 = "Sort Ascending";
 "ButtonTitle.StayOffline"                   = "Stay Offline";
+"ButtonTitle.Stream"                        = "Stream in Order";
 "ButtonTitle.Yes"                           = "Yes";
 
 "InfoText.DataStoreLocation"                = "This app gives you the option to store your data either on...\n\n   (a) on your device (default) or\n   (b) on a Network Accessible Storage (NAS) drive. \n\nThe key point here is that there is no sharing on the device. If you prefer to use a NAS then anyone who has this app and access to your Wi-Fi can access your data.";

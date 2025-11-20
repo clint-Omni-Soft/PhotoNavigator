@@ -22,7 +22,7 @@ class MediaViewerViewController: UIViewController {
     // MARK: Public Definitions
     
     var delegate: MediaViewerViewControllerDelegate!
-    
+
     @IBOutlet weak var mediaNameLabel        : UILabel!
     @IBOutlet weak var myActivityIndicator   : UIActivityIndicatorView!
     @IBOutlet weak var myImageView           : UIImageView!
@@ -583,9 +583,30 @@ extension MediaViewerViewController {
     
     
     private func requestNextAsset( forward: Bool ) {
-        logVerbose( "forward[ %@ ]", stringFor( forward ) )
-        resourceIndexPath = forward ? navigatorCentral.nextAssetAfter( resourceIndexPath ) : navigatorCentral.previousAssetBefore( resourceIndexPath )
-        deviceAsset       = navigatorCentral.deviceAssetAt( resourceIndexPath )
+        if navigatorCentral.stayInFolder {
+            if navigatorCentral.shuffleImages {
+                resourceIndexPath = navigatorCentral.nextShuffledAssetFile( resourceIndexPath )
+            }
+            else {
+                let currentSection = resourceIndexPath.section
+                
+                resourceIndexPath = navigatorCentral.nextAssetAfter( resourceIndexPath )
+                
+                if resourceIndexPath.section != currentSection {
+                    resourceIndexPath.section = currentSection
+                    resourceIndexPath.item    = 0
+                }
+                
+            }
+            
+            logVerbose( "stayInFolder[ true ]  shuffleImages[ %@ ] -> resourceIndexPath[ %@ ]", stringFor( navigatorCentral.shuffleImages ), stringFor( resourceIndexPath ) )
+        }
+        else {
+            resourceIndexPath = forward ? navigatorCentral.nextAssetAfter( resourceIndexPath ) : navigatorCentral.previousAssetBefore( resourceIndexPath )
+            logVerbose( "stayInFolder[ false ]  forward[ %@ ] -> resourceIndexPath[ %@ ]", stringFor( forward ), stringFor( resourceIndexPath ) )
+        }
+        
+        deviceAsset = navigatorCentral.deviceAssetAt( resourceIndexPath )
         
         requestAssetData()
     }
@@ -743,9 +764,31 @@ extension MediaViewerViewController {
     
     
     private func requestNextMediaFile( forward: Bool ) {
-        logTrace()
-        resourceIndexPath = forward ? navigatorCentral.nextMediaFileAfter( resourceIndexPath ) : navigatorCentral.previousMediaFileBefore( resourceIndexPath )
-        mediaFile         = navigatorCentral.mediaFileAt( resourceIndexPath )
+        if navigatorCentral.stayInFolder {
+            logVerbose( "stayInFolder[ true ]  shuffleImages[ %@ ]", stringFor( navigatorCentral.shuffleImages ) )
+            
+            if navigatorCentral.shuffleImages {
+                resourceIndexPath = navigatorCentral.nextShuffledMediaFile( resourceIndexPath )
+            }
+            else {
+                let currentSection = resourceIndexPath.section
+                
+                resourceIndexPath = navigatorCentral.nextMediaFileAfter( resourceIndexPath )
+                
+                if resourceIndexPath.section != currentSection {
+                    resourceIndexPath.section = currentSection
+                    resourceIndexPath.item    = 0
+                }
+                
+            }
+            
+        }
+        else {
+            logVerbose( "stayInFolder[ false ]  forward[ %@ ]", stringFor( forward ) )
+            resourceIndexPath = forward ? navigatorCentral.nextMediaFileAfter( resourceIndexPath ) : navigatorCentral.previousMediaFileBefore( resourceIndexPath )
+        }
+        
+        mediaFile = navigatorCentral.mediaFileAt( resourceIndexPath )
         
         requestMediaFileData()
     }

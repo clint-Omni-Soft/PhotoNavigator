@@ -59,6 +59,7 @@
 "AlertTitle.CannotReadAllDbFiles"           = "¡No se pueden leer TODOS los archivos de la base de datos en el control remoto!";
 "AlertTitle.DataWillBeSavedToNAS"           = "Preparación para guardar datos en:";
 "AlertTitle.DeviceNameRequired"             = "Se requiere el nombre del dispositivo para NAS";
+"AlertTitle.DisplayOptions"                 = "Opciones de visualización";
 "AlertTitle.DuplicateEntry"                 = "¡Entrada duplicada!";
 "AlertTitle.EnterDeviceName"                = "Ingrese el nombre del dispositivo";
 "AlertTitle.EnterName"                      = "Ingrese su Nombre";
@@ -92,6 +93,7 @@
 "ButtonTitle.Edit"                          = "Editar";
 "ButtonTitle.GotIt"                         = "¡Entiendo!";
 "ButtonTitle.Hide"                          = "Esconder";
+"ButtonTitle.Loop"                          = "Bucle en carpeta";
 "ButtonTitle.Next"                          = "Próximo";
 "ButtonTitle.No"                            = "¡No!";
 "ButtonTitle.OK"                            = "DE ACUERDO";
@@ -104,8 +106,10 @@
 "ButtonTitle.Save"                          = "Salvar";
 "ButtonTitle.SelectDirectory"               = "Seleccionar directorio";
 "ButtonTitle.SetAsMediaRepository"          = "Définir comme référentiel multimédia";
+"ButtonTitle.Shuffle"                       = "Mezclar en carpeta";
 "ButtonTitle.SortAscending"                 = "Orden ascendente";
 "ButtonTitle.StayOffline"                   = "Mantenerse fuera de línea";
+"ButtonTitle.Stream"                        = "Stream in Order";
 "ButtonTitle.Yes"                           = "Sí";
 
 "InfoText.DataStoreLocation"                = "Esta aplicación le brinda la opción de almacenar sus datos en...\n\n (a) en su dispositivo (predeterminado) o\n (b) en una unidad de almacenamiento accesible en red (NAS). \n\nEl punto clave aquí es que no se puede compartir en el dispositivo. Si prefiere utilizar un NAS, cualquiera que tenga esta aplicación y acceso a su Wi-Fi podrá acceder a sus datos.";

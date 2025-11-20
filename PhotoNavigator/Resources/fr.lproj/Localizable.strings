@@ -59,6 +59,7 @@
 "AlertTitle.CannotReadAllDbFiles"           = "Impossible de lire TOUS les fichiers de base de données à distance!";
 "AlertTitle.DataWillBeSavedToNAS"           = "Préparation de l'enregistrement des données dans:";
 "AlertTitle.DeviceNameRequired"             = "Le nom de l'appareil est requis pour NAS";
+"AlertTitle.DisplayOptions"                 = "Options d'affichage";
 "AlertTitle.DuplicateEntry"                 = "Double entrée!";
 "AlertTitle.EnterDeviceName"                = "Entrez le nom de l'appareil";
 "AlertTitle.EnterName"                      = "Entrez le nom";
@@ -92,6 +93,7 @@
 "ButtonTitle.Edit"                          = "Modifier";
 "ButtonTitle.GotIt"                         = "J'ai compris!";
 "ButtonTitle.Hide"                          = "Cacher";
+"ButtonTitle.Loop"                          = "Boucle dans le dossier";
 "ButtonTitle.Next"                          = "Prochain";
 "ButtonTitle.No"                            = "Non!";
 "ButtonTitle.OK"                            = "OK";
@@ -104,8 +106,10 @@
 "ButtonTitle.Save"                          = "Sauvegarder";
 "ButtonTitle.SelectDirectory"               = "Sélectionnez le répertoire";
 "ButtonTitle.SetAsMediaRepository"          = "Définir comme référentiel multimédia";
+"ButtonTitle.Shuffle"                       = "Mélanger dans le dossier";
 "ButtonTitle.SortAscending"                 = "Trier par ordre croissant";
 "ButtonTitle.StayOffline"                   = "Restez hors ligne";
+"ButtonTitle.Stream"                        = "Stream in Order";
 "ButtonTitle.Yes"                           = "Oui";
 
 "InfoText.DataStoreLocation"                = "Cette application vous offre la possibilité de stocker vos données soit sur...\n\n (a) sur votre appareil (par défaut) ou\n (b) sur un lecteur de stockage accessible en réseau (NAS). \n\nLe point clé ici est qu’il n’y a pas de partage sur l’appareil. Si vous préférez utiliser un NAS, toute personne disposant de cette application et ayant accès à votre Wi-Fi peut accéder à vos données.";

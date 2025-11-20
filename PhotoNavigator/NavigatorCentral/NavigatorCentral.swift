@@ -55,6 +55,8 @@ class NavigatorCentral: NSObject {
     var resigningActive                 = false
     var sectionTitleArray: [String]     = []
     var sessionActive                   = false
+    var shuffleImages                   = false
+    var stayInFolder                    = false
     var stayOffline                     = false
     let userDefaults                    = UserDefaults.standard
     
@@ -713,6 +715,32 @@ class NavigatorCentral: NSObject {
         }
         
         return IndexPath.init(row: 0, section: 0 )
+    }
+    
+    
+    func nextShuffledAssetFile(_ indexPath: IndexPath ) -> IndexPath {
+        let currentArray = deviceAssetArrayOfArrays[indexPath.section]
+        let arraySize    = currentArray.count - 1
+        var randomIndex  = Int.random(in: 0...arraySize )
+        
+        if randomIndex == indexPath.row {
+            randomIndex = Int.random(in: 0...arraySize )
+        }
+        
+        return IndexPath.init(row: randomIndex, section: indexPath.section )
+    }
+    
+    
+    func nextShuffledMediaFile(_ indexPath: IndexPath ) -> IndexPath {
+        let currentArray = mediaFileArrayOfArrays[indexPath.section]
+        let arraySize    = currentArray.count - 1
+        var randomIndex  = Int.random(in: 0...arraySize )
+        
+        if randomIndex == indexPath.row {
+            randomIndex = Int.random(in: 0...arraySize )
+        }
+        
+        return IndexPath.init(row: randomIndex, section: indexPath.section )
     }
     
     

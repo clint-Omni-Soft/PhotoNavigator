@@ -45,9 +45,9 @@ class MediaListViewController: UIViewController {
     private var queuedSelection     = GlobalIndexPaths.noSelection
     private var sectionIndexTitles  : [String] = []
     private var sectionTitleIndexes : [Int]    = []
-    private var showAllSections     = true
     private var searchEnabled       = false
     private var searchResults       : [MediaFile] = []
+    private var showAllSections     = true
     private let userDefaults        = UserDefaults.standard
 
     private var lastSelection: IndexPath {
@@ -224,6 +224,12 @@ class MediaListViewController: UIViewController {
 
     // MARK: Target / Action Methods
     
+    @IBAction func displayModeBarButtonTouched(_ sender : UIBarButtonItem ) {
+        logTrace()
+        presentDisplayOptions( sender )
+    }
+    
+    
     @IBAction func hidePrimaryBarButtonTouched(_ sender: UIBarButtonItem ) {
         logTrace()
         appDelegate.hidePrimaryView( true )
@@ -372,7 +378,7 @@ class MediaListViewController: UIViewController {
 
     
     private func loadBarButtonItems() {
-//        logTrace()
+        logTrace()
         let caretImage          = UIImage(named: showAllSections ? "arrowUp" : "arrowDown" )
         var leftBarButtonItems  = [UIBarButtonItem]()
         var rightBarButtonItems = [UIBarButtonItem]()
@@ -399,10 +405,75 @@ class MediaListViewController: UIViewController {
             rightBarButtonItems.append( UIBarButtonItem.init( image: searchImage, style: .plain, target: self, action: #selector( searchToggleBarButtonTouched(_:) ) ) )
         }
         
+        if lastSelection != GlobalIndexPaths.noSelection {
+            let image = navigatorCentral.stayInFolder ? ( navigatorCentral.shuffleImages ? UIImage(named: "shuffle" ) : UIImage(named: "repeat" ) ) : UIImage(named: "pin" )
+            
+            rightBarButtonItems.append( UIBarButtonItem.init( image: image, style: .plain, target: self, action: #selector( displayModeBarButtonTouched(_:) ) ) )
+        }
+        
         navigationItem.rightBarButtonItems = rightBarButtonItems
     }
     
     
+    private func presentDisplayOptions(_ displayOptionsBarButtonItem : UIBarButtonItem ) {
+        let alert       = UIAlertController( title: NSLocalizedString( "AlertTitle.DisplayOptions", comment: "Display Options" ), message: nil, preferredStyle: .actionSheet )
+        let mediaViewer = appDelegate.mediaViewer
+        
+        if mediaViewer == nil {
+            logTrace( "MediaViewer is nil!" )
+        }
+
+        let     streamAction = UIAlertAction.init( title: NSLocalizedString( "ButtonTitle.Stream", comment: "Stream in Order" ), style: .default ) {
+            ( alertAction ) in
+            logTrace( "Stream Action" )
+            
+            self.navigatorCentral.shuffleImages = false
+            self.navigatorCentral.stayInFolder  = false
+            
+            self.loadBarButtonItems()
+        }
+        
+        let     repeatAction = UIAlertAction.init( title: NSLocalizedString( "ButtonTitle.Loop", comment: "Loop in Folder" ), style: .default ) {
+            ( alertAction ) in
+            logTrace( "Loop Action" )
+            
+            self.navigatorCentral.shuffleImages = false
+            self.navigatorCentral.stayInFolder  = true
+
+            self.loadBarButtonItems()
+        }
+        
+        let     shuffleAction = UIAlertAction.init( title: NSLocalizedString( "ButtonTitle.Shuffle", comment: "Shuffle in Folder" ), style: .default ) {
+            ( alertAction ) in
+            logTrace( "Shuffle Action" )
+            
+            self.navigatorCentral.shuffleImages = true
+            self.navigatorCentral.stayInFolder  = true
+            
+            self.loadBarButtonItems()
+        }
+        
+        let     cancelAction = UIAlertAction.init( title: NSLocalizedString( "ButtonTitle.Cancel", comment: "Cancel" ), style: .cancel ) {
+            ( alertAction ) in
+            logTrace( "Cancel Action" )
+        }
+        
+        alert.addAction( streamAction  )
+        alert.addAction( repeatAction  )
+        alert.addAction( shuffleAction )
+        alert.addAction( cancelAction  )
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            alert.popoverPresentationController?.barButtonItem            = displayOptionsBarButtonItem
+            alert.popoverPresentationController!.delegate                 = self
+            alert.popoverPresentationController?.permittedArrowDirections = .any
+            alert.popoverPresentationController?.permittedArrowDirections = .any
+        }
+            
+        present( alert, animated: true )
+    }
+    
+        
     private func presentSortOptions() {
         guard let sortOptionsVC: SortOptionsViewController = iPhoneViewControllerWithStoryboardId(storyboardId: StoryboardIds.sortOptions ) as? SortOptionsViewController else {
             logTrace( "ERROR: Could NOT load SortOptionsViewController!" )
