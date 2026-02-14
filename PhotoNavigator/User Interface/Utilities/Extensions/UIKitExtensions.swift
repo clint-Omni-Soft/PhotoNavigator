@@ -10,14 +10,29 @@
 import UIKit
 
 
-// MARK: UIViewController Methods
-
 
 struct HeaderViewTagOffsets {
     static let down = 200
     static let up   = 100
 }
 
+
+
+// MARK: Date Methods
+
+extension Date {
+    
+    func daysBetweenDate(toDate: Date) -> Int {
+        let components = Calendar.current.dateComponents([.day], from: self, to: toDate)
+        return components.day ?? 0
+    }
+    
+    
+}
+
+
+
+// MARK: UIViewController Methods
 
 extension UIViewController {
     
@@ -28,6 +43,50 @@ extension UIViewController {
         navigationController?.navigationBar.topItem?.backBarButtonItem = backBarButtonItem
     }
 
+    
+    func configureNavBarTitleButtonWith(_ title: String, _ ibAction: Selector ) {
+        let containerView  = UIView.init( frame: CGRect( x: 0, y: 0, width: 160, height: 40 ) )
+        let navTitleButton = UIButton( type: .custom )
+
+        navTitleButton.tag = 111
+        navTitleButton.frame = containerView.frame
+        navTitleButton.setTitle( title, for: .normal )
+        navTitleButton.setTitleColor( .blue, for: .normal )
+        navTitleButton.titleLabel?.font = UIFont.boldSystemFont( ofSize: 18 )
+        navTitleButton.addTarget( self, action:  ibAction, for: .touchUpInside )
+        
+        containerView.addSubview( navTitleButton )
+        
+        navigationController?.navigationBar.tintColor = .blue
+        navigationItem.titleView = containerView
+    }
+    
+    
+    func customizeButton(_ button: UIButton, with title: String ) {
+        button.layer.borderColor   = UIColor.black.cgColor
+        button.layer.borderWidth   = 1.0
+        button.layer.cornerRadius  = 15.0
+        button.layer.masksToBounds = true
+        
+        button.setTitle( title, for: .normal )
+
+        if #available( iOS 26.0, *) {
+            button.configuration = .glass()
+        }
+        
+    }
+    
+    
+    func getNavBarTitleButton() -> UIButton {
+        var button = UIButton(frame: CGRect( x: 0, y: 0, width: 160, height: 40 ) )
+        
+        if let titleView = navigationItem.titleView {
+            button = titleView.viewWithTag( 111 ) as! UIButton
+        }
+        
+        return button
+    }
+    
     
     func headerViewFor(_ tableView : UITableView, _ section : Int, with title : String, arrowUp : Bool ) -> UIView {
         // NOTE: This method is no longer used
@@ -59,7 +118,6 @@ extension UIViewController {
         let     storyboard     = UIStoryboard.init( name: storyboardName, bundle: nil )
         let     viewController = storyboard.instantiateViewController( withIdentifier: storyboardId )
         
-        
         return viewController
     }
     
@@ -74,6 +132,17 @@ extension UIViewController {
         present( alert, animated: true, completion: nil )
     }
 
+    
+    func prominentStyleForBarButtonItem() -> UIBarButtonItem.Style {
+        var style = UIBarButtonItem.Style.plain
+        
+        if #available(iOS 26.0, *) {
+            style = .prominent
+        }
+
+        return style
+    }
+    
     
     func removeViewControllerByIdiom() {
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -110,6 +179,32 @@ extension UIViewController {
     
     // MARK: UserDefaults Convenience Methods
     
+    func flagIsPresentInUserDefaults(_ key : String ) -> Bool {
+        var     flagIsPresent = false
+        
+        if let _ = UserDefaults.standard.string( forKey: key ) {
+            flagIsPresent = true
+        }
+        
+        return flagIsPresent
+    }
+    
+    
+    func getIndexPathFromUserDefaults(_ key: String ) -> IndexPath {
+        var indexPath = GlobalIndexPaths.noSelection
+        
+        if let value = UserDefaults.standard.string( forKey: key ) {
+            let components = value.components(separatedBy: "/" )
+            let section    = Int( components[0] ) ?? 0
+            let row        = Int( components[1] ) ?? 0
+            
+            indexPath = IndexPath(row: row, section: section )
+        }
+
+        return indexPath
+    }
+    
+    
     func getIntValueFromUserDefaults(_ key: String ) -> Int {
         return UserDefaults.standard.integer(forKey: key )
     }
@@ -126,18 +221,13 @@ extension UIViewController {
     }
     
     
-    func flagIsPresentInUserDefaults(_ key : String ) -> Bool {
-        var     flagIsPresent = false
-        
-        if let _ = UserDefaults.standard.string( forKey: key ) {
-            flagIsPresent = true
-        }
-        
-        return flagIsPresent
+    func removeFlagFromUserDefaults(_ key: String ) {
+        UserDefaults.standard.removeObject(forKey: key )
+        UserDefaults.standard.synchronize()
     }
     
     
-    func removeFlagFromUserDefaults(_ key: String ) {
+    func removeStringFromUserDefaults(_ key: String ) {
         UserDefaults.standard.removeObject(forKey: key )
         UserDefaults.standard.synchronize()
     }
@@ -145,6 +235,14 @@ extension UIViewController {
     
     func saveFlagInUserDefaults(_ key: String ) {
         UserDefaults.standard.set( key, forKey: key )
+        UserDefaults.standard.synchronize()
+    }
+    
+    
+    func saveIndexPathInUserDefaults(_ key: String, indexPath: IndexPath ) {
+        let value = String(format:  "%d/%d", indexPath.section, indexPath.row )
+        
+        UserDefaults.standard.set( value, forKey: key )
         UserDefaults.standard.synchronize()
     }
     
@@ -187,9 +285,44 @@ extension UIViewController {
 
 
 
+// MARK: String Methods
+
+extension String {
+    
+    var alphaNumeric: String {
+            return components(separatedBy: CharacterSet.alphanumerics.inverted).joined()
+        }
+    
+    
+    func heightWithConstrainedWidth( width: CGFloat, font: UIFont ) -> CGFloat {
+        let constraintRect = CGSize( width: width, height: .greatestFiniteMagnitude )
+        let boundingBox    = self.boundingRect( with        : constraintRect,
+                                                options     : [.usesLineFragmentOrigin, .usesFontLeading],
+                                                attributes  : [NSAttributedString.Key.font: font],
+                                                context     : nil)
+        return boundingBox.height
+    }
+    
+    
+}
+
+
+
 // MARK: Image Methods
 
 extension UIImage {
+    
+    func alpha(_ value:CGFloat) -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(size, false, scale)
+        draw(at: CGPoint.zero, blendMode: .normal, alpha: value)
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
+    
     
     func resized( withPercentage percentage: CGFloat, isOpaque: Bool = true ) -> UIImage? {
         let canvas = CGSize( width: size.width * percentage, height: size.height * percentage )
@@ -222,20 +355,48 @@ extension UIImage {
     
     
 }
+
+
+
+// MARK: Custom Presentation Classes
+
+class CustomPresentationController: UIPresentationController {
+
+    var customFrame: CGRect!
+
+    init(presentedViewController: UIViewController, presenting presentingViewController: UIViewController?, customFrame: CGRect) {
+        self.customFrame = customFrame
+        super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
+    }
+
+    override var frameOfPresentedViewInContainerView: CGRect {
+        return customFrame
+    }
+
+    override func presentationTransitionWillBegin() {
+        // Optional: Add a dimming view or other custom animations here
+    }
+
+    override func dismissalTransitionWillBegin() {
+        // Optional: Add dismissal animations here
+    }
+
+}
+
+
+
+class CustomTransitioningDelegate: NSObject, UIViewControllerTransitioningDelegate {
+
+    var customFrame: CGRect!
+
+    init(_ customFrame: CGRect) {
+        self.customFrame = customFrame
+        super.init()
+    }
+
     
-
-
-// MARK: String Methods
-
-extension String {
-    
-    func heightWithConstrainedWidth( width: CGFloat, font: UIFont ) -> CGFloat {
-        let constraintRect = CGSize( width: width, height: .greatestFiniteMagnitude )
-        let boundingBox    = self.boundingRect( with        : constraintRect,
-                                                options     : [.usesLineFragmentOrigin, .usesFontLeading],
-                                                attributes  : [NSAttributedString.Key.font: font],
-                                                context     : nil)
-        return boundingBox.height
+    func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
+        return CustomPresentationController(presentedViewController: presented, presenting: presenting, customFrame: customFrame)
     }
     
     
@@ -244,6 +405,33 @@ extension String {
 
 
 // MARK: Global Methods
+
+func dateFrom(_ dateString: String ) -> Date {
+    let     dateComponentArray = dateString.components(separatedBy: "-" )
+    var     date = Date.distantFuture
+    
+    if dateComponentArray.count == 3 {
+        let     formatter = DateFormatter()
+        
+        formatter.locale     = .current
+        formatter.dateFormat = "yyyy-MM-dd"
+        
+        date = formatter.date(from: dateString)!
+    }
+    
+    return date
+}
+
+
+func dayOfTheWeekFrom(_ date: Date ) -> Int {
+    if let oneBasedDay = Calendar.current.dateComponents( [.weekday], from: date ).weekday {
+        return oneBasedDay - 1
+    }
+
+    logTrace( "ERROR!!!  Unable to unwrap date!  Returning 0" )
+    return  0
+}
+
 
 func extensionFrom(_ filename: String ) -> String {
     var fileExtension = ""
@@ -255,6 +443,22 @@ func extensionFrom(_ filename: String ) -> String {
     }
 
     return fileExtension.uppercased()
+}
+
+
+func indexPathFrom(_ string: String ) -> IndexPath {
+    let components = string.components(separatedBy: "," )
+    var indexPath  = GlobalIndexPaths.noSelection
+
+    if components.count == 2 {
+        let trimmedComponents = components.map {
+            $0.trimmingCharacters( in: .whitespaces )
+        }
+        
+        indexPath = IndexPath(row: Int( trimmedComponents[1] )!, section: Int( trimmedComponents[0] )! )
+    }
+    
+    return indexPath
 }
 
 
@@ -288,34 +492,18 @@ func stringFor(_ decimalValue : NSDecimalNumber, withCurrentSymbol : Bool ) -> S
 }
 
 
-func stringFor(_ frame: CGRect ) -> String {
-    return String( format: "[ %4.1f, %4.1f ][ %4.1f, %4.1f ]", frame.origin.x, frame.origin.y, frame.size.width, frame.size.height )
+func stringFor(_ indexPath: IndexPath ) -> String {
+    return String( format: "%d, %d", indexPath.section, indexPath.row )
+}
+
+
+func stringFor(_ rect: CGRect ) -> String {
+    return String( format: "[ %3.1f, %3.1f ][ %3.1f, %3.1f ]", rect.origin.x, rect.origin.y, rect.size.width, rect.size.height )
 }
 
 
 func stringFor(_ size: CGSize ) -> String {
-    return String( format: "[ %4.1f, %4.1f ]", size.width, size.height )
-}
-
-
-func indexPathFrom(_ string: String ) -> IndexPath {
-    let components = string.components(separatedBy: "," )
-    var indexPath  = GlobalIndexPaths.noSelection
-
-    if components.count == 2 {
-        let trimmedComponents = components.map {
-            $0.trimmingCharacters( in: .whitespaces )
-        }
-        
-        indexPath = IndexPath(row: Int( trimmedComponents[1] )!, section: Int( trimmedComponents[0] )! )
-    }
-    
-    return indexPath
-}
-
-
-func stringFor(_ indexPath: IndexPath ) -> String {
-    return String( format: "%d, %d", indexPath.section, indexPath.row )
+    return String( format: "[ %3.1f, %3.1f ]", size.width, size.height )
 }
 
 

@@ -969,13 +969,13 @@ extension NavigatorCentral: NASCentralDelegate {
 
         let     imageRequest = imageRequestQueue.first
         let     delegate     = imageRequest!.1
-        let     imageName    = imageRequest!.0
+//        let     imageName    = imageRequest!.0
         
         imageRequestQueue.removeFirst()
         
-        if didFetchImage && imageName != filename {
-            logVerbose( "ERROR!  Image returned[ %@ ] is not what was requested [ %@ ]", filename, imageName )
-        }
+//        if didFetchImage && imageName != filename {
+//            logVerbose( "ERROR!  Image returned[ %@ ] is not what was requested [ %@ ]", filename, imageName )
+//        }
 
         if self.imageRequestQueue.count == 0 {
             notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.ready ), object: self )

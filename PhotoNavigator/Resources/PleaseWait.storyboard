@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y6W-OH-hqX">
-    <device id="ipad11_0rounded" orientation="landscape" layout="fullscreen" appearance="light"/>
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
@@ -14,37 +14,45 @@
             <objects>
                 <viewController id="Y6W-OH-hqX" customClass="PleaseWaitViewController" customModule="PhotoNavigator" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
-                        <rect key="frame" x="0.0" y="0.0" width="1210" height="834"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Stock" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="20" translatesAutoresizingMaskIntoConstraints="NO" id="Tvo-oT-1RZ" userLabel="titleLabel">
-                                <rect key="frame" x="20" y="42" width="1170" height="44"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Stock" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tvo-oT-1RZ" userLabel="titleLabel">
+                                <rect key="frame" x="16" y="134" width="361" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="5kB-nc-GKg"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreenImage" translatesAutoresizingMaskIntoConstraints="NO" id="leR-Pt-upa">
-                                <rect key="frame" x="306" y="94" width="598" height="598"/>
+                                <rect key="frame" x="-52" y="186" width="497" height="497"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="leR-Pt-upa" secondAttribute="height" multiplier="1:1" id="ezJ-Z2-Ivu"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please wait while we connect to your external device..." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="N8B-Y1-FZm" userLabel="pleaseWaitLabel">
-                                <rect key="frame" x="20" y="94" width="1170" height="66"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please wait while we connect to your external device..." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="11" translatesAutoresizingMaskIntoConstraints="NO" id="N8B-Y1-FZm" userLabel="pleaseWaitLabel">
+                                <rect key="frame" x="16" y="186" width="361" height="60"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="66" id="aHx-Za-Ms6"/>
+                                    <constraint firstAttribute="height" constant="60" id="aHx-Za-Ms6"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" systemColor="systemRedColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2p-Z6-bXP">
-                                <rect key="frame" x="20" y="168" width="1170" height="40"/>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="pxh-ER-uqg">
+                                <rect key="frame" x="178" y="262" width="37" height="37"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="dCP-F0-R4G"/>
+                                    <constraint firstAttribute="width" constant="37" id="sI0-VM-QHv"/>
+                                    <constraint firstAttribute="height" constant="37" id="xbw-eV-vvj"/>
+                                </constraints>
+                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P2p-Z6-bXP">
+                                <rect key="frame" x="16" y="315" width="361" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="dCP-F0-R4G"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
                                 <state key="normal" title="Stay Offline"/>
@@ -52,34 +60,26 @@
                                     <action selector="stayOfflineButtonTouched:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="oTI-lD-nri"/>
                                 </connections>
                             </button>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="pxh-ER-uqg">
-                                <rect key="frame" x="586.5" y="398.5" width="37" height="37"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© Omni-Soft, Inc. 2024-2026" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bxt-et-ywm">
+                                <rect key="frame" x="16" y="691" width="361" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="37" id="sI0-VM-QHv"/>
-                                    <constraint firstAttribute="height" constant="37" id="xbw-eV-vvj"/>
+                                    <constraint firstAttribute="height" constant="21" id="Fqf-lg-qHE"/>
                                 </constraints>
-                                <color key="color" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </activityIndicatorView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© Omni-Soft, Inc. 2024-2026" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="Bxt-et-ywm">
-                                <rect key="frame" x="20" y="700" width="1170" height="29"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="29" id="Fqf-lg-qHE"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All rights reserved.  Contact us at" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="3Nv-EO-JFb">
-                                <rect key="frame" x="20" y="729" width="1170" height="29"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All rights reserved.  Contact us at" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Nv-EO-JFb">
+                                <rect key="frame" x="16" y="717" width="361" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="29" id="beD-V7-bDJ"/>
+                                    <constraint firstAttribute="height" constant="21" id="beD-V7-bDJ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="support@Omni-Soft.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="ELh-R3-PRP">
-                                <rect key="frame" x="20" y="758" width="1170" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="support@Omni-Soft.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ELh-R3-PRP">
+                                <rect key="frame" x="16" y="743" width="361" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="SWM-Ph-aB0"/>
                                 </constraints>
@@ -92,28 +92,28 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="pxh-ER-uqg" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="1x0-JH-Fg9"/>
-                            <constraint firstItem="ELh-R3-PRP" firstAttribute="top" secondItem="3Nv-EO-JFb" secondAttribute="bottom" id="2DH-uf-d4X"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="N8B-Y1-FZm" secondAttribute="trailing" constant="20" id="2a7-b4-kdI"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="ELh-R3-PRP" secondAttribute="trailing" constant="20" id="CyU-z0-GZe"/>
-                            <constraint firstItem="Bxt-et-ywm" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="Dou-uc-oOZ"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Bxt-et-ywm" secondAttribute="trailing" constant="20" id="ERt-PK-Xdv"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="ELh-R3-PRP" secondAttribute="bottom" constant="10" id="G6Q-4V-Cjz"/>
-                            <constraint firstItem="N8B-Y1-FZm" firstAttribute="top" secondItem="Tvo-oT-1RZ" secondAttribute="bottom" constant="8" id="KCF-nN-n6I"/>
-                            <constraint firstItem="ELh-R3-PRP" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="OtE-j5-6LX"/>
-                            <constraint firstItem="3Nv-EO-JFb" firstAttribute="top" secondItem="Bxt-et-ywm" secondAttribute="bottom" id="RsI-zX-6h3"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Tvo-oT-1RZ" secondAttribute="trailing" constant="20" id="Te4-fi-JNP"/>
-                            <constraint firstItem="P2p-Z6-bXP" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="Vcx-qy-Qnu"/>
-                            <constraint firstItem="pxh-ER-uqg" firstAttribute="centerY" secondItem="5EZ-qb-Rvc" secondAttribute="centerY" id="WY4-aD-8Nw"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="P2p-Z6-bXP" secondAttribute="trailing" constant="20" id="aul-OT-lg6"/>
-                            <constraint firstItem="N8B-Y1-FZm" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="bXW-gT-pAm"/>
-                            <constraint firstItem="3Nv-EO-JFb" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="bhF-aN-0YU"/>
+                            <constraint firstItem="ELh-R3-PRP" firstAttribute="top" secondItem="3Nv-EO-JFb" secondAttribute="bottom" constant="5" id="2DH-uf-d4X"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="N8B-Y1-FZm" secondAttribute="trailing" constant="16" id="2a7-b4-kdI"/>
+                            <constraint firstItem="pxh-ER-uqg" firstAttribute="top" secondItem="N8B-Y1-FZm" secondAttribute="bottom" constant="16" id="4A0-l3-TKk"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="ELh-R3-PRP" secondAttribute="trailing" constant="16" id="CyU-z0-GZe"/>
+                            <constraint firstItem="Bxt-et-ywm" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="Dou-uc-oOZ"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Bxt-et-ywm" secondAttribute="trailing" constant="16" id="ERt-PK-Xdv"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="ELh-R3-PRP" secondAttribute="bottom" constant="20" id="G6Q-4V-Cjz"/>
+                            <constraint firstItem="P2p-Z6-bXP" firstAttribute="top" secondItem="pxh-ER-uqg" secondAttribute="bottom" constant="16" id="JLZ-ga-Nj0"/>
+                            <constraint firstItem="N8B-Y1-FZm" firstAttribute="top" secondItem="Tvo-oT-1RZ" secondAttribute="bottom" constant="8" symbolic="YES" id="KCF-nN-n6I"/>
+                            <constraint firstItem="ELh-R3-PRP" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="OtE-j5-6LX"/>
+                            <constraint firstItem="3Nv-EO-JFb" firstAttribute="top" secondItem="Bxt-et-ywm" secondAttribute="bottom" constant="5" id="RsI-zX-6h3"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Tvo-oT-1RZ" secondAttribute="trailing" constant="16" id="Te4-fi-JNP"/>
+                            <constraint firstItem="P2p-Z6-bXP" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="Vcx-qy-Qnu"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="P2p-Z6-bXP" secondAttribute="trailing" constant="16" id="aul-OT-lg6"/>
+                            <constraint firstItem="N8B-Y1-FZm" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="bXW-gT-pAm"/>
+                            <constraint firstItem="3Nv-EO-JFb" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="bhF-aN-0YU"/>
                             <constraint firstItem="leR-Pt-upa" firstAttribute="centerX" secondItem="5EZ-qb-Rvc" secondAttribute="centerX" id="iQ7-OU-SvT"/>
                             <constraint firstItem="leR-Pt-upa" firstAttribute="top" secondItem="Tvo-oT-1RZ" secondAttribute="bottom" constant="8" symbolic="YES" id="k2B-Pa-YJ2"/>
-                            <constraint firstItem="P2p-Z6-bXP" firstAttribute="top" secondItem="N8B-Y1-FZm" secondAttribute="bottom" constant="8" id="ltw-yX-URL"/>
-                            <constraint firstItem="Tvo-oT-1RZ" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="oif-4U-bZg"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="3Nv-EO-JFb" secondAttribute="trailing" constant="20" id="pbH-jL-7fd"/>
-                            <constraint firstItem="Bxt-et-ywm" firstAttribute="top" secondItem="leR-Pt-upa" secondAttribute="bottom" constant="8" id="qu4-1D-LHo"/>
-                            <constraint firstItem="Tvo-oT-1RZ" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="10" id="yuT-p8-kWP"/>
+                            <constraint firstItem="Tvo-oT-1RZ" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="oif-4U-bZg"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="3Nv-EO-JFb" secondAttribute="trailing" constant="16" id="pbH-jL-7fd"/>
+                            <constraint firstItem="Bxt-et-ywm" firstAttribute="top" secondItem="leR-Pt-upa" secondAttribute="bottom" constant="8" symbolic="YES" id="qu4-1D-LHo"/>
+                            <constraint firstItem="Tvo-oT-1RZ" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="16" id="yuT-p8-kWP"/>
                         </constraints>
                     </view>
                     <connections>
@@ -130,13 +130,10 @@
     <resources>
         <image name="launchScreenImage" width="1920" height="1920"/>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

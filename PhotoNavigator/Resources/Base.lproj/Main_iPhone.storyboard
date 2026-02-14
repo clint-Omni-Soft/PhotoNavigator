@@ -444,23 +444,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreenImage" translatesAutoresizingMaskIntoConstraints="NO" id="VDH-GD-Ohy">
-                                <rect key="frame" x="-807" y="180" width="2007" height="466"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="VDH-GD-Ohy" secondAttribute="height" multiplier="1:1" constant="1541" id="wlq-Lc-YjM"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo Stock" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RRW-hi-UIZ" userLabel="Photo Navigator">
-                                <rect key="frame" x="16" y="102" width="361" height="48"/>
+                                <rect key="frame" x="16" y="102" width="361" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="heo-E0-xpT"/>
+                                    <constraint firstAttribute="height" constant="44" id="heo-E0-xpT"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="35"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="27"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreenImage" translatesAutoresizingMaskIntoConstraints="NO" id="VDH-GD-Ohy">
+                                <rect key="frame" x="-45.666666666666657" y="154" width="484.33333333333326" height="484"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="VDH-GD-Ohy" secondAttribute="height" multiplier="1:1" id="wlq-Lc-YjM"/>
+                                </constraints>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uvW-nV-ryW" userLabel="versionLabel">
-                                <rect key="frame" x="16" y="150" width="361" height="21"/>
+                                <rect key="frame" x="16" y="154" width="361" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="5EH-R4-e7C"/>
                                 </constraints>
@@ -468,26 +468,26 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© Omni-Soft, Inc. 2024-2026" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="wTh-zR-CiW">
-                                <rect key="frame" x="16" y="654" width="361" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="© Omni-Soft, Inc. 2024 - 2026" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wTh-zR-CiW">
+                                <rect key="frame" x="16" y="646" width="361" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="6Fy-Nb-LP5"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="All rights reserved.  Contact us at" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PF3-5g-SYn">
-                                <rect key="frame" x="16" y="680" width="361" height="25"/>
+                                <rect key="frame" x="16" y="672" width="361" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="uIY-B1-vpK"/>
+                                    <constraint firstAttribute="height" constant="21" id="uIY-B1-vpK"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="support@Omni-Soft.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w9R-mD-WdK">
-                                <rect key="frame" x="16" y="706" width="361" height="21"/>
+                                <rect key="frame" x="16" y="698" width="361" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="t8A-rD-jsx"/>
                                 </constraints>
@@ -496,7 +496,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kcO-x5-aWZ" userLabel="invisibleButton">
-                                <rect key="frame" x="16" y="651" width="361" height="21"/>
+                                <rect key="frame" x="16" y="646" width="361" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="hVQ-Ep-l9r"/>
                                 </constraints>
@@ -511,20 +511,20 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="PF3-5g-SYn" firstAttribute="top" secondItem="wTh-zR-CiW" secondAttribute="bottom" constant="5" id="2Yu-eE-ftW"/>
-                            <constraint firstItem="wTh-zR-CiW" firstAttribute="top" secondItem="VDH-GD-Ohy" secondAttribute="bottom" constant="8" id="334-Pi-v6c"/>
+                            <constraint firstItem="wTh-zR-CiW" firstAttribute="top" secondItem="VDH-GD-Ohy" secondAttribute="bottom" constant="8" symbolic="YES" id="334-Pi-v6c"/>
+                            <constraint firstItem="VDH-GD-Ohy" firstAttribute="top" secondItem="RRW-hi-UIZ" secondAttribute="bottom" constant="8" symbolic="YES" id="48z-hX-ODH"/>
                             <constraint firstItem="uvW-nV-ryW" firstAttribute="leading" secondItem="zu3-TC-F6Y" secondAttribute="leading" constant="16" id="Cbv-uY-hvU"/>
-                            <constraint firstItem="zu3-TC-F6Y" firstAttribute="bottom" secondItem="w9R-mD-WdK" secondAttribute="bottom" constant="8" id="FCM-ZS-6Wx"/>
+                            <constraint firstItem="zu3-TC-F6Y" firstAttribute="bottom" secondItem="w9R-mD-WdK" secondAttribute="bottom" constant="16" id="FCM-ZS-6Wx"/>
                             <constraint firstItem="kcO-x5-aWZ" firstAttribute="leading" secondItem="zu3-TC-F6Y" secondAttribute="leading" constant="16" id="JZL-2a-T9K"/>
-                            <constraint firstItem="kcO-x5-aWZ" firstAttribute="top" secondItem="VDH-GD-Ohy" secondAttribute="bottom" constant="5" id="Mve-9t-8yr"/>
+                            <constraint firstItem="kcO-x5-aWZ" firstAttribute="top" secondItem="VDH-GD-Ohy" secondAttribute="bottom" constant="8" symbolic="YES" id="Mve-9t-8yr"/>
                             <constraint firstItem="zu3-TC-F6Y" firstAttribute="trailing" secondItem="uvW-nV-ryW" secondAttribute="trailing" constant="16" id="O3q-NU-le0"/>
                             <constraint firstItem="zu3-TC-F6Y" firstAttribute="trailing" secondItem="PF3-5g-SYn" secondAttribute="trailing" constant="16" id="SSw-qh-30L"/>
                             <constraint firstItem="zu3-TC-F6Y" firstAttribute="trailing" secondItem="RRW-hi-UIZ" secondAttribute="trailing" constant="16" id="UjL-5P-iRs"/>
                             <constraint firstItem="wTh-zR-CiW" firstAttribute="leading" secondItem="zu3-TC-F6Y" secondAttribute="leading" constant="16" id="Xww-WY-xqg"/>
                             <constraint firstItem="RRW-hi-UIZ" firstAttribute="top" secondItem="t74-1J-tdi" secondAttribute="top" constant="102" id="ZhH-6G-pjd"/>
-                            <constraint firstItem="w9R-mD-WdK" firstAttribute="top" secondItem="PF3-5g-SYn" secondAttribute="bottom" constant="1" id="dk4-uq-DBa"/>
+                            <constraint firstItem="w9R-mD-WdK" firstAttribute="top" secondItem="PF3-5g-SYn" secondAttribute="bottom" constant="5" id="dk4-uq-DBa"/>
                             <constraint firstItem="w9R-mD-WdK" firstAttribute="leading" secondItem="zu3-TC-F6Y" secondAttribute="leading" constant="16" id="ldO-YF-jDR"/>
-                            <constraint firstItem="uvW-nV-ryW" firstAttribute="top" secondItem="RRW-hi-UIZ" secondAttribute="bottom" id="mjW-dG-mjR"/>
-                            <constraint firstItem="VDH-GD-Ohy" firstAttribute="top" secondItem="uvW-nV-ryW" secondAttribute="bottom" constant="9" id="nIl-8E-odp"/>
+                            <constraint firstItem="uvW-nV-ryW" firstAttribute="top" secondItem="RRW-hi-UIZ" secondAttribute="bottom" constant="8" symbolic="YES" id="mjW-dG-mjR"/>
                             <constraint firstItem="RRW-hi-UIZ" firstAttribute="leading" secondItem="zu3-TC-F6Y" secondAttribute="leading" constant="16" id="rOq-5s-XuS"/>
                             <constraint firstItem="zu3-TC-F6Y" firstAttribute="trailing" secondItem="wTh-zR-CiW" secondAttribute="trailing" constant="16" id="ssH-RU-RIv"/>
                             <constraint firstItem="PF3-5g-SYn" firstAttribute="leading" secondItem="zu3-TC-F6Y" secondAttribute="leading" constant="16" id="tq5-1C-SXu"/>
@@ -1423,19 +1423,19 @@
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="opaqueSeparatorColor">
-            <color red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

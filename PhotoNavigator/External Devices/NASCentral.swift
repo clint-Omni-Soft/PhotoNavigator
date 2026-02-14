@@ -1708,7 +1708,7 @@ extension NASCentral: SMBCentralDelegate {
     
     
     private func compareLastUpdatedFiles(_ nasData: Data ) {
-        var     compareResult = LastUpdatedFileCompareResult.fileNotFound
+        var     compareResult = LastUpdatedFileCompareResult.nasIsNewer
         let     formatter     = DateFormatter()
         var     updatedBy     = NSLocalizedString( "Title.Unknown", comment: "Unknown" )
         
@@ -1720,37 +1720,49 @@ extension NASCentral: SMBCentralDelegate {
             if fileManager.fileExists(atPath: deviceFileUrl.path ) {
                 
                 if let deviceFileData = fileManager.contents( atPath: deviceFileUrl.path ) {
+                    // LastUpdated file contents example: 2025-12-05 10:29:11,Clint's iPhone
                     let     deviceDateString = String( decoding: deviceFileData, as: UTF8.self )
-                    let     deviceComponents = deviceDateString.components(separatedBy: GlobalConstants.separatorForLastUpdatedString )
-                    let     deviceDate       = formatter.date( from: deviceComponents[0] )
-                    let     nasDateString    = String( decoding: nasData, as: UTF8.self )
-                    let     nasComponents    = nasDateString.components(separatedBy: GlobalConstants.separatorForLastUpdatedString )
-                    let     nasDate          = formatter.date( from: nasComponents[0] )
+                    let     deviceComponents = deviceDateString.components(separatedBy: GlobalConstants.separatorForLastUpdatedString )  // ","
                     
-                    if let dateOnNas = nasDate?.timeIntervalSince1970, let dateOnDevice = deviceDate?.timeIntervalSince1970 {
-                        if dateOnNas < dateOnDevice {
-                            compareResult = LastUpdatedFileCompareResult.deviceIsNewer
-                        }
-                        else if dateOnDevice < dateOnNas {
-                            compareResult = LastUpdatedFileCompareResult.nasIsNewer
+                    if deviceComponents.count == 2 {
+                        let     deviceDate    = formatter.date( from: deviceComponents[0] )
+                        let     nasDateString = String( decoding: nasData, as: UTF8.self )
+                        let     nasComponents = nasDateString.components(separatedBy: GlobalConstants.separatorForLastUpdatedString )
+
+                        if nasComponents.count == 2 {
+                            let     nasDate = formatter.date( from: nasComponents[0] )
+                            
+                            updatedBy = nasComponents[1]
+
+                            if let dateOnNas = nasDate?.timeIntervalSince1970, let dateOnDevice = deviceDate?.timeIntervalSince1970 {
+                                if dateOnNas < dateOnDevice {
+                                    compareResult = LastUpdatedFileCompareResult.deviceIsNewer
+                                }
+                                else if dateOnDevice < dateOnNas {
+                                    compareResult = LastUpdatedFileCompareResult.nasIsNewer
+                                }
+                                else {
+                                    compareResult = LastUpdatedFileCompareResult.equal
+                                }
+                                
+                            }
+                            else {
+                                logTrace( "ERROR!!!  could not unwrap nasDate and/or deviceDate" )
+                            }
+
                         }
                         else {
-                            compareResult = LastUpdatedFileCompareResult.equal
+                            logTrace( "ERROR!!!  nasComponents.count != 2" )
                         }
-                        
-                        if nasComponents.count == 2 {
-                            updatedBy = nasComponents[1]
-                        }
-                        
+
                     }
                     else {
-                        logTrace( "ERROR!  Could NOT unwrap dateOnNas or dateOnDevice!" )
+                        logTrace( "ERROR!!!  deviceComponents.count != 2" )
                     }
-                    
                     
                 }
                 else {
-                    logTrace( "ERROR!  Could NOT unwrap deviceFileData!" )
+                    logTrace( "ERROR!  Could NOT access deviceFileUrl!" )
                 }
 
             }
@@ -1760,10 +1772,11 @@ extension NASCentral: SMBCentralDelegate {
 
         }
         else {
-            logTrace( "ERROR!  Could NOT unwrap documentDirectoryURL!" )
+            logTrace( "ERROR!  Could NOT access documentDirectoryURL!" )
         }
 
         logVerbose( "[ %@ ] by [ %@ ]", descriptionForCompare( compareResult ), updatedBy )
+        
         DispatchQueue.main.async {
             self.delegate?.nasCentral( self, didCompareLastUpdatedFiles: compareResult, lastUpdatedBy: updatedBy )
             self.processNextRequest()
