@@ -232,12 +232,14 @@ class NASCentral: NSObject {
     private var fileManager             = FileManager.default
     private var missingDbFiles          = [String].init()
     private var nasImageFileArray       : [SMBFile] = []
+    private let notificationCenter      = NotificationCenter.default
     private var reEstablishConnection   = false
     private var requestQueue            : [[Any]] = []
     private var selectedDevice          : SMBDevice?
     private var selectedShare           : SMBShare?
     private var sessionActive           = false
     private var smbCentral              = SMBCentral.sharedInstance
+    private let userDefaults            = UserDefaults.standard
     private var workingAccessKey        = NASDescriptor()
     
     private var deviceName: String {
@@ -1043,6 +1045,16 @@ extension NASCentral {
     
     private func _unlockNas(_ delegate: NASCentralDelegate ) {
 //        logTrace()
+        if userDefaults.bool( forKey: UserDefaultKeys.workOffline ) {
+            logTrace( "Working Offline ... do NOT unlock" )
+            
+            delegate.nasCentral( self, didUnlockNas: true )
+            userDefaults.set( false, forKey: UserDefaultKeys.workOffline )
+            
+            self.processNextRequest()
+            return
+        }
+        
         let     fullPath = dataStoreAccessKey.path + "/" + Filenames.lockFile
         
         self.delegate = delegate
@@ -1392,8 +1404,7 @@ extension NASCentral: SMBCentralDelegate {
             
         }
         else if currentCommand == .UnlockNas {
-            logVerbose( "[ %@ ][ %@ ]", stringFor( didDeleteFile ), filename )
-
+            logTrace( "Lock file removed ... notifying delegate" )
             DispatchQueue.main.async {
                 self.delegate?.nasCentral( self, didUnlockNas: didDeleteFile )
                 self.processNextRequest()
@@ -1720,44 +1731,84 @@ extension NASCentral: SMBCentralDelegate {
             if fileManager.fileExists(atPath: deviceFileUrl.path ) {
                 
                 if let deviceFileData = fileManager.contents( atPath: deviceFileUrl.path ) {
-                    // LastUpdated file contents example: 2025-12-05 10:29:11,Clint's iPhone
-                    let     deviceDateString = String( decoding: deviceFileData, as: UTF8.self )
-                    let     deviceComponents = deviceDateString.components(separatedBy: GlobalConstants.separatorForLastUpdatedString )  // ","
-                    
-                    if deviceComponents.count == 2 {
-                        let     deviceDate    = formatter.date( from: deviceComponents[0] )
-                        let     nasDateString = String( decoding: nasData, as: UTF8.self )
-                        let     nasComponents = nasDateString.components(separatedBy: GlobalConstants.separatorForLastUpdatedString )
+                    // LastUpdated file contents formats:
+                        // Version 1.0 = 2025-12-05 10:29:11,Clint's iPhone
+                        // Version 2.0 = V2,999,Clint's iPhone
+                    let     deviceString     = String( decoding: deviceFileData, as: UTF8.self )
+                    let     deviceComponents = deviceString.components(separatedBy: GlobalConstants.separatorForLastUpdatedString )  // ","
+                    let     nasDateString    = String( decoding: nasData, as: UTF8.self )
+                    let     nasComponents    = nasDateString.components(separatedBy: GlobalConstants.separatorForLastUpdatedString )
 
-                        if nasComponents.count == 2 {
-                            let     nasDate = formatter.date( from: nasComponents[0] )
-                            
-                            updatedBy = nasComponents[1]
+                    switch compareLastUpdatedFileVersions( deviceComponents.count, nasComponents.count ) {
+                        
+                        case LastUpdatedFileFormatComparison.v1Both:            let deviceDate = formatter.date( from: deviceComponents[0] )
+                                                                                let nasDate    = formatter.date( from: nasComponents[0]    )
+                                                                                
+                                                                                updatedBy = nasComponents[1]
 
-                            if let dateOnNas = nasDate?.timeIntervalSince1970, let dateOnDevice = deviceDate?.timeIntervalSince1970 {
-                                if dateOnNas < dateOnDevice {
-                                    compareResult = LastUpdatedFileCompareResult.deviceIsNewer
-                                }
-                                else if dateOnDevice < dateOnNas {
-                                    compareResult = LastUpdatedFileCompareResult.nasIsNewer
-                                }
-                                else {
-                                    compareResult = LastUpdatedFileCompareResult.equal
-                                }
-                                
-                            }
-                            else {
-                                logTrace( "ERROR!!!  could not unwrap nasDate and/or deviceDate" )
-                            }
+                                                                                if let dateOnNas = nasDate?.timeIntervalSince1970, let dateOnDevice = deviceDate?.timeIntervalSince1970 {
+                                                                                    if dateOnNas < dateOnDevice {
+                                                                                        compareResult = LastUpdatedFileCompareResult.deviceIsNewer
+                                                                                    }
+                                                                                    else if dateOnDevice < dateOnNas {
+                                                                                        compareResult = LastUpdatedFileCompareResult.nasIsNewer
+                                                                                    }
+                                                                                    else {
+                                                                                        compareResult = LastUpdatedFileCompareResult.equal
+                                                                                    }
+                                                                                    
+                                                                                }
+                                    
+                    case LastUpdatedFileFormatComparison.v2Both:                let baseDbVersion   = Int( UserDefaults.standard.string( forKey: UserDefaultKeys.lastDbUpdate ) ?? "0" ) ?? 0
+                                                                                let deviceDbVersion = Int( deviceComponents[ 1 ] ) ?? 0
+                                                                                let nasDbVersion    = Int( nasComponents[    1 ] ) ?? 0
+                                                                                var versionToSave   = nasComponents[ 1 ]
+                                                                                
+                                                                                updatedBy = nasComponents[2]
+                                                                                
+                                                                                if baseDbVersion == nasDbVersion {
+                                                                                    if deviceDbVersion > nasDbVersion {
+                                                                                        compareResult = LastUpdatedFileCompareResult.deviceIsNewer
+                                                                                        versionToSave = deviceComponents[ 1 ]
+                                                                                    }
+                                                                                    else {
+                                                                                        compareResult = LastUpdatedFileCompareResult.equal
+                                                                                    }
 
-                        }
-                        else {
-                            logTrace( "ERROR!!!  nasComponents.count != 2" )
-                        }
+                                                                                }
+                                                                                else {
+                                                                                    if baseDbVersion == nasDbVersion + 1 {
+                                                                                        logTrace( "Device has updates that the NAS does not have" )
+                                                                                        compareResult = LastUpdatedFileCompareResult.deviceIsNewer
+                                                                                        versionToSave = String( baseDbVersion )
+                                                                                    }
+                                                                                    else {
+                                                                                        // Default to nasIsNewer
+//                                                                                        notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.databaseOutOfDate ), object: self )
+                                                                                    }
+                                                                                    
+                                                                                }
 
-                    }
-                    else {
-                        logTrace( "ERROR!!!  deviceComponents.count != 2" )
+                                                                                logVerbose( "Version to save: base[ %d ] device[ %d ] nas[ %d ] -> [ %@ ]", baseDbVersion, deviceDbVersion, nasDbVersion, versionToSave )
+                        
+                                                                                userDefaults.removeObject(       forKey: UserDefaultKeys.lastDbUpdate )
+                                                                                userDefaults.set( versionToSave, forKey: UserDefaultKeys.lastDbUpdate )
+                                                                                userDefaults.synchronize()
+
+                    case LastUpdatedFileFormatComparison.v1DeviceV2External:    let nasDbVersion = nasComponents[ 1 ]
+                        
+                                                                                updatedBy     = nasComponents[2]
+                                                                                compareResult = LastUpdatedFileCompareResult.nasIsNewer
+
+                                                                                userDefaults.removeObject(      forKey: UserDefaultKeys.lastDbUpdate )
+                                                                                userDefaults.set( nasDbVersion, forKey: UserDefaultKeys.lastDbUpdate )
+                                                                                userDefaults.synchronize()
+
+                    case LastUpdatedFileFormatComparison.v2DeviceV1External:    compareResult = LastUpdatedFileCompareResult.equal
+                        
+                    default:
+                        logTrace( "ERROR!!!  Unsupported LastUpdatedFileFormatComparison!" )
+                        break
                     }
                     
                 }
@@ -1782,6 +1833,30 @@ extension NASCentral: SMBCentralDelegate {
             self.processNextRequest()
         }
         
+    }
+    
+    
+    private func compareLastUpdatedFileVersions(_ deviceCount: Int, _ externalCount: Int ) -> Int {
+        var result = LastUpdatedFileFormatComparison.v1Both
+        
+        // LastUpdated file contents formats: Version 1.0 = 2025-12-05 10:29:11,Clint's iPhone ... 2 components
+                                           // Version 2.0 = V2,999,Clint's iPhone              ... 3 components
+        
+        if deviceCount == 2 && externalCount == 2 {
+            result = LastUpdatedFileFormatComparison.v1Both
+        }
+        else if deviceCount == 3 && externalCount == 3 {
+            result = LastUpdatedFileFormatComparison.v2Both
+        }
+        else if deviceCount == 3 && externalCount == 2 {
+            result = LastUpdatedFileFormatComparison.v2DeviceV1External
+        }
+        else if deviceCount == 2 && externalCount == 3 {
+            result = LastUpdatedFileFormatComparison.v1DeviceV2External
+        }
+        
+        logVerbose( "[ %@ ]", descriptionForFormatVersionCompare( result ) )
+        return result
     }
     
     
@@ -1933,3 +2008,24 @@ func descriptionForCompare(_ lastUpdatedCompare: Int ) -> String {
 }
 
 
+struct LastUpdatedFileFormatComparison {
+    static let v1Both             = Int( 0 )
+    static let v2Both             = Int( 1 )
+    static let v1DeviceV2External = Int( 2 )
+    static let v2DeviceV1External = Int( 3 )
+}
+
+
+func descriptionForFormatVersionCompare(_ lastUpdatedFormatCompare: Int ) -> String {
+    var     description = "Unknown"
+    
+    switch lastUpdatedFormatCompare {
+    case LastUpdatedFileFormatComparison.v1Both:                description = "Both V1"
+    case LastUpdatedFileFormatComparison.v2Both:                description = "Both V2"
+    case LastUpdatedFileFormatComparison.v1DeviceV2External:    description = "Device[ V1 ] & External[ V2 ]"
+    case LastUpdatedFileFormatComparison.v2DeviceV1External:    description = "External[ V1 ] & Device[ V2 ]"
+    default:    break
+    }
+
+    return description
+}

@@ -510,6 +510,7 @@ extension SMBCentral {
             return
         }
         
+        logVerbose( "[ %@ ]", path )
         if let smbFile  = SMBFile.init( path: path, share: connectedShare! ) {
 
             smbFile.updateStatus( {
@@ -525,6 +526,7 @@ extension SMBCentral {
                         delegate.smbCentral( self, didReadFile: false, fileData )
                     }
                     else {
+//                        logTrace( "    opening" )
                         smbFile.open( .read, completion: {
                             (error) in
                             

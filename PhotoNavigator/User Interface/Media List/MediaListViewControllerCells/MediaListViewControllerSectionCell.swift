@@ -62,8 +62,9 @@ class MediaListViewControllerSectionCell: UITableViewCell {
         sectionNumber = section
         
         titleLabel.text      = titleText
-        titleLabel.textColor = .black
-        
+        titleLabel.textColor = .systemBlue
+        titleLabel.font      = .preferredFont(forTextStyle: .headline)
+
         toggleButton.setTitle( "", for: .normal )
     }
 

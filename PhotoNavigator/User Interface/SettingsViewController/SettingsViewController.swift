@@ -149,6 +149,12 @@ class SettingsViewController: UIViewController {
 
     // MARK: Target/Action Methods
     
+    @IBAction func backBarButtonTouched(_ sender: UIBarButtonItem ) {
+        logTrace()
+        navigationController?.popViewController(animated: true )
+    }
+    
+    
     @IBAction func questionBarButtonTouched(_ sender : UIBarButtonItem ) {
         let     message = String( format: NSLocalizedString( "AlertMessage.SelectHowToUseForInfo", comment: "Select '%@' for helpful information on '%@' and '%@'." ),
                                           NSLocalizedString( "Title.HowToUse",                     comment: "How to Use"            ),
@@ -164,11 +170,15 @@ class SettingsViewController: UIViewController {
 
     private func loadBarButtonItems() {
         logTrace()
+        var leftBarButtonItems: [UIBarButtonItem] = []
+
         if UIDevice.current.userInterfaceIdiom == .pad {
-            configureBackBarButtonItem()
+            leftBarButtonItems.append( backBarButtonItem( #selector( backBarButtonTouched(_:) ) ) )
         }
+
+        leftBarButtonItems.append( UIBarButtonItem.init( image: UIImage(systemName: "questionmark.circle" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) ) )
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem.init( image: UIImage(named: "question" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) )
+        navigationItem.leftBarButtonItems = leftBarButtonItems
     }
     
     

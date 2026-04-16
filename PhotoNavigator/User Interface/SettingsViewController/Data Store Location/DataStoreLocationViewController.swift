@@ -89,6 +89,12 @@ class DataLocationViewController: UIViewController {
     
     // MARK: Target/Action Methods
     
+    @IBAction func backBarButtonTouched(_ sender: UIBarButtonItem ) {
+        logTrace()
+        navigationController?.popViewController(animated: true )
+    }
+    
+    
     @IBAction func questionBarButtonTouched(_ sender : UIBarButtonItem ) {
         let     message = NSLocalizedString( "InfoText.DataStoreLocation", comment: "We provide support for three different storage locations...\n\n   (a) on your device (default),\n   (b) in the cloud and \n   (c) on a Network Accessible Storage (NAS) unit. \n\nThe key point here is that there is no sharing on the device, if you chose the cloud then your data can be shared across all of your devices and if you chose NAS then anyone who has access to your Wi-Fi can access it." )
 
@@ -101,8 +107,12 @@ class DataLocationViewController: UIViewController {
     
     private func loadBarButtonItems() {
 //        logTrace()
-        configureBackBarButtonItem()
-        navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "question" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) )
+        var leftBarButtonItems: [UIBarButtonItem] = []
+
+        leftBarButtonItems.append( backBarButtonItem( #selector( backBarButtonTouched(_:) ) ) )
+        leftBarButtonItems.append( UIBarButtonItem.init( image: UIImage(systemName: "questionmark.circle" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) ) )
+        
+        navigationItem.leftBarButtonItems = leftBarButtonItems
     }
     
 

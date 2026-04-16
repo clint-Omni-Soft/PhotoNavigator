@@ -44,15 +44,9 @@ class LogViewController: UIViewController {
 
     // MARK: Target / Action Methods
     
-    @IBAction func leftBarButtonTouched(_ sender : UIBarButtonItem ) {
+    @IBAction func backBarButtonTouched(_ sender : UIBarButtonItem ) {
         logTrace()
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            dismiss(animated: true )
-        }
-        else {
-            navigationController?.popViewController( animated: true )
-        }
-        
+        removeViewControllerByIdiom()
     }
 
     
@@ -61,15 +55,7 @@ class LogViewController: UIViewController {
     
     private func loadBarButtonItems() {
 //        logTrace()
-        if #available(iOS 26.0, *)  {
-            navigationItem.leftBarButtonItem = UIBarButtonItem( image: UIImage(systemName: "checkmark"), style: .prominent, target: self, action: #selector( leftBarButtonTouched ) )
-        }
-        else {
-            let title = ( ( UIDevice.current.userInterfaceIdiom == .pad ) ? NSLocalizedString( "ButtonTitle.Done", comment: "Done" ) : NSLocalizedString( "ButtonTitle.Back", comment: "Back" ) )
-            
-            navigationItem.leftBarButtonItem = UIBarButtonItem.init( title: title, style : prominentStyleForBarButtonItem(), target: self, action: #selector( leftBarButtonTouched(_:) ) )
-        }
-        
+        navigationItem.leftBarButtonItem = backBarButtonItem( #selector( backBarButtonTouched(_:) ) )
     }
 
     

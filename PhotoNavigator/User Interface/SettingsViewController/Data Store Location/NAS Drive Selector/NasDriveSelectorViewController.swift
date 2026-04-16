@@ -113,8 +113,8 @@ class NasDriveSelectorViewController: UIViewController {
         logTrace()
         super.viewWillAppear( animated )
         
-        questionBarButtonItem = UIBarButtonItem.init( image : UIImage(named: "question"  ), style : .plain, target : self, action : #selector( questionBarButtonTouched(_:) ) )
-        upBarButtonItem       = UIBarButtonItem.init( image : UIImage(named: "upOneLevel"), style : .plain, target : self, action : #selector( upBarButtonItemTouched(_:)   ) )
+        questionBarButtonItem = UIBarButtonItem.init( image : UIImage(systemName: "questionmark.circle" ), style : .plain, target : self, action : #selector( questionBarButtonTouched(_:) ) )
+        upBarButtonItem       = UIBarButtonItem.init( image : UIImage(systemName: "arrow.up.cicle.fill"), style : .plain, target : self, action : #selector( upBarButtonItemTouched(_:)   ) )
         
         myTableView.reloadData()
     }

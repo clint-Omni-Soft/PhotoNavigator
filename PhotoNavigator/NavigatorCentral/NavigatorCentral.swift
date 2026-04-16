@@ -59,7 +59,8 @@ class NavigatorCentral: NSObject {
     var stayInFolder                    = false
     var stayOffline                     = false
     let userDefaults                    = UserDefaults.standard
-    
+    var userNotificationsAllowed        = false
+
     var dataSourceDescriptor: NASDescriptor {
         get {
             var     descriptor = NASDescriptor()
@@ -295,7 +296,6 @@ class NavigatorCentral: NSObject {
     // MARK: Private Variables & Definitions
     
     private var canSeeNasInProgress         = false
-    private var databaseUpdated             = false
     private var dataSourceLocationBacking   = DataLocation.notAssigned
     private var dataStoreLocationBacking    = DataLocation.notAssigned
     private var photoAssetsObject           : PhotoAssets!
@@ -328,6 +328,23 @@ class NavigatorCentral: NSObject {
     var openInProgress          = false
     var persistentContainer     : NSPersistentContainer!
 
+    var databaseUpdated: Bool {
+        get {
+            return flagIsPresentInUserDefaults( UserDefaultKeys.databaseUpdated )
+        }
+        
+        set ( setFlag ) {
+            if setFlag {
+                setFlagInUserDefaults( UserDefaultKeys.databaseUpdated )
+            }
+            else {
+                removeFlagFromUserDefaults( UserDefaultKeys.databaseUpdated )
+            }
+            
+        }
+        
+    }
+    
     var updatedOffline: Bool {
         get {
             return flagIsPresentInUserDefaults( UserDefaultKeys.updatedOffline )
@@ -974,7 +991,6 @@ class NavigatorCentral: NSObject {
                         updatedOffline = true
                     }
                     
-                    createLastUpdatedFile()
                 }
                 
             }
@@ -1401,8 +1417,11 @@ extension NavigatorCentral {
                     logTrace( "We are updating ... do nothing!" )
                 }
                 else if self.databaseUpdated {
-                    self.databaseUpdated = false
                     logVerbose( "databaseUpdated[ true ]\n    %@", self.deviceAccessControl.descriptor() )
+                    
+                    self.databaseUpdated = false
+                    self.createLastUpdatedFile()
+                    
                     logTrace( "copying database to NAS" )
                     self.nasCentral.copyDatabaseFromDeviceToNas( self )
 
@@ -1431,6 +1450,13 @@ extension NavigatorCentral {
             timer.invalidate()
         }
 
+        if !deviceAccessControl.byMe {
+            logTrace( "do nothing!" )
+            self.nasCentral.emptyQueue()
+            self.nasCentral.unlockNas( self )
+            return
+        }
+        
         logVerbose( "databaseUpdated[ %@ ]\n    %@", stringFor( databaseUpdated ), deviceAccessControl.descriptor() )
         
         if databaseUpdated {
@@ -1458,20 +1484,27 @@ extension NavigatorCentral {
                         self.deviceAccessControl.updating = true
                         
                         logTrace( "copying database to NAS" )
+                        self.createLastUpdatedFile()
+                        
+                        self.nasCentral.emptyQueue()
                         self.nasCentral.copyDatabaseFromDeviceToNas( self )
                     }
                     
                 }
 
             }
-            
-        }
-        else {
-            if !deviceAccessControl.byMe {
-                logTrace( "do nothing!" )
-                return
+            else {
+                if self.userNotificationsAllowed {
+                    DispatchQueue.main.async() {
+                        UIApplication.shared.applicationIconBadgeNumber = 1
+                    }
+                    
+                }
+
             }
-            
+
+        }
+        else {      // !databaseUpdated
             if !stayOffline {
                 DispatchQueue.global().async {
 

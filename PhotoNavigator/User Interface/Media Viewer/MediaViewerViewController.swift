@@ -434,17 +434,17 @@ class MediaViewerViewController: UIViewController {
         var rightBarButtonItems: [UIBarButtonItem] = []
         
         if UIDevice.current.userInterfaceIdiom == .pad {
-            leftBarButtonItems.append( UIBarButtonItem.init(image: UIImage(named: "hamburger" ), style: .plain, target: self, action: #selector( showPrimaryBarButtonItemTouched(_:) ) ) )
+            leftBarButtonItems.append( UIBarButtonItem.init(image: UIImage(systemName: "sidebar.left" ), style: .plain, target: self, action: #selector( showPrimaryBarButtonItemTouched(_:) ) ) )
         }
         
+        leftBarButtonItems.append( UIBarButtonItem.init( image: UIImage(systemName: "questionmark.circle" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) ) )
+
         if videoState != .notLoaded {
             let videoBarButtonImage = ( videoState == .playing ) ? UIImage(named: "pauseVideo" ) : UIImage(named: "playVideo" )
 
             leftBarButtonItems.append( UIBarButtonItem.init(image: videoBarButtonImage, style: .plain, target: self, action: #selector( videoStartStopButtonTouched(_:) ) ) )
         }
         
-        leftBarButtonItems.append( UIBarButtonItem.init( image: UIImage(named: "question" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) ) )
-
         if resourceIndexPath != GlobalIndexPaths.noSelection {
             let slideShowButton: UIBarButtonItem.SystemItem = slideShowActive ? .pause : .play
             

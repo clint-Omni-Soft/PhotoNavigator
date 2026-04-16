@@ -379,17 +379,17 @@ class MediaListViewController: UIViewController {
     
     private func loadBarButtonItems() {
         logTrace()
-        let caretImage          = UIImage(named: showAllSections ? "arrowUp" : "arrowDown" )
+        let caretImage          = UIImage(systemName: showAllSections ? "arrow.up" : "arrow.down" )
         var leftBarButtonItems  = [UIBarButtonItem]()
         var rightBarButtonItems = [UIBarButtonItem]()
-        let searchImage         = UIImage(named: myTextField.isHidden ? "magnifyingGlass" : "magnifyingGlassXout" )
+        let searchBarButtonItem = UIBarButtonItem.init( image: UIImage( systemName: "magnifyingglass" ), style: .plain, target: self, action: #selector( searchToggleBarButtonTouched(_:) ) )
         let weHaveData          = ( navigatorCentral.dataSourceLocation == .nas ) ? ( navigatorCentral.numberOfMediaFilesLoaded > 0 ) : ( navigatorCentral.numberOfDeviceAssetsLoaded > 0 )
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             leftBarButtonItems.append( UIBarButtonItem.init( barButtonSystemItem: .close, target: self, action: #selector( hidePrimaryBarButtonTouched(_: ) ) ) )
         }
 
-        leftBarButtonItems.append( UIBarButtonItem.init( image: UIImage(named: "question" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) ) )
+        leftBarButtonItems.append( UIBarButtonItem.init( image: UIImage(systemName: "questionmark.circle" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) ) )
 
         if myTableView.numberOfSections > 1 {
             leftBarButtonItems.append( UIBarButtonItem.init( image: caretImage,  style: .plain, target: self, action: #selector( showAllBarButtonTouched(_ :) ) ) )
@@ -398,15 +398,16 @@ class MediaListViewController: UIViewController {
         navigationItem.leftBarButtonItems = leftBarButtonItems
 
         if UIDevice.current.userInterfaceIdiom == .pad {
-            rightBarButtonItems.append( UIBarButtonItem.init( image: UIImage(named: "gear" ), style: .plain, target: self, action: #selector( settingsBarButtonTouched(_:) ) ) )
+            rightBarButtonItems.append( UIBarButtonItem.init( image: UIImage(systemName: "gearshape" ), style: .plain, target: self, action: #selector( settingsBarButtonTouched(_:) ) ) )
         }
         
         if weHaveData && navigatorCentral.dataSourceLocation == .nas {
-            rightBarButtonItems.append( UIBarButtonItem.init( image: searchImage, style: .plain, target: self, action: #selector( searchToggleBarButtonTouched(_:) ) ) )
+            searchBarButtonItem.tintColor = myTextField.isHidden ? .black : .blue
+            rightBarButtonItems.append( searchBarButtonItem )
         }
         
         if lastSelection != GlobalIndexPaths.noSelection {
-            let image = navigatorCentral.stayInFolder ? ( navigatorCentral.shuffleImages ? UIImage(named: "shuffle" ) : UIImage(named: "repeat" ) ) : UIImage(named: "pin" )
+            let image = navigatorCentral.stayInFolder ? ( navigatorCentral.shuffleImages ? UIImage(named: "shuffle" ) : UIImage(named: "repeat" ) ) : UIImage(systemName: "pin" )
             
             rightBarButtonItems.append( UIBarButtonItem.init( image: image, style: .plain, target: self, action: #selector( displayModeBarButtonTouched(_:) ) ) )
         }

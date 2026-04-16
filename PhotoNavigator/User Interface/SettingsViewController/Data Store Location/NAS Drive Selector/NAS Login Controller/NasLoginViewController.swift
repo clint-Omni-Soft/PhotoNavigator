@@ -47,9 +47,9 @@ class NasLoginViewController: UIViewController {
         passwordLabel.text = NSLocalizedString( "LabelText.Password",      comment: "Password"  )
         userNameLabel.text = NSLocalizedString( "LabelText.UserName",      comment: "User Name" )
         titleLabel   .text = NSLocalizedString( "Title.EnterCredentials",  comment: "Enter Credentials for" )
-        
-        cancelButton.setTitle( NSLocalizedString( "ButtonTitle.Cancel", comment: "Cancel" ), for: .normal )
-        okButton    .setTitle( NSLocalizedString( "ButtonTitle.OK",     comment: "OK"     ), for: .normal )
+
+        expandImageToFit( cancelButton )
+        expandImageToFit( okButton     )
     }
     
     

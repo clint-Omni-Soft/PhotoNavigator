@@ -14,6 +14,7 @@
 "AlertMessage.ConnectingToExternalDevice"   = "Connexion à votre appareil externe.";
 "AlertMessage.CsvFileSaved"                 = "Un fichier CSV a été enregistré avec succès sur votre lecteur NAS.";
 "AlertMessage.DatabaseNotOpen"              = "Erreur fatale!  La base de données n'est PAS ouverte!  Veuillez supprimer et réinstaller l'application.";
+"AlertMessage.DatabaseOutOfDate"            = "Nous n'avons pas pu enregistrer vos modifications car votre base de données est obsolète !";
 "AlertMessage.DataCorrupted"                = "Ce fichier multimédia a été corrompu !";
 "AlertMessage.DataWillBeMovedTo"            = "Lorsque vous appuyez sur le bouton OK, nous transférerons vos données, puis tuerons l'application. Lorsque vous redémarrez l'application, vos données seront stockées sur votre ";
 "AlertMessage.DataWillBeShared"             = "Lorsque vous appuyez sur le bouton OK, nous transférerons vos données, puis tuerons l'application. Lorsque vous redémarrerez, l'application PARTAGERA les données de votre ";

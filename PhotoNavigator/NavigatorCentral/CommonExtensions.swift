@@ -11,6 +11,7 @@ import CoreData
 
 
 
+
 // MARK: CloudCentralDelegate Methods (Public)
 
 extension NavigatorCentral: CloudCentralDelegate {
@@ -101,6 +102,11 @@ extension NavigatorCentral: CloudCentralDelegate {
         deviceAccessControl.updating = false
  
         notificationCenter.post( name: NSNotification.Name( rawValue: Notifications.ready ), object: self )
+
+        if self.userNotificationsAllowed && UIApplication.shared.applicationIconBadgeNumber != GlobalConstants.noSelection {
+            UIApplication.shared.applicationIconBadgeNumber = GlobalConstants.noSelection
+        }
+
     }
 
 
@@ -214,6 +220,11 @@ extension NavigatorCentral: CloudCentralDelegate {
        logVerbose( "[ %@ ]", stringFor( didUnlockCloud ) )
 
        cloudCentral.endSession( self )
+
+        if self.userNotificationsAllowed && UIApplication.shared.applicationIconBadgeNumber != GlobalConstants.noSelection {
+            UIApplication.shared.applicationIconBadgeNumber = GlobalConstants.noSelection
+        }
+
     }
        
        
@@ -245,17 +256,20 @@ extension NavigatorCentral {
     
     func createLastUpdatedFile() {
         if let documentDirectoryURL = fileManager.urls( for: .documentDirectory, in: .userDomainMask ).first {
-            let     fileUrl   = documentDirectoryURL.appendingPathComponent( Filenames.lastUpdated )
-            let     formatter = DateFormatter()
+            let fileUrl            = documentDirectoryURL.appendingPathComponent( Filenames.lastUpdated )
+            var lastDbUpdateString = getStringFromUserDefaults( UserDefaultKeys.lastDbUpdate )
+            let lastDbUpdate       =  1 + ( Int( lastDbUpdateString ) ?? 0 )
             
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            lastDbUpdateString  = String( lastDbUpdate )
             
-            let     dateString   = formatter.string( from: Date() )
-            let     outputString = dateString + GlobalConstants.separatorForLastUpdatedString + deviceName
-            let     data         = outputString.data( using: .utf8 )
+            let outputString = GlobalConstants.lastUpdatedVersionString + GlobalConstants.separatorForLastUpdatedString + lastDbUpdateString + GlobalConstants.separatorForLastUpdatedString + deviceName
+            let data         = outputString.data( using: .utf8 )
             
             if !fileManager.createFile( atPath: fileUrl.path, contents: data, attributes: nil ) {
                 logTrace( "ERROR!  Create failed!" )
+            }
+            else {
+                logVerbose( "[ %@ ]", outputString )
             }
             
         }
@@ -264,7 +278,7 @@ extension NavigatorCentral {
         }
         
     }
-    
+
 
     func dataLocationFor(_ locationString: String ) -> DataLocation {
         var     location: DataLocation = .notAssigned
@@ -293,6 +307,10 @@ extension NavigatorCentral {
         return name
     }
     
+  
+    
+    
+    
     
 }
 
@@ -301,6 +319,23 @@ extension NavigatorCentral {
 // MARK: Image Convenience Methods (Public)
 
 extension NavigatorCentral {
+    
+    func createImageRequestFor(_ command: Int, filename: String ) {
+        logVerbose( "Creating ImageRequest[ %@ ][ %@ ] ", nameForImageRequest( command ), filename )
+        self.persistentContainer.viewContext.perform {
+            let     imageRequest = NSEntityDescription.insertNewObject( forEntityName: EntityNames.imageRequest, into: self.managedObjectContext ) as! ImageRequest
+            
+            imageRequest.index    = Int16( self.offlineImageRequestQueue.count )
+            imageRequest.command  = Int16( command )
+            imageRequest.filename = filename
+            
+            self.saveContext()
+            
+            self.updatedOffline = true
+        }
+        
+    }
+    
     
     func deleteImageNamed(_ name: String ) -> Bool {
 //        logTrace()
@@ -331,6 +366,10 @@ extension NavigatorCentral {
             
         }
         
+        
+        
+        
+        
         if dataStoreLocation == .nas || dataStoreLocation == .shareNas {
             if stayOffline {
                 logTrace( "stayOffline!  queue request" )
@@ -351,6 +390,14 @@ extension NavigatorCentral {
         logVerbose( "Requesting [ %@ ] from NAS ...", imageName )
         imageRequestQueue.append( (imageName, delegate ) )
         nasCentral.fetchImage( imageName, self )
+        
+        
+        
+        
+        
+        
+        
+        
     }
 
     
@@ -429,6 +476,12 @@ extension NavigatorCentral {
             nasCentral.fetchImageNames( self )
         }
         
+
+
+
+
+
+
     }
     
     
@@ -444,9 +497,53 @@ extension NavigatorCentral {
         }
         
         return imagesRequested
+
+
+
+
+
+
+
+
     }
         
 
+//    func getImageFrom(_ phAsset: PHAsset, targetSize: CGSize, isThumbnail: Bool, delegate: PinCentralDelegate ) {
+////        logVerbose( "[ %@ ][ %@ ]", phAsset.descriptorString(), stringFor( targetSize ) )
+//        let cachingImageManager = PHCachingImageManager()
+//        var firstSegmentLoaded  = false
+//        let imageRequestOptions = PHImageRequestOptions()
+//        var myImage             : UIImage!
+//
+//        imageRequestOptions.isNetworkAccessAllowed = false
+//        
+//        cachingImageManager.requestImage(for: phAsset, targetSize: targetSize, contentMode: .aspectFill, options: imageRequestOptions, resultHandler: { image, _ in
+//            if let verifiedImage = image {
+//                myImage = verifiedImage
+//                
+//                if isThumbnail {
+//                    delegate.pinCentral( self, didGetImage: true, from: phAsset, image: myImage )
+//                }
+//                else {
+//                    if !firstSegmentLoaded {
+//                        firstSegmentLoaded = true
+//                    }
+//                    else {
+//                        delegate.pinCentral( self, didGetImage: true, from: phAsset, image: myImage )
+//                    }
+//
+//                }
+//                
+//            }
+//            else {
+//                delegate.pinCentral( self, didGetImage: false, from: phAsset, image: UIImage() )
+//            }
+//            
+//        })
+//
+//    }
+    
+    
     func imageExistsWith(_ name: String ) -> Bool {
 //        logTrace()
         let         directoryPath = pictureDirectoryPath()
@@ -478,6 +575,26 @@ extension NavigatorCentral {
         }
         
         return ( false, UIImage.init() )
+    }
+    
+    
+    func imageNameFor(_ pinName: String, _ pinDetails: String ) -> String {
+        var dateString     = ""
+        let encodedDetails = pinDetails.replacingOccurrences(of: " ", with: "" ).replacingOccurrences(of: ",", with: "" )
+        let encodedName    = pinName.replacingOccurrences(   of: " ", with: "" ).replacingOccurrences(of: "'", with: "" )
+        let formatter      = DateFormatter()
+        var imageName      = ""
+
+        formatter.dateFormat = "yyyyMMdd-HHmmss"
+        
+        dateString = formatter.string(from: Date() )
+        
+        imageName = dateString + "_" + encodedName + "_" + encodedDetails + ".jpg"
+        
+        imageName = imageName.replacingOccurrences( of: "/", with: "-" )
+        imageName = imageName.replacingOccurrences( of: ":", with: "-" )
+        
+        return imageName
     }
     
     
@@ -525,53 +642,73 @@ extension NavigatorCentral {
  
  
  
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-    
-    
-    
 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+  
  
  
  
  */
  
+    
+    func normalize(_ image : UIImage ) -> UIImage {
+         var     rotation : Float = 0.0
+
+         switch image.imageOrientation {
+         case .down:             rotation = .pi
+         case .downMirrored:     rotation = .pi
+         case .left:             rotation = -.pi/2
+         case .leftMirrored:     rotation = -.pi/2
+         case .right:            rotation = .pi/2
+         case .rightMirrored:    rotation = .pi/2
+         case .up:               rotation = 0.0
+         case .upMirrored:       rotation = 0.0
+         default: break
+         }
+         
+         if rotation == 0.0 {
+             return image
+         }
+
+         logOrientationOf( image )
+         logVerbose( "rotation[ %f ]", rotation )
+         
+         let     naturalImage = UIImage( cgImage: (image.cgImage)!, scale: image.scale, orientation: .up )
+         let     rotatedImage = naturalImage.rotate( radians: rotation )!
+         
+         return rotatedImage
+     }
+     
+
+//    func removeThumbnails() {
+//        let directoryPath = pictureDirectoryPath()
+//        
+//        if directoryPath.isEmpty {
+//            logTrace( "ERROR!!!  directoryPath.isEmpty!" )
+//            return
+//        }
+//        
+//        logTrace()
+//        
+//        var thumbnailsRemoved = 0
+//        
+//        for pinArray in pinArrayOfArrays {
+//            for pin in pinArray {
+//                if let imageName = pin.imageName {
+//                    let thumbnailImageName = GlobalConstants.thumbNailPrefix + imageName
+//                    
+//                    thumbnailsRemoved += deleteImageNamed( thumbnailImageName ) ? 1 : 0
+//                }
+//                
+//            }
+//            
+//        }
+//        
+//        removeFlagFromUserDefaults( UserDefaultKeys.usingThumbnails   )
+//        setFlagInUserDefaults(      UserDefaultKeys.thumbnailsRemoved )
+//        
+//        logVerbose( "Removed [ %d ] thumbnail images", thumbnailsRemoved )
+//    }
+    
     
     func saveImage(_ image: UIImage, imageFilename: String, compressed: Bool ) -> Bool {
 //        logTrace()
@@ -610,9 +747,41 @@ extension NavigatorCentral {
             logVerbose( "ERROR!  Failed to save image for [ %@ ] ... Error[ %@ ]", imageFilename, error.localizedDescription )
         }
         
+        
+        
+        
+        
+        
+        
         return false
     }
  
+    
+    func saveToExternalStorage(_ mediaFilename: String ) {
+        logTrace()
+        let fileUrl = URL( fileURLWithPath: pictureDirectoryPath() ).appendingPathComponent( mediaFilename )
+        
+        if let data = fileManager.contents( atPath: fileUrl.path ) {
+            if dataStoreLocation == .iCloud || dataStoreLocation == .shareCloud {
+//                cloudCentral.saveImageData( data, filename: mediaFilename, self )
+            }
+            else if dataStoreLocation == .nas || dataStoreLocation == .shareNas {
+                if stayOffline {
+                    createImageRequestFor( OfflineImageRequestCommands.save, filename: mediaFilename )
+                }
+                else {
+                    nasCentral.saveImageData( data, filename: mediaFilename, self )
+                }
+                
+            }
+            
+        }
+        else {
+            logVerbose( "ERROR!  Could NOT unwrap data for file [ %@ ]", fileUrl.path )
+        }
+            
+    }
+    
     
     func uploadImageNamed(_ imageName: String, _ delegate: NavigatorCentralDelegate ) {  // Tailored to each implementation
         let     directoryPath        = pictureDirectoryPath()
@@ -625,20 +794,26 @@ extension NavigatorCentral {
             if let imageData = imageFileData {
                 logVerbose( "[ %@ ]", imageName )
                 self.delegate = delegate
-
+                
                 nasCentral.saveImageData( imageData, filename: imageName, self )
             }
             else {
                 logVerbose( "ERROR!  Failed to load data for image for [ %@ ]", imageName )
                 delegate.navigatorCentral( self, didSaveImageData: false )  // Tailored to each implementation
             }
-
+            
         }
         else {
             logVerbose( "ERROR!  [ %@ ] does NOT exist!", imageName )
             delegate.navigatorCentral( self, didSaveImageData: false )  // Tailored to each implementation
         }
-
+        
+        
+        
+        
+        
+        
+        
     }
     
     
@@ -686,23 +861,6 @@ extension NavigatorCentral {
     
     // MARK: Image Convenience Utility Methods (Private)
 
-    private func createImageRequestFor(_ command: Int, filename: String ) {
-//        logVerbose( "Creating ImageRequest[ %@ ][ %@ ] ", nameForImageRequest( command ), filename )
-//        self.persistentContainer.viewContext.perform {
-//            let     imageRequest = NSEntityDescription.insertNewObject( forEntityName: EntityNames.imageRequest, into: self.managedObjectContext ) as! ImageRequest
-//            
-//            imageRequest.index    = Int16( self.offlineImageRequestQueue.count )
-//            imageRequest.command  = Int16( command )
-//            imageRequest.filename = filename
-//            
-//            self.saveContext()
-//            
-//            self.updatedOffline = true
-//        }
-        
-    }
-    
-    
     private func fetchFromDiskImageNamed(_ name: String ) -> (Bool, UIImage) {
         let result = fetchFromDiskImageFileNamed( name )
         
@@ -736,35 +894,6 @@ extension NavigatorCentral {
         logVerbose( "imageOrientation[ %@ ]", imageOrientation )
     }
 
-    
-    private func normalize(_ image: UIImage ) -> UIImage {
-        var     rotation: Float = 0.0
-
-        switch image.imageOrientation {
-        case .down:             rotation = .pi
-        case .downMirrored:     rotation = .pi
-        case .left:             rotation = -.pi/2
-        case .leftMirrored:     rotation = -.pi/2
-        case .right:            rotation = .pi/2
-        case .rightMirrored:    rotation = .pi/2
-        case .up:               rotation = 0.0
-        case .upMirrored:       rotation = 0.0
-        default: break
-        }
-        
-        if rotation == 0.0 {
-            return image
-        }
-
-        logOrientationOf( image )
-        logVerbose( "rotation[ %f ]", rotation )
-        
-        let     naturalImage = UIImage( cgImage: (image.cgImage)!, scale: image.scale, orientation: .up )
-        let     rotatedImage = naturalImage.rotate( radians: rotation )!
-        
-        return rotatedImage
-    }
-    
     
 }
 
@@ -873,6 +1002,16 @@ extension NavigatorCentral: NASCentralDelegate {
         
     func nasCentral(_ nasCentral: NASCentral, didCopyDatabaseFromDeviceToNas: Bool ) {
         logVerbose( "[ %@ ]", stringFor( didCopyDatabaseFromDeviceToNas ) )
+        
+        // We have to wait until all files are copied to the NAS before we do this or we will drop an update if it fails to complete
+        var lastDbUpdateString = self.userDefaults.string(forKey: UserDefaultKeys.lastDbUpdate ) ?? ""
+        let lastDbUpdate       =  1 + ( Int( lastDbUpdateString ) ?? 0 )
+        
+        lastDbUpdateString  = String( lastDbUpdate )
+        self.userDefaults.set( lastDbUpdateString, forKey: UserDefaultKeys.lastDbUpdate )
+        removeFlagFromUserDefaults( UserDefaultKeys.databaseUpdated )
+
+//        logVerbose( "Set lastDbUpdate to [ %@ ]", lastDbUpdateString )
         
         if updatedOffline {
 //            DispatchQueue.main.asyncAfter(deadline: .now() + 4.0 ) {

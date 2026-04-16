@@ -99,6 +99,12 @@ class MediaLocationViewController: UIViewController {
     
     // MARK: Target/Action Methods
     
+    @IBAction func backBarButtonTouched(_ sender: UIBarButtonItem ) {
+        logTrace()
+        navigationController?.popViewController(animated: true )
+    }
+    
+    
     @IBAction func questionBarButtonTouched(_ sender : UIBarButtonItem ) {
         let    message = NSLocalizedString( "InfoText.MediaRepository",  comment: "Use this utility to specify where your photos and media files are located.  They can be on either (a) on this device or (b) on a Network Accessible Storage (NAS) unit.\n\nThis app ONLY recognizes photos and media files in the following file formats: JPG, JPEG, PNG, MPG, MPEG or MOV." )
 
@@ -111,8 +117,12 @@ class MediaLocationViewController: UIViewController {
     
     private func loadBarButtonItems() {
         logTrace()
-        configureBackBarButtonItem()
-        navigationItem.rightBarButtonItem = UIBarButtonItem.init(image: UIImage(named: "question" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) )
+        var leftBarButtonItems: [UIBarButtonItem] = []
+
+        leftBarButtonItems.append( backBarButtonItem( #selector( backBarButtonTouched(_:) ) ) )
+        leftBarButtonItems.append( UIBarButtonItem.init( image: UIImage(systemName: "questionmark.circle" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) ) )
+        
+        navigationItem.leftBarButtonItems = leftBarButtonItems
     }
     
 

@@ -266,8 +266,8 @@
 			isa = PBXGroup;
 			children = (
 				F44EF2D82CAC9DDE00ADC4AE /* PhotosExtensions.swift */,
-				F4D685162C61725C008BE359 /* UIKitExtensions.swift */,
 				F4D685172C61725C008BE359 /* UIImage+Cropping.swift */,
+				F4D685162C61725C008BE359 /* UIKitExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -284,10 +284,10 @@
 		F4D685212C6173D2008BE359 /* External Devices */ = {
 			isa = PBXGroup;
 			children = (
-				F4D685222C6173D2008BE359 /* SMBCentral.swift */,
 				F4D685232C6173D2008BE359 /* CloudCentral.swift */,
-				F4D685242C6173D2008BE359 /* NASCentral.swift */,
 				F4D685252C6173D2008BE359 /* DeviceAccessControl.swift */,
+				F4D685242C6173D2008BE359 /* NASCentral.swift */,
+				F4D685222C6173D2008BE359 /* SMBCentral.swift */,
 			);
 			path = "External Devices";
 			sourceTree = "<group>";

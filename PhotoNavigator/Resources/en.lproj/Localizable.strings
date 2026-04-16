@@ -14,6 +14,7 @@
 "AlertMessage.ConnectingToExternalDevice"   = "Connecting to your external device.";
 "AlertMessage.CsvFileSaved"                 = "A CSV file has successfully been saved on your NAS drive.";
 "AlertMessage.DatabaseNotOpen"              = "Fatal Error!  Database is NOT open!  Please delete and re-install the app.";
+"AlertMessage.DatabaseOutOfDate"            = "We could not save your changes because your database is out of date!";
 "AlertMessage.DataCorrupted"                = "This media file has been corrupted!";
 "AlertMessage.DataWillBeMovedTo"            = "When you hit the OK button we will transfer your data then kill the app.  When you re-start the app your data will stored be on your ";
 "AlertMessage.DataWillBeShared"             = "When you hit the OK button we will transfer your data then kill the app.  When you re-start the app will SHARE the data in your ";

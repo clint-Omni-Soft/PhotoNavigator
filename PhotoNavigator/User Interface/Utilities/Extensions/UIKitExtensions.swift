@@ -36,11 +36,24 @@ extension Date {
 
 extension UIViewController {
     
-    func configureBackBarButtonItem() {
-        let backBarButtonItem = UIBarButtonItem()
+    func backBarButtonItem(_ ibAction: Selector ) -> UIBarButtonItem {
+         return UIBarButtonItem.init(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: ibAction )
+    }
+
+    
+    func barButtonItemFor(_ isEditing: Bool, _ ibAction: Selector ) -> UIBarButtonItem {
+        let systemImageName = isEditing ? "checkmark" : "slider.horizontal.3"
+        let buttonTintColor = isEditing ? UIColor.systemBlue : UIColor.black
+        let barButtonItem   = UIBarButtonItem( image: UIImage(systemName: systemImageName ), style: .plain, target: self, action: ibAction )
         
-        backBarButtonItem.title = NSLocalizedString( "ButtonTitle.Back", comment: "Back" )
-        navigationController?.navigationBar.topItem?.backBarButtonItem = backBarButtonItem
+        barButtonItem.tintColor = buttonTintColor
+        
+        return barButtonItem
+    }
+
+    
+    func configureBackBarButtonItem() {
+        navigationController?.navigationBar.topItem?.backBarButtonItem = UIBarButtonItem()
     }
 
     
@@ -62,9 +75,16 @@ extension UIViewController {
     }
     
     
+    func configurePopoverViewBorder(_ view: UIView ) {
+        view.layer.borderColor  = PopoverViewBorder.color.cgColor
+        view.layer.cornerRadius = PopoverViewBorder.cornerRadius
+        view.layer.borderWidth  = PopoverViewBorder.width
+    }
+
+
     func customizeButton(_ button: UIButton, with title: String ) {
-        button.layer.borderColor   = UIColor.black.cgColor
-        button.layer.borderWidth   = 1.0
+        button.layer.borderColor   = UIColor.blue.cgColor
+        button.layer.borderWidth   = 2.0
         button.layer.cornerRadius  = 15.0
         button.layer.masksToBounds = true
         
@@ -77,6 +97,15 @@ extension UIViewController {
     }
     
     
+    func expandImageToFit(_ button: UIButton ) {
+        button.setTitle( "", for: .normal )
+
+        button.imageView?.contentMode     = .scaleAspectFit // Scale the image to fit the image view
+        button.contentHorizontalAlignment = .fill           // Ensure horizontal alignment fills the button
+        button.contentVerticalAlignment   = .fill           // Ensure vertical alignment fills the button
+    }
+    
+
     func getNavBarTitleButton() -> UIButton {
         var button = UIButton(frame: CGRect( x: 0, y: 0, width: 160, height: 40 ) )
         
@@ -95,7 +124,7 @@ extension UIViewController {
         let     headerView = UIView .init( frame: CGRect.init( x:  0, y:  0, width: tableWidth,      height: 44 ) )
         let     labelView  = UILabel.init( frame: CGRect.init( x: 10, y: 11, width: tableWidth - 40, height: 22 ) )
 
-        button.setImage( UIImage( named: arrowUp ? "arrowUp" : "arrowDown" ), for: .normal )
+        button.setImage( UIImage(systemName: arrowUp ? "arrow.up" : "arrow.down" ), for: .normal )
         button.frame     = CGRect.init( x: tableWidth - 45, y: 7.0, width: 30.0, height: 30.0 )
         button.tag       = section + ( arrowUp ? HeaderViewTagOffsets.up : HeaderViewTagOffsets.down )
         button.tintColor = .blue

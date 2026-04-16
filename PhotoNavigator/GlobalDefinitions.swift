@@ -11,10 +11,18 @@ import UIKit
 
 // MARK: Public Variables & Definitions
 
+struct ControlViewBorder {
+    static let color       : UIColor = .lightGray
+    static let cornerRadius: CGFloat = 10.0
+    static let width       : CGFloat = 2.0
+}
+
 enum DataLocation {
     case device
+    case iCloud
     case nas
     case notAssigned
+    case shareCloud
     case shareNas
 }
 
@@ -34,49 +42,6 @@ struct EntityNames {
     static let imageRequest   = "ImageRequest"
     static let mediaFile      = "MediaFile"
     static let photoAssets    = "PhotoAssets"
-}
-
-struct Filenames {
-    static let database    = "PhotoNavigatorDB.sqlite"
-    static let databaseShm = "PhotoNavigatorDB.sqlite-shm"
-    static let databaseWal = "PhotoNavigatorDB.sqlite-wal"
-    static let exportedCsv = "PhotoNavigator.csv"
-    static let lastUpdated = "LastUpdated"
-    static let lockFile    = "LockFile"
-}
-
-struct GlobalConstants {
-    static let dataFileExtension                = ".dat"
-    static let fileExtensionSeparator           = "."
-    static let filePathSeparator                = "/"
-    static let groupedTableViewBackgroundColor  = UIColor.init( red: 239/255, green: 239/255, blue: 244/255, alpha: 1.0 )
-    static let newMediaFile                     = -1
-    static let noGuid                           = "No GUID"
-    static let noSelection                      = -1
-    static let notSet                           = Int16( -4 )
-    static let lightBlueColor                   = UIColor.init( red: 153/255, green: 204/255, blue: 255/255, alpha: 1.0 )
-    static let noImage                          = "noImage"
-    static let offlineColor                     = UIColor.init( red: 242/255, green: 242/255, blue: 242/255, alpha: 1.0 )
-    static let onlineColor                      = UIColor.init( red: 204/255, green: 255/255, blue: 204/255, alpha: 1.0 )
-    static let paleYellowColor                  = UIColor.init( red: 255/255, green: 255/255, blue: 204/255, alpha: 1.0 )
-    static let separatorForIdentifierString     = ","
-    static let separatorForLastUpdatedString    = ","
-    static let separatorForLockfileString       = ","
-    static let separatorForSorts                = ";"
-    static let sortAscending                    = "↑"    // "▴"
-    static let sortAscendingFlag                = "A"
-    static let sortByCreationDate               = "creationDate"
-    static let sortDescending                   = "↓"    // "▾"
-    static let sortDescendingFlag               = "D"
-    static let supportedFilenameExtensions      = ["JPEG", "JPG", "HEIC", "HEIF", "HTM", "HTML", "M4V", "MOV", "MP4", "MPEG", "MPEG4", "PNG", "QT", "TIF", "TIFF", "TS", "WEBM", "WEBP", "WMV"]
-    static let imageFilenameExtensions          = ["JPEG", "JPG", "HEIC", "HEIF", "PNG", "TIF", "TIFF"]
-    static let videoFilenameExtensions          = ["M4V",  "MOV",  "MP4", "MPEG", "MPEG4", "QT", "TS", "WEBP", "WMV"]
-    static let webFilenameExtensions            = ["HTM", "HTML", "WEBP"]
-}
-
-struct GlobalIndexPaths {
-    static let newMediaFile = IndexPath(row: GlobalConstants.newMediaFile, section: GlobalConstants.newMediaFile )
-    static let noSelection  = IndexPath(row: GlobalConstants.noSelection,  section: GlobalConstants.noSelection  )
 }
 
 struct FileMimeTypes {
@@ -103,10 +68,55 @@ struct FileMimeTypes {
     static let unsup = "unsupported"
 }
 
+struct Filenames {
+    static let database    = "PhotoNavigatorDB.sqlite"
+    static let databaseShm = "PhotoNavigatorDB.sqlite-shm"
+    static let databaseWal = "PhotoNavigatorDB.sqlite-wal"
+    static let exportedCsv = "PhotoNavigator.csv"
+    static let lastUpdated = "LastUpdated"
+    static let lockFile    = "LockFile"
+}
+
+struct GlobalConstants {
+    static let dataFileExtension                = ".dat"
+    static let fileExtensionSeparator           = "."
+    static let filePathSeparator                = "/"
+    static let groupedTableViewBackgroundColor  = UIColor.init( red: 239/255, green: 239/255, blue: 244/255, alpha: 1.0 )
+    static let newMediaFile                     = -1
+    static let noGuid                           = "No GUID"
+    static let noSelection                      = -1
+    static let notSet                           = Int16( -4 )
+    static let lastUpdatedVersionString         = "V2"
+    static let lightBlueColor                   = UIColor.init( red: 153/255, green: 204/255, blue: 255/255, alpha: 1.0 )
+    static let noImage                          = "noImage"
+    static let offlineColor                     = UIColor.init( red: 242/255, green: 242/255, blue: 242/255, alpha: 1.0 )
+    static let onlineColor                      = UIColor.init( red: 204/255, green: 255/255, blue: 204/255, alpha: 1.0 )
+    static let paleYellowColor                  = UIColor.init( red: 255/255, green: 255/255, blue: 204/255, alpha: 1.0 )
+    static let separatorForIdentifierString     = ","
+    static let separatorForLastUpdatedString    = ","
+    static let separatorForLockfileString       = ","
+    static let separatorForSorts                = ";"
+    static let sortAscending                    = "↑"    // "▴"
+    static let sortAscendingFlag                = "A"
+    static let sortByCreationDate               = "creationDate"
+    static let sortDescending                   = "↓"    // "▾"
+    static let sortDescendingFlag               = "D"
+    static let supportedFilenameExtensions      = ["JPEG", "JPG", "HEIC", "HEIF", "HTM", "HTML", "M4V", "MOV", "MP4", "MPEG", "MPEG4", "PNG", "QT", "TIF", "TIFF", "TS", "WEBM", "WEBP", "WMV"]
+    static let imageFilenameExtensions          = ["JPEG", "JPG", "HEIC", "HEIF", "PNG", "TIF", "TIFF"]
+    static let videoFilenameExtensions          = ["M4V",  "MOV",  "MP4", "MPEG", "MPEG4", "QT", "TS", "WEBP", "WMV"]
+    static let webFilenameExtensions            = ["HTM", "HTML", "WEBP"]
+}
+
+struct GlobalIndexPaths {
+    static let newMediaFile = IndexPath(row: GlobalConstants.newMediaFile, section: GlobalConstants.newMediaFile )
+    static let noSelection  = IndexPath(row: GlobalConstants.noSelection,  section: GlobalConstants.noSelection  )
+}
+
 struct Notifications {
     static let cannotReadAllDbFiles         = "CannotReadAllDbFiles"
     static let cannotSeeExternalDevice      = "CannotSeeExternalDevice"
     static let connectingToExternalDevice   = "ConnectingToExternalDevice"
+    static let databaseOutOfDate            = "DatabaseOutOfDate"
     static let deviceAssetsReloaded         = "DeviceAssetsReloaded"
     static let deviceNameNotSet             = "DeviceNameNotSet"
     static let enteringBackground           = "EnteringBackground"
@@ -118,6 +128,12 @@ struct Notifications {
     static let transferringDatabase         = "TransferringDatabase"
     static let unableToConnect              = "UnableToConnect"
     static let updatingExternalDevice       = "UpdatingExternalDevice"
+}
+
+struct PopoverViewBorder {
+    static let color       : UIColor = .lightGray
+    static let cornerRadius: CGFloat = 20.0
+    static let width       : CGFloat = 4.0
 }
 
 struct SortOptions {
@@ -154,6 +170,7 @@ struct SupportedFilenameExtensions {
 
 struct UserDefaultKeys {
     static let currentSortOption         = "CurrentSortOption"
+    static let databaseUpdated           = "DatabaseUpdated"
     static let dataSourceDescriptor      = "DataSourceDescriptor"
     static let dataSourceLocation        = "DataSourceLocation"
     static let dataStoreDescriptor       = "DataStoreDescriptor"
@@ -164,10 +181,12 @@ struct UserDefaultKeys {
     static let howToUseShown             = "HowToUseShown"
     static let imageDuration             = "ImageDuration"
     static let lastAccessedMediaFileGuid = "LastAccessedMediaFileGuid"
+    static let lastDbUpdate              = "LastDbUpdate"
     static let lastSelectionIndexPath    = "LastSelectionIndexPath"
     static let lastTabSelected           = "LastTabSelected"
     static let networkAccessGranted      = "NetworkAccessGranted"
     static let networkPath               = "NetworkPath"
     static let updatedOffline            = "UpdatedOffline"
+    static let workOffline               = "WorkOffline"
 }
 
