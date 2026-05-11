@@ -77,10 +77,8 @@ class DataLocationViewController: UIViewController {
         super.viewWillAppear( animated )
         
         canSeeNasFolders = false
+        myActivityIndicator.isHidden = true
         nasCentral.canSeeNasDataSourceFolders( self )
-        
-        myActivityIndicator.isHidden = false
-        myActivityIndicator.startAnimating()
         
         loadBarButtonItems()
     }
@@ -96,7 +94,8 @@ class DataLocationViewController: UIViewController {
     
     
     @IBAction func questionBarButtonTouched(_ sender : UIBarButtonItem ) {
-        let     message = NSLocalizedString( "InfoText.DataStoreLocation", comment: "We provide support for three different storage locations...\n\n   (a) on your device (default),\n   (b) in the cloud and \n   (c) on a Network Accessible Storage (NAS) unit. \n\nThe key point here is that there is no sharing on the device, if you chose the cloud then your data can be shared across all of your devices and if you chose NAS then anyone who has access to your Wi-Fi can access it." )
+        let     message = NSLocalizedString( "InfoText.DataStoreLocation1", comment: "DATA STORE LOCATION\n\nWe provide support for two different storage location options...\n\n   (a) on your device (default) or \n   (b) on a Network Accessible Storage (NAS) unit that supports SMB 1.0.\n\n" ) +
+                          NSLocalizedString( "InfoText.DataStoreLocation2", comment: "The key point here is that there is no sharing on the device.  If you chose NAS then anyone who has access to your Wi-Fi can access it.\n\n" )
 
         presentAlert( title: NSLocalizedString( "AlertTitle.GotAQuestion", comment: "Got a question?" ), message: message )
     }
@@ -126,11 +125,8 @@ extension DataLocationViewController : NASCentralDelegate {
     
     func nasCentral(_ nasCentral: NASCentral, canSeeNasFolders: Bool) {
         logVerbose( "[ %@ ]", stringFor( canSeeNasFolders ) )
-        
         self.canSeeNasFolders = canSeeNasFolders
         
-        myActivityIndicator.stopAnimating()
-        myActivityIndicator.isHidden = true
         myTableView.reloadData()
     }
 

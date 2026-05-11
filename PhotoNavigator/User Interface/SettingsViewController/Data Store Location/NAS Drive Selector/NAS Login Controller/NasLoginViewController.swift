@@ -57,6 +57,8 @@ class NasLoginViewController: UIViewController {
         logTrace()
         super.viewWillAppear( animated )
 
+        configurePopoverViewBorder( view )
+
         nasDriveNameLabel.text = device.netbiosName
     }
     

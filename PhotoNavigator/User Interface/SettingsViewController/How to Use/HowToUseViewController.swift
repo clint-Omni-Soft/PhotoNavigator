@@ -27,7 +27,7 @@ class HowToUseViewController: UIViewController {
     private var currentSelection = GlobalConstants.noSelection
     
     private let infoMessageArray = [ NSLocalizedString( "InfoText.FirstThingsFirst",    comment: "Before you start using this app, you should consider where we can find your photos and media files (see Media Repository for details)." ),
-                                     NSLocalizedString( "InfoText.MediaRepository",     comment: "Use this utility to specify where your photos and media files are located.  They can be on either (a) on this device or (b) on a Network Accessible Storage (NAS) unit.\n\nThis app ONLY recognizes photos and media files in the following file formats: JPG, JPEG, PNG, MPG, MPEG or MOV." ),
+                                     NSLocalizedString( "InfoText.MediaRepository",     comment: "Use this utility to specify where your photos and media files are located.  They can be on either (a) on this device or (b) on a Network Accessible Storage (NAS) unit that supports SMB 1.0.\n\nThis app ONLY recognizes photos and media files in the following file formats: JPG, JPEG, PNG, MPG, MPEG or MOV." ),
                                      NSLocalizedString( "InfoText.ScanMediaRepository", comment: "Once you have specified where your photos and media files are located (your repository), you can this utility to scan the designated location and create a database on this device for easy access.\n\nThe time it takes to access and display a photo or media file will depend on where you store your files.  We do NOT copy your files to your device." ) ]
 
     private let tableDataArray   = [ NSLocalizedString( "Title.FirstThingFirst",     comment: "First things first"    ),

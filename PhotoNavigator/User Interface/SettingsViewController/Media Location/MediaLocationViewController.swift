@@ -75,7 +75,8 @@ class MediaLocationViewController: UIViewController {
         super.viewWillAppear( animated )
         
         canSeeNasDataSourceFolders = false
-        nasCentral.canSeeNasDataSourceFolders( self )
+        myActivityIndicator.isHidden = true
+//        nasCentral.canSeeNasDataSourceFolders( self )
 
         if selectedOption == CellIndexes.device  {
             PHPhotoLibrary.requestAuthorization(for: .readWrite ) { (status) in
@@ -86,10 +87,6 @@ class MediaLocationViewController: UIViewController {
                 
             }
             
-        }
-        else {
-            myActivityIndicator.isHidden = false
-            myActivityIndicator.startAnimating()
         }
         
         loadBarButtonItems()
@@ -136,14 +133,8 @@ extension MediaLocationViewController: NASCentralDelegate {
     
     func nasCentral(_ nasCentral: NASCentral, canSeeNasDataSourceFolders: Bool) {
         logVerbose( "[ %@ ]", stringFor( canSeeNasDataSourceFolders ) )
-        
         self.canSeeNasDataSourceFolders = canSeeNasDataSourceFolders
         
-        if canSeeNasDataSourceFolders {
-            myActivityIndicator.stopAnimating()
-            myActivityIndicator.isHidden = true
-        }
-
         myTableView.reloadData()
     }
 
@@ -223,13 +214,7 @@ extension MediaLocationViewController: UITableViewDelegate {
             promptToScanNow()
 
         case CellIndexes.nas:
-            if canSeeNasDataSourceFolders {
-                launchNasSelectorViewController()
-            }
-            else {
-                presentAlert( title   : NSLocalizedString( "AlertTitle.Error",                     comment:  "Error" ),
-                              message : NSLocalizedString( "AlertMessage.CannotSeeExternalDevice", comment: "We cannot see your external device.  Move closer to your WiFi network and try again." ) )
-            }
+            launchNasSelectorViewController()
 
         default:
             logTrace( "ERROR!  SBH!" )

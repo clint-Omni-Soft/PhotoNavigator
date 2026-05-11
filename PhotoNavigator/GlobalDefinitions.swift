@@ -184,6 +184,7 @@ struct UserDefaultKeys {
     static let lastDbUpdate              = "LastDbUpdate"
     static let lastSelectionIndexPath    = "LastSelectionIndexPath"
     static let lastTabSelected           = "LastTabSelected"
+    static let nasConnectAttempted       = "NasConnectAttempted"
     static let networkAccessGranted      = "NetworkAccessGranted"
     static let networkPath               = "NetworkPath"
     static let updatedOffline            = "UpdatedOffline"

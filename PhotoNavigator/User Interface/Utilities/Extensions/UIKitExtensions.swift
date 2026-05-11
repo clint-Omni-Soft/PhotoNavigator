@@ -57,6 +57,14 @@ extension UIViewController {
     }
 
     
+    func configureControlViewBorder(_ view: UIView ) {
+        view.layer.borderColor   = ControlViewBorder.color.cgColor
+        view.layer.borderWidth   = ControlViewBorder.width
+        view.layer.cornerRadius  = ControlViewBorder.cornerRadius
+        view.layer.masksToBounds = true
+    }
+
+    
     func configureNavBarTitleButtonWith(_ title: String, _ ibAction: Selector ) {
         let containerView  = UIView.init( frame: CGRect( x: 0, y: 0, width: 160, height: 40 ) )
         let navTitleButton = UIButton( type: .custom )

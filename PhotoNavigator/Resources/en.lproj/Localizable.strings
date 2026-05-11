@@ -113,9 +113,10 @@
 "ButtonTitle.Stream"                        = "Stream in Order";
 "ButtonTitle.Yes"                           = "Yes";
 
-"InfoText.DataStoreLocation"                = "This app gives you the option to store your data either on...\n\n   (a) on your device (default) or\n   (b) on a Network Accessible Storage (NAS) drive. \n\nThe key point here is that there is no sharing on the device. If you prefer to use a NAS then anyone who has this app and access to your Wi-Fi can access your data.";
+"InfoText.DataStoreLocation1"               = "DATA STORE LOCATION\n\nWe provide support for two different storage location options...\n\n   (a) on your device (default) or \n   (b) on a Network Accessible Storage (NAS) unit that supports SMB 1.0.\n\n";
+"InfoText.DataStoreLocation2"               = "The key point here is that there is no sharing on the device.  If you chose NAS then anyone who has access to your Wi-Fi can access it.\n\n";
 "InfoText.FirstThingsFirst"                 = "Before you start using this app, you should consider where we can find your photos and media files (see Media Repository for details).";
-"InfoText.MediaRepository"                  = "Use this utility to specify where your photos and media files are located.  They can be on either (a) on this device or (b) on a Network Accessible Storage (NAS) unit.\n\nThis app ONLY recognizes photos and media files in the following file formats: JPEG, JPG, HEIC, HEIF, HTM, HTML, MOV, MP4, MPEG, MPEG4, PNG, QT, TIF, TIFF, TS, WEBM, WEBP, WMV.";
+"InfoText.MediaRepository"                  = "Use this utility to specify where your photos and media files are located.  They can be on either (a) on this device or (b) on a Network Accessible Storage (NAS) unit that supports SMB 1.0.\n\nThis app ONLY recognizes photos and media files in the following file formats: JPG, JPEG, PNG, MPG, MPEG or MOV.";
 "InfoText.MediaList1"                       = "Touching any media title in the list will load the it into the Media Viewer.\n\nNavigation Bar Buttons:\n\n";
 "InfoText.MediaList2"                       = "When your media can be grouped, an up/down caret will be displayed which you can use to open/close all sections of the table.  Touching on a section header will open/close that section.\n\n";
 "InfoText.MediaList3"                       = "When reading from a NAS drive, you have two more controls:\n";

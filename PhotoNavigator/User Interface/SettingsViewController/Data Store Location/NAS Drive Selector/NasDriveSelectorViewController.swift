@@ -69,6 +69,7 @@ class NasDriveSelectorViewController: UIViewController {
     private var actionButtonState         : ControlPanelStates = .hiddenState
     private var directoryCreateState      = DirectoryCreationStates.done
     private var currentState              : StateMachine = .deviceSelect
+    private let customDelegate            = CustomTransitioningDelegate( CGRect(x: 0, y: 0, width: 1, height: 1) )
     private var deviceArray               : [SMBDevice] = []
     private var devicePassword            = ""
     private var deviceUserName            = ""
@@ -86,7 +87,8 @@ class NasDriveSelectorViewController: UIViewController {
     private var tableDataArray            : [String]   = []
     private var targetDirectoryIndex      = GlobalConstants.noSelection
     private var upBarButtonItem           : UIBarButtonItem!
-    
+    private var userDefaults              = UserDefaults.standard
+
 
     
     // MARK: UIViewController Lifecycle Methods
@@ -113,9 +115,9 @@ class NasDriveSelectorViewController: UIViewController {
         logTrace()
         super.viewWillAppear( animated )
         
-        questionBarButtonItem = UIBarButtonItem.init( image : UIImage(systemName: "questionmark.circle" ), style : .plain, target : self, action : #selector( questionBarButtonTouched(_:) ) )
-        upBarButtonItem       = UIBarButtonItem.init( image : UIImage(systemName: "arrow.up.cicle.fill"), style : .plain, target : self, action : #selector( upBarButtonItemTouched(_:)   ) )
-        
+        questionBarButtonItem = UIBarButtonItem.init( image : UIImage(systemName: "questionmark.circle"  ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) )
+        upBarButtonItem       = UIBarButtonItem.init( image : UIImage(systemName: "arrow.up.circle.fill" ), style: .plain, target: self, action: #selector( upBarButtonItemTouched(_:  ) ) )
+
         myTableView.reloadData()
     }
     
@@ -171,9 +173,10 @@ class NasDriveSelectorViewController: UIViewController {
         var     message = "Unknown"
         
         switch mode {
-        case .dataSourceLocation:   message = NSLocalizedString( "InfoText.MediaRepository",   comment: "Use this utility to specify where your photos and media files are located.  They can be on either (a) on this device or (b) on a Network Accessible Storage (NAS) unit.\n\nThis app ONLY recognizes photos and media files in the following file formats: JPG, JPEG, PNG, MPG, MPEG or MOV." )
-        case .dataStoreLocation:    message = NSLocalizedString( "InfoText.DataStoreLocation", comment: "This app gives you the option to store your data either on...\n\n   (a) on your device (default) or\n   (b) on a Network Accessible Storage (NAS) drive. \n\nThe key point here is that there is no sharing on the device. If you prefer to use a NAS then anyone who has this app and access to your Wi-Fi can access your data." )
-        }
+        case .dataSourceLocation:   message = NSLocalizedString( "InfoText.MediaRepository",    comment: "Use this utility to specify where your photos and media files are located.  They can be on either (a) on this device or (b) on a Network Accessible Storage (NAS) unit that supports SMB 1.0.\n\nThis app ONLY recognizes photos and media files in the following file formats: JPG, JPEG, PNG, MPG, MPEG or MOV." )
+        case .dataStoreLocation:    message = NSLocalizedString( "InfoText.DataStoreLocation1", comment: "DATA STORE LOCATION\n\nWe provide support for two different storage location options...\n\n   (a) on your device (default) or \n   (b) on a Network Accessible Storage (NAS) unit that supports SMB 1.0.\n\n" ) +
+                                              NSLocalizedString( "InfoText.DataStoreLocation2", comment: "The key point here is that there is no sharing on the device.  If you chose NAS then anyone who has access to your Wi-Fi can access it.\n" )
+       }
 
         presentAlert( title: NSLocalizedString( "AlertTitle.GotAQuestion", comment: "Got a question?" ), message: message )
     }
@@ -206,19 +209,6 @@ class NasDriveSelectorViewController: UIViewController {
     }
     
     
-    private func currentStateName() -> String {
-        var name = "Unknown"
-        
-        switch currentState {
-        case .deviceSelect:     name = "deviceSelect"
-        case .shareSelect:      name = "shareSelect"
-        case .navigating:       name = "navigating"
-        }
-        
-        return name
-    }
-    
-    
     private func displayDevices() {
         logTrace()
         showActivityIndicator( false )
@@ -236,7 +226,6 @@ class NasDriveSelectorViewController: UIViewController {
     
     
     private func launchTransferProgressViewController() {
-
         guard let transferProgressVC : TransferProgressViewController = iPhoneViewControllerWithStoryboardId( storyboardId: StoryboardIds.transferProgress ) as? TransferProgressViewController else {
             logTrace( "Error!  Unable to load TransferProgressViewController!" )
             return
@@ -462,17 +451,12 @@ extension NasDriveSelectorViewController : NASCentralDelegate {
             nasCentral.fetchShares( self )
         }
         else {
+            logVerbose( "\n    Connect failed using credentials for [ %@ ] = [ %@ ]/[ %@ ]", selectedDevice.netbiosName, deviceUserName, devicePassword )
             removeDeviceCredentials()
             currentState = .deviceSelect
 
             showActivityIndicator( false )
-            
-            logVerbose( "\n    Connect failed using credentials for [ %@ ] = [ %@ ]/[ %@ ]", selectedDevice.netbiosName, deviceUserName, devicePassword )
-            DispatchQueue.main.asyncAfter( deadline: .now() ) {
-                self.presentAlert( title   : NSLocalizedString( "AlertTitle.Error",      comment: "Error!" ),
-                                   message : NSLocalizedString( "AlertMessage.NoAccess", comment: "Unable to access this file server!" ) )
-            }
-            
+            promptForLoginCredentialsFor( device )
         }
         
     }
@@ -656,16 +640,16 @@ extension NasDriveSelectorViewController : NASCentralDelegate {
     // MARK: NASCentralDelegate Discovery Utility Methods
     
     private func removeDeviceCredentials() {
-        UserDefaults.standard.removeObject( forKey: selectedDevice.netbiosName )
-        UserDefaults.standard.synchronize()
+        userDefaults.removeObject( forKey: selectedDevice.netbiosName )
+        userDefaults.synchronize()
     }
     
     
     private func saveDeviceCredentials() {
         let     userNamePassword = deviceUserName + "/" + devicePassword
         
-        UserDefaults.standard.set( userNamePassword, forKey: selectedDevice.netbiosName )
-        UserDefaults.standard.synchronize()
+        userDefaults.set( userNamePassword, forKey: selectedDevice.netbiosName )
+        userDefaults.synchronize()
     }
 
 
@@ -747,9 +731,8 @@ extension NasDriveSelectorViewController : UITableViewDelegate {
         
         switch currentState {
         case .deviceSelect:     selectedDevice = deviceArray[indexPath.row]
-                                logVerbose( "[ %@ ][ %@ ]", currentStateName(), selectedDevice.netbiosName )
 
-                                if let userNamePassword = UserDefaults.standard.string( forKey: selectedDevice.netbiosName ) {
+                                if let userNamePassword = userDefaults.string( forKey: selectedDevice.netbiosName ) {
                                     let     credentialsArray = userNamePassword.components( separatedBy: "/" )
                                     
                                     devicePassword = credentialsArray[1]
@@ -760,13 +743,18 @@ extension NasDriveSelectorViewController : UITableViewDelegate {
                                     nasCentral.connectTo( selectedDevice, deviceUserName, devicePassword, self )
                                 }
                                 else {
-                                    nasCentral.connectTo( selectedDevice, "", "", self )    // This will force the OS to prompt the user for permission to scan their network
+                                    if !userDefaults.bool( forKey: UserDefaultKeys.nasConnectAttempted ) {
+                                        nasCentral.connectTo( selectedDevice, "", "", self )    // This will force the OS to prompt the user for permission to scan their network
+                                        
+                                        userDefaults.set( true, forKey: UserDefaultKeys.nasConnectAttempted )
+                                        userDefaults.synchronize()
+                                    }
+                                    
                                     promptForLoginCredentialsFor( selectedDevice )
                                 }
                                 
         case .shareSelect:      currentState  = .navigating
                                 selectedShare = shareArray[indexPath.row]
-                                logVerbose( "[ %@ ][ %@ ]", currentStateName(), selectedShare )
 
                                 showActivityIndicator( true )
 
@@ -775,7 +763,6 @@ extension NasDriveSelectorViewController : UITableViewDelegate {
         case .navigating:       if mode == .dataStoreLocation {
                                     if targetDirectoryIndex == GlobalConstants.noSelection {
                                         pathsOnShare.append( tableDataArray[indexPath.row] )
-                                        logVerbose( "[ %@ ][ %@ ]", currentStateName(), currentPath() )
                                         showActivityIndicator( true )
 
                                         nasCentral.fetchDirectoriesFrom( selectedShare, currentPath(), self )
@@ -839,40 +826,18 @@ extension NasDriveSelectorViewController : UITableViewDelegate {
         nasLoginVC.delegate = self
         nasLoginVC.device   = device
         
-        nasLoginVC.preferredContentSize   = CGSize( width: myTableView.frame.width, height: 280 )
-        nasLoginVC.modalPresentationStyle = .formSheet
+        let customSize = CGSize(width: myTableView.frame.width - 20, height: 280 )
+        let x          = (view.bounds.width  - customSize.width ) / 2
+        let y          = 100.0
         
-        nasLoginVC.popoverPresentationController?.delegate                 = self
-        nasLoginVC.popoverPresentationController?.permittedArrowDirections = .up
-        nasLoginVC.popoverPresentationController?.sourceRect               = CGRectMake( 50, 50, 50, 50 )
-        nasLoginVC.popoverPresentationController?.sourceView               = view
+        customDelegate.customFrame = CGRect(x: x, y: y, width: customSize.width, height: customSize.height )
         
+        nasLoginVC.modalPresentationStyle = .custom
+        nasLoginVC.transitioningDelegate  = customDelegate
+
         present( nasLoginVC, animated: true, completion: nil )
     }
     
-    
-    private func promptForPermissionToImport(_ filename : String ) {
-        let     alert  = UIAlertController.init( title         : NSLocalizedString( "AlertTitle.AreYouSureImport",         comment: "Are you sure you want to import this file?" ),
-                                                 message       : NSLocalizedString( "AlertMessage.ImportingIsDestructive", comment: "Importing an improperly formatted CSV file can fail or have an unpredicable outcome.  To prevent this, we will attempt to validate your CSV file before importing it.  Even so, if the import fails, you may lose any data you have created and you may have to delete the app and start over again." ),
-                                                 preferredStyle: .alert)
-        
-        let     okAction = UIAlertAction.init( title: NSLocalizedString( "ButtonTitle.OK", comment: "OK" ), style: .destructive )
-        { ( alertAction ) in
-            logVerbose( "OK Action ... [ %@/%@ ]", self.currentPath(), filename )
-            let     fullPath = self.currentPath() + "/" + filename
-            
-            self.showActivityIndicator( true )
-            self.nasCentral.fetchFileOn( self.openShare, fullPath, self )
-        }
-        
-        let     cancelAction = UIAlertAction.init(title: NSLocalizedString( "ButtonTitle.Cancel", comment: "Cancel" ), style: .cancel, handler: nil )
-        
-        alert.addAction( okAction     )
-        alert.addAction( cancelAction )
-        
-        present( alert, animated: true, completion: nil )
-    }
-
     
     private func promptToScanNow() {
         let     alert  = UIAlertController.init( title: NSLocalizedString( "AlertTitle.ScanNowPrompt", comment: "Would you like for us to scan your repository now?" ), message: "", preferredStyle : .alert)

@@ -62,6 +62,7 @@ class ScanRepoViewController: UIViewController {
         
         loadLabels()
         configureControls()
+        configureControlViewBorder( myTextView )
     }
     
     
@@ -85,8 +86,8 @@ class ScanRepoViewController: UIViewController {
     
     private func configureControls() {
         logTrace()
-        startButton.isEnabled = !scanning && !scanComplete
-        stopButton .isEnabled =  scanning && !scanComplete
+        startButton.isHidden =  scanning || scanComplete
+        stopButton .isHidden = !scanning || scanComplete
     }
     
     
@@ -107,7 +108,9 @@ class ScanRepoViewController: UIViewController {
             
             self.myActivityIndicator.isHidden = false
             self.myActivityIndicator.startAnimating()
-            
+
+            self.saveStringToUserDefaults( stringFor( GlobalIndexPaths.noSelection ), for: UserDefaultKeys.lastSelectionIndexPath ) // Prevents a crash in MediaListVC
+
             if self.navigatorCentral.dataSourceLocation == .nas {
                 self.scanNAS()
             }

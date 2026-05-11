@@ -39,6 +39,7 @@ class MediaListViewController: UIViewController {
     }
     
     private let appDelegate         = UIApplication.shared.delegate as! AppDelegate
+    private let customDelegate      = CustomTransitioningDelegate( CGRect(x: 0, y: 0, width: 1, height: 1) )
     private let deviceAccessControl = DeviceAccessControl.sharedInstance
     private var navigatorCentral    = NavigatorCentral.sharedInstance
     private var notificationCenter  = NotificationCenter.default
@@ -96,7 +97,7 @@ class MediaListViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.title = NSLocalizedString( "Title.Media", comment: "Media" )
-        
+
         myTextField.delegate      = self
         myTextField.isHidden      = !searchEnabled
         myTextField.returnKeyType = .done
@@ -386,7 +387,7 @@ class MediaListViewController: UIViewController {
         let weHaveData          = ( navigatorCentral.dataSourceLocation == .nas ) ? ( navigatorCentral.numberOfMediaFilesLoaded > 0 ) : ( navigatorCentral.numberOfDeviceAssetsLoaded > 0 )
 
         if UIDevice.current.userInterfaceIdiom == .pad {
-            leftBarButtonItems.append( UIBarButtonItem.init( barButtonSystemItem: .close, target: self, action: #selector( hidePrimaryBarButtonTouched(_: ) ) ) )
+            leftBarButtonItems.append( UIBarButtonItem.init( image: UIImage(systemName: "sidebar.left" ), style: .plain, target: self, action: #selector( hidePrimaryBarButtonTouched(_:) ) ) )
         }
 
         leftBarButtonItems.append( UIBarButtonItem.init( image: UIImage(systemName: "questionmark.circle" ), style: .plain, target: self, action: #selector( questionBarButtonTouched(_:) ) ) )
@@ -468,7 +469,6 @@ class MediaListViewController: UIViewController {
             alert.popoverPresentationController?.barButtonItem            = displayOptionsBarButtonItem
             alert.popoverPresentationController!.delegate                 = self
             alert.popoverPresentationController?.permittedArrowDirections = .any
-            alert.popoverPresentationController?.permittedArrowDirections = .any
         }
             
         present( alert, animated: true )
@@ -483,14 +483,15 @@ class MediaListViewController: UIViewController {
         
         sortOptionsVC.delegate = self
         
-        sortOptionsVC.modalPresentationStyle = .popover
-        sortOptionsVC.preferredContentSize   = CGSize(width: myTableView.frame.width, height: 300 )
-
-        sortOptionsVC.popoverPresentationController!.delegate                 = self
-        sortOptionsVC.popoverPresentationController?.permittedArrowDirections = .any
-        sortOptionsVC.popoverPresentationController?.sourceRect               = sortButton.frame
-        sortOptionsVC.popoverPresentationController?.sourceView               = sortButton
+        let customSize = CGSize(width: myTableView.frame.width - 20, height: 300 )
+        let x          = (view.bounds.width  - customSize.width ) / 2
+        let y          = (view.bounds.height - customSize.height) / 2
         
+        customDelegate.customFrame = CGRect(x: x, y: y, width: customSize.width, height: customSize.height )
+        
+        sortOptionsVC.modalPresentationStyle = .custom
+        sortOptionsVC.transitioningDelegate  = customDelegate
+      
         present( sortOptionsVC, animated: true, completion: nil )
     }
     
@@ -618,7 +619,11 @@ extension MediaListViewController: NavigatorCentralDelegate {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5 ) {
             self.scrollToLastSelectedItem()
             self.loadBarButtonItems()
-            self.displayMediaAt( self.lastSelection )
+            
+            if self.lastSelection != GlobalIndexPaths.noSelection {
+                self.displayMediaAt( self.lastSelection )
+            }
+            
         }
 
     }
