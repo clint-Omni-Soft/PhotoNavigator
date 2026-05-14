@@ -44,8 +44,9 @@ extension UIViewController {
     func barButtonItemFor(_ isEditing: Bool, _ ibAction: Selector ) -> UIBarButtonItem {
         let systemImageName = isEditing ? "checkmark" : "slider.horizontal.3"
         let buttonTintColor = isEditing ? UIColor.systemBlue : UIColor.black
-        let barButtonItem   = UIBarButtonItem( image: UIImage(systemName: systemImageName ), style: .plain, target: self, action: ibAction )
-        
+        let barButtonItem   = isEditing ? UIBarButtonItem( image: UIImage(systemName: systemImageName ), style: .plain, target: self, action: ibAction ) :
+                                          UIBarButtonItem( title: NSLocalizedString( "ButtonTitle.Edit", comment: "Edit"), style: .plain, target: self, action: ibAction )
+
         barButtonItem.tintColor = buttonTintColor
         
         return barButtonItem
