@@ -1721,11 +1721,16 @@ extension NASCentral: SMBCentralDelegate {
     private func compareLastUpdatedFiles(_ nasData: Data ) {
         var     compareResult = LastUpdatedFileCompareResult.nasIsNewer
         let     formatter     = DateFormatter()
+        let     nasDateString = String( decoding: nasData, as: UTF8.self )
         var     updatedBy     = NSLocalizedString( "Title.Unknown", comment: "Unknown" )
         
         formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
-        if let documentDirectoryURL = fileManager.urls( for: .documentDirectory, in: .userDomainMask ).first {
+        if nasDateString.isEmpty || nasDateString == "" {
+            logTrace( "ERROR!!!  NAS last updated file is empty!" )
+            compareResult = LastUpdatedFileCompareResult.equal
+        }
+        else if let documentDirectoryURL = fileManager.urls( for: .documentDirectory, in: .userDomainMask ).first {
             let     deviceFileUrl = documentDirectoryURL.appendingPathComponent( Filenames.lastUpdated )
             
             if fileManager.fileExists(atPath: deviceFileUrl.path ) {
@@ -1736,7 +1741,6 @@ extension NASCentral: SMBCentralDelegate {
                         // Version 2.0 = V2,999,Clint's iPhone
                     let     deviceString     = String( decoding: deviceFileData, as: UTF8.self )
                     let     deviceComponents = deviceString.components(separatedBy: GlobalConstants.separatorForLastUpdatedString )  // ","
-                    let     nasDateString    = String( decoding: nasData, as: UTF8.self )
                     let     nasComponents    = nasDateString.components(separatedBy: GlobalConstants.separatorForLastUpdatedString )
 
                     switch compareLastUpdatedFileVersions( deviceComponents.count, nasComponents.count ) {
